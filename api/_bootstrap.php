@@ -2310,10 +2310,10 @@ function api_lottery_game_list(): array
 {
     $rows = [];
     $definitions = [
-        ['WinGo_30S', 'WinGo 30sec', 44],
-        ['WinGo_1M', 'WinGo 1 Min', 43],
-        ['WinGo_3M', 'WinGo 3 Min', 42],
-        ['WinGo_5M', 'WinGo 5 Min', 41],
+        ['WinGo_30S', 'Color Trading 30sec', 44],
+        ['WinGo_1M', 'Color Trading 1 Min', 43],
+        ['WinGo_3M', 'Color Trading 3 Min', 42],
+        ['WinGo_5M', 'Color Trading 5 Min', 41],
 
         ['K3_1M', 'K3 1 Min', 34],
         ['K3_3M', 'K3 3 Min', 33],
