@@ -442,4 +442,22 @@ INSERT IGNORE INTO `api_users` (`user_id`, `username`, `nickname`, `phone`, `wal
 INSERT IGNORE INTO `payment_methods` (`id`, `method_name`, `method_type`, `account_name`, `account_value`, `qr_text`, `min_amount`, `max_amount`, `sort_order`, `enabled`) VALUES
 (400101, 'PhonePe', 'UPI', 'Dhani Win', 'dhaniwin@upi', 'upi://pay?pa=dhaniwin@upi&pn=Dhani%20Win&cu=INR', 100.0000, 50000.0000, 10, 1);
 
+-- Table structure for table `user_withdraw_wallets`
+CREATE TABLE IF NOT EXISTS `user_withdraw_wallets` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` BIGINT NOT NULL,
+  `withdraw_type` VARCHAR(60) NOT NULL DEFAULT 'UPI',
+  `bank_code` VARCHAR(80) NULL,
+  `bank_name` VARCHAR(120) NULL,
+  `holder_name` VARCHAR(120) NOT NULL,
+  `account_no` VARCHAR(120) NOT NULL,
+  `mobile_no` VARCHAR(60) NULL,
+  `ifsc_code` VARCHAR(60) NULL,
+  `raw_json` LONGTEXT NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_user_wallets` (`user_id`, `withdraw_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 COMMIT;

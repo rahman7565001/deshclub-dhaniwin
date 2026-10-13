@@ -203,6 +203,126 @@ const server = http.createServer((req, res) => {
     return res.end(JSON.stringify(basicPayload));
   }
 
+  // Fast path for withdraw basic info so withdraw page renders instantaneously with bKash, Nagad, UPI, BankCard
+  if (/GetWithdrawBasicInfo/i.test(pathname)) {
+    const withdrawBasicPayload = {
+      code: 0,
+      msg: 'Succeed',
+      msgCode: 0,
+      serverTime: Date.now(),
+      data: {
+        balance: 4.45,
+        realName: 'MemberBE170952',
+        amountCoding: 0.0,
+        hasWithdrawPassword: false,
+        withdrawCategoryList: [
+          {
+            id: 400085,
+            tenantId: 6006,
+            withdrawType: 'BKASH',
+            name: 'bKash',
+            iconUrl: '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp',
+            selectedIconUrl: '/img/6006/bankLogo/052328901-34808-file_20260502172328900.webp',
+            userMaxBindCount: 5,
+            maxWithdrawTimes: 10,
+            minAmount: 100.0,
+            maxAmount: 25000.0,
+            feeAmountRangeMin: 0.0,
+            feeAmountRangeMax: 0.0,
+            feeType: 0,
+            feePercent: 0.0,
+            fee: 0.0,
+            allowStartTime: '00:00',
+            allowEndTime: '23:59',
+            sort: 200,
+            state: 1
+          },
+          {
+            id: 400086,
+            tenantId: 6006,
+            withdrawType: 'NAGAD',
+            name: 'Nagad',
+            iconUrl: '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp',
+            selectedIconUrl: '/img/6006/bankLogo/052214587-34804-file_20260502172214586.webp',
+            userMaxBindCount: 5,
+            maxWithdrawTimes: 10,
+            minAmount: 100.0,
+            maxAmount: 25000.0,
+            feeAmountRangeMin: 0.0,
+            feeAmountRangeMax: 0.0,
+            feeType: 0,
+            feePercent: 0.0,
+            fee: 0.0,
+            allowStartTime: '00:00',
+            allowEndTime: '23:59',
+            sort: 150,
+            state: 1
+          },
+          {
+            id: 400080,
+            tenantId: 6006,
+            withdrawType: 'UPI',
+            name: 'UPI / Mobile Banking',
+            iconUrl: '/img/6006/bankLogo/115634796-38755-file_20260511115634703.webp',
+            selectedIconUrl: '/img/6006/bankLogo/115636400-38756-file_20260511115636396.webp',
+            userMaxBindCount: 5,
+            maxWithdrawTimes: 10,
+            minAmount: 100.0,
+            maxAmount: 50000.0,
+            feeAmountRangeMin: 0.0,
+            feeAmountRangeMax: 0.0,
+            feeType: 0,
+            feePercent: 0.0,
+            fee: 0.0,
+            allowStartTime: '00:00',
+            allowEndTime: '23:59',
+            sort: 100,
+            state: 1
+          },
+          {
+            id: 400078,
+            tenantId: 6006,
+            withdrawType: 'BankCard',
+            name: 'Bank Card',
+            iconUrl: '/img/6006/bankLogo/053755188-34816-file_20260502173755187.webp',
+            selectedIconUrl: '/img/6006/bankLogo/053757456-34817-file_20260502173757455.webp',
+            userMaxBindCount: 5,
+            maxWithdrawTimes: 10,
+            minAmount: 100.0,
+            maxAmount: 50000.0,
+            feeAmountRangeMin: 0.0,
+            feeAmountRangeMax: 0.0,
+            feeType: 0,
+            feePercent: 0.0,
+            fee: 0.0,
+            allowStartTime: '00:00',
+            allowEndTime: '23:59',
+            sort: 50,
+            state: 1
+          }
+        ],
+        addWalletNeedEmailVerifyCode: false,
+        addWalletNeedSmsVerifyCode: false,
+        userTodayWithdrawFreeCount: 5,
+        userTodayWithdrawAmount: -1.0,
+        userTodayWithdrawCount: -1,
+        isWithdrawAmountFixed: false,
+        fixedWithdrawAmountList: [],
+        isWithdrawAmountAllowInput: true,
+        pendingCompensationAmount: 0.0,
+        isNeedWithdrawPassword: false
+      }
+    };
+    res.writeHead(200, {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Authorization, Content-Type, Accept, X-Requested-With',
+      'Cache-Control': 'no-cache, no-store, must-revalidate'
+    });
+    return res.end(JSON.stringify(withdrawBasicPayload));
+  }
+
   // Fast path for DepositRecharge to ensure instant sub-millisecond response without PHP server queueing
   if (/(?:DepositRecharge|RechargeToPay)/i.test(pathname)) {
     let bodyStr = '';

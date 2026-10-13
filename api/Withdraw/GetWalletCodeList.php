@@ -15,6 +15,38 @@ if ($override) {
 $payload = [
         'data' => [
             [
+                'code' => 'BKASH',
+                'name' => 'bKash',
+            ],
+            [
+                'code' => 'NAGAD',
+                'name' => 'Nagad',
+            ],
+            [
+                'code' => 'ROCKET',
+                'name' => 'Rocket',
+            ],
+            [
+                'code' => 'UPAY',
+                'name' => 'Upay',
+            ],
+            [
+                'code' => 'DBBL',
+                'name' => 'Dutch-Bangla Bank (DBBL)',
+            ],
+            [
+                'code' => 'IBBL',
+                'name' => 'Islami Bank Bangladesh',
+            ],
+            [
+                'code' => 'BRAC',
+                'name' => 'BRAC Bank',
+            ],
+            [
+                'code' => 'CITY',
+                'name' => 'City Bank',
+            ],
+            [
                 'code' => 'INR10119',
                 'name' => 'PUNJAB NATIONAL BANK',
             ],

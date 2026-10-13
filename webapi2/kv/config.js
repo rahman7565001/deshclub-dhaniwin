@@ -24,7 +24,7 @@
                 "isOpenForgetPwdEmail": "0",
                 "isOpenForgetPwdSMS": "1",
                 "isInvitecode": "0",
-                "isOpenAddWithdrawSMS": "1",
+                "isOpenAddWithdrawSMS": "0",
                 "isOpenRegisterCaptcha": "1",
                 "isOpenUserGoogleVerifySMS": "0",
                 "isOpenUserOTPSMS": "0",

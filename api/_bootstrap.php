@@ -3578,79 +3578,243 @@ function api_recharge_record_payload(array $input): array
 function api_withdraw_basic_info_payload(): array
 {
     $user = api_primary_user();
-    $curr = api_user_currency($user)['currency'];
     $tenantId = (int) (api_config()['site']['tenant_id'] ?? 6006);
     $enabled = api_setting_bool('withdraw_enabled', true) ? 1 : 0;
 
-    if ($curr === 'BDT') {
-        $categories = [
-            [
-                'id' => 400085,
-                'tenantId' => $tenantId,
-                'withdrawType' => 'BKASH',
-                'name' => 'Bkash',
-                'iconUrl' => '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp',
-                'selectedIconUrl' => '/img/6006/bankLogo/052328901-34808-file_20260502172328900.webp',
-                'userMaxBindCount' => 1,
-                'maxWithdrawTimes' => 5,
-                'minAmount' => 100.0,
-                'maxAmount' => 25000.0,
-                'feeAmountRangeMin' => 0.0,
-                'feeAmountRangeMax' => 0.0,
-                'feeType' => 0,
-                'feePercent' => 0.0,
-                'fee' => 0.0,
-                'allowStartTime' => '00:00',
-                'allowEndTime' => '23:59',
-                'sort' => 200,
-                'state' => $enabled
-            ],
-            [
-                'id' => 400086,
-                'tenantId' => $tenantId,
-                'withdrawType' => 'NAGAD',
-                'name' => 'Nagad',
-                'iconUrl' => '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp',
-                'selectedIconUrl' => '/img/6006/bankLogo/052214587-34804-file_20260502172214586.webp',
-                'userMaxBindCount' => 1,
-                'maxWithdrawTimes' => 5,
-                'minAmount' => 100.0,
-                'maxAmount' => 25000.0,
-                'feeAmountRangeMin' => 0.0,
-                'feeAmountRangeMax' => 0.0,
-                'feeType' => 0,
-                'feePercent' => 0.0,
-                'fee' => 0.0,
-                'allowStartTime' => '00:00',
-                'allowEndTime' => '23:59',
-                'sort' => 150,
-                'state' => $enabled
-            ],
-        ];
-    } else {
-        $categories = [
-            ['id' => 400080, 'tenantId' => $tenantId, 'withdrawType' => 'UPI', 'name' => 'UPI', 'iconUrl' => '/img/6006/bankLogo/115634796-38755-file_20260511115634703.webp', 'selectedIconUrl' => '/img/6006/bankLogo/115636400-38756-file_20260511115636396.webp', 'userMaxBindCount' => 1, 'maxWithdrawTimes' => 5, 'minAmount' => 100.0, 'maxAmount' => 50000.0, 'feeAmountRangeMin' => 0.0, 'feeAmountRangeMax' => 0.0, 'feeType' => 0, 'feePercent' => 0.0, 'fee' => 0.0, 'allowStartTime' => '00:00', 'allowEndTime' => '23:59', 'sort' => 150, 'state' => $enabled],
-            ['id' => 400078, 'tenantId' => $tenantId, 'withdrawType' => 'BankCard', 'name' => 'BankCard', 'iconUrl' => '/img/6006/bankLogo/053755188-34816-file_20260502173755187.webp', 'selectedIconUrl' => '/img/6006/bankLogo/053757456-34817-file_20260502173757455.webp', 'userMaxBindCount' => 1, 'maxWithdrawTimes' => 5, 'minAmount' => 110.0, 'maxAmount' => 50000.0, 'feeAmountRangeMin' => 0.0, 'feeAmountRangeMax' => 0.0, 'feeType' => 0, 'feePercent' => 0.0, 'fee' => 0.0, 'allowStartTime' => '00:00', 'allowEndTime' => '23:59', 'sort' => 100, 'state' => $enabled],
-        ];
-    }
+    $categories = [
+        [
+            'id' => 400085,
+            'tenantId' => $tenantId,
+            'withdrawType' => 'BKASH',
+            'name' => 'bKash',
+            'iconUrl' => '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp',
+            'selectedIconUrl' => '/img/6006/bankLogo/052328901-34808-file_20260502172328900.webp',
+            'userMaxBindCount' => 5,
+            'maxWithdrawTimes' => 10,
+            'minAmount' => 100.0,
+            'maxAmount' => 25000.0,
+            'feeAmountRangeMin' => 0.0,
+            'feeAmountRangeMax' => 0.0,
+            'feeType' => 0,
+            'feePercent' => 0.0,
+            'fee' => 0.0,
+            'allowStartTime' => '00:00',
+            'allowEndTime' => '23:59',
+            'sort' => 200,
+            'state' => $enabled
+        ],
+        [
+            'id' => 400086,
+            'tenantId' => $tenantId,
+            'withdrawType' => 'NAGAD',
+            'name' => 'Nagad',
+            'iconUrl' => '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp',
+            'selectedIconUrl' => '/img/6006/bankLogo/052214587-34804-file_20260502172214586.webp',
+            'userMaxBindCount' => 5,
+            'maxWithdrawTimes' => 10,
+            'minAmount' => 100.0,
+            'maxAmount' => 25000.0,
+            'feeAmountRangeMin' => 0.0,
+            'feeAmountRangeMax' => 0.0,
+            'feeType' => 0,
+            'feePercent' => 0.0,
+            'fee' => 0.0,
+            'allowStartTime' => '00:00',
+            'allowEndTime' => '23:59',
+            'sort' => 150,
+            'state' => $enabled
+        ],
+        [
+            'id' => 400080,
+            'tenantId' => $tenantId,
+            'withdrawType' => 'UPI',
+            'name' => 'UPI / Mobile Banking',
+            'iconUrl' => '/img/6006/bankLogo/115634796-38755-file_20260511115634703.webp',
+            'selectedIconUrl' => '/img/6006/bankLogo/115636400-38756-file_20260511115636396.webp',
+            'userMaxBindCount' => 5,
+            'maxWithdrawTimes' => 10,
+            'minAmount' => 100.0,
+            'maxAmount' => 50000.0,
+            'feeAmountRangeMin' => 0.0,
+            'feeAmountRangeMax' => 0.0,
+            'feeType' => 0,
+            'feePercent' => 0.0,
+            'fee' => 0.0,
+            'allowStartTime' => '00:00',
+            'allowEndTime' => '23:59',
+            'sort' => 100,
+            'state' => $enabled
+        ],
+        [
+            'id' => 400078,
+            'tenantId' => $tenantId,
+            'withdrawType' => 'BankCard',
+            'name' => 'Bank Card',
+            'iconUrl' => '/img/6006/bankLogo/053755188-34816-file_20260502173755187.webp',
+            'selectedIconUrl' => '/img/6006/bankLogo/053757456-34817-file_20260502173757455.webp',
+            'userMaxBindCount' => 5,
+            'maxWithdrawTimes' => 10,
+            'minAmount' => 100.0,
+            'maxAmount' => 50000.0,
+            'feeAmountRangeMin' => 0.0,
+            'feeAmountRangeMax' => 0.0,
+            'feeType' => 0,
+            'feePercent' => 0.0,
+            'fee' => 0.0,
+            'allowStartTime' => '00:00',
+            'allowEndTime' => '23:59',
+            'sort' => 50,
+            'state' => $enabled
+        ]
+    ];
 
     return api_success([
         'balance' => (float) $user['wallet_balance'],
-        'realName' => '',
-        'amountCoding' => api_setting_float('amount_coding', 4.11),
+        'realName' => (string) ($user['nickname'] ?? ''),
+        'amountCoding' => 0.0,
         'hasWithdrawPassword' => false,
         'withdrawCategoryList' => $categories,
         'addWalletNeedEmailVerifyCode' => false,
-        'addWalletNeedSmsVerifyCode' => true,
-        'userTodayWithdrawFreeCount' => 0,
+        'addWalletNeedSmsVerifyCode' => false,
+        'userTodayWithdrawFreeCount' => 5,
         'userTodayWithdrawAmount' => -1.0,
         'userTodayWithdrawCount' => -1,
         'isWithdrawAmountFixed' => false,
         'fixedWithdrawAmountList' => [],
-        'isWithdrawAmountAllowInput' => false,
+        'isWithdrawAmountAllowInput' => true,
         'pendingCompensationAmount' => 0.0,
         'isNeedWithdrawPassword' => false,
     ]);
+}
+
+function api_user_withdraw_wallet_payload(array $input): array
+{
+    $pdo = api_pdo();
+    $user = api_primary_user();
+    $userId = (int) ($user['user_id'] ?? 599822);
+    $withdrawType = trim((string) api_param($input, 'withdrawType', ''));
+
+    if (!$pdo) {
+        return api_success([]);
+    }
+
+    try {
+        if ($withdrawType !== '') {
+            $stmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE user_id = ? AND withdraw_type = ? AND status = 1 ORDER BY id DESC");
+            $stmt->execute([$userId, $withdrawType]);
+            $rows = $stmt->fetchAll();
+            if (empty($rows)) {
+                $stmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE user_id = ? AND status = 1 ORDER BY id DESC");
+                $stmt->execute([$userId]);
+                $rows = $stmt->fetchAll();
+            }
+        } else {
+            $stmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE user_id = ? AND status = 1 ORDER BY id DESC");
+            $stmt->execute([$userId]);
+            $rows = $stmt->fetchAll();
+        }
+    } catch (Throwable $e) {
+        $rows = [];
+    }
+
+    $list = [];
+    foreach ($rows as $row) {
+        $wType = (string) $row['withdraw_type'];
+        $icon = '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp';
+        if (stripos($wType, 'nagad') !== false || stripos((string)$row['bank_code'], 'nagad') !== false) {
+            $icon = '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp';
+        } elseif (stripos($wType, 'bank') !== false) {
+            $icon = '/img/6006/bankLogo/053755188-34816-file_20260502173755187.webp';
+        }
+
+        $list[] = [
+            'walletId' => (int) $row['id'],
+            'id' => (int) $row['id'],
+            'userId' => (int) $row['user_id'],
+            'withdrawType' => $wType,
+            'bankCode' => (string) ($row['bank_code'] ?: $wType),
+            'bankName' => (string) ($row['bank_name'] ?: $wType),
+            'holderName' => (string) $row['holder_name'],
+            'accountNo' => (string) $row['account_no'],
+            'cardNo' => (string) $row['account_no'],
+            'mobileNo' => (string) ($row['mobile_no'] ?: $row['account_no']),
+            'ifscCode' => (string) ($row['ifsc_code'] ?? ''),
+            'iconUrl' => $icon,
+            'state' => 1,
+            'isDefault' => true,
+            'createTime' => strtotime($row['created_at'] ?? 'now') * 1000,
+        ];
+    }
+
+    return api_success($list);
+}
+
+function api_add_user_withdraw_wallet_payload(array $input): array
+{
+    $pdo = api_pdo();
+    $user = api_primary_user();
+    $userId = (int) ($user['user_id'] ?? 599822);
+
+    $withdrawType = (string) api_param($input, 'withdrawType', 'BKASH');
+    $holderName = trim((string) api_param($input, 'holderName', api_param($input, 'name', '')));
+    $accountNo = trim((string) api_param($input, 'accountNo', api_param($input, 'phone', api_param($input, 'accountNumber', ''))));
+    $accountNoConfirm = trim((string) api_param($input, 'accountNoConfirm', ''));
+    $bankCode = trim((string) api_param($input, 'bankCode', ''));
+    $mobileNo = trim((string) api_param($input, 'mobileNo', $accountNo));
+    $ifscCode = trim((string) api_param($input, 'ifscCode', ''));
+
+    if ($accountNoConfirm !== '' && $accountNo !== '' && $accountNo !== $accountNoConfirm) {
+        return api_error('Account number confirmation does not match', 400, -1);
+    }
+
+    if ($accountNo === '') {
+        return api_error('Please enter account / phone number', 400, -1);
+    }
+    if ($holderName === '') {
+        $holderName = (string) ($user['nickname'] ?: 'Account Holder');
+    }
+
+    $bankName = $withdrawType;
+    if (stripos($withdrawType, 'bkash') !== false || stripos($bankCode, 'bkash') !== false) {
+        $bankName = 'bKash';
+    } elseif (stripos($withdrawType, 'nagad') !== false || stripos($bankCode, 'nagad') !== false) {
+        $bankName = 'Nagad';
+    } elseif (stripos($bankCode, 'rocket') !== false) {
+        $bankName = 'Rocket';
+    } elseif (stripos($withdrawType, 'upi') !== false) {
+        $bankName = 'bKash / Nagad (UPI)';
+    }
+
+    if ($pdo) {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO user_withdraw_wallets (user_id, withdraw_type, bank_code, bank_name, holder_name, account_no, mobile_no, ifsc_code, raw_json, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+            $stmt->execute([
+                $userId,
+                $withdrawType,
+                $bankCode ?: $withdrawType,
+                $bankName,
+                $holderName,
+                $accountNo,
+                $mobileNo,
+                $ifscCode,
+                json_encode($input['params'] ?? [], JSON_UNESCAPED_UNICODE)
+            ]);
+            $walletId = (int) $pdo->lastInsertId();
+        } catch (Throwable $e) {
+            return api_error('Failed to bind withdrawal account: ' . $e->getMessage(), 500, -1);
+        }
+    } else {
+        $walletId = 1;
+    }
+
+    api_audit('add_withdraw_wallet', (string) $walletId, [
+        'user_id' => $userId,
+        'withdraw_type' => $withdrawType,
+        'holder_name' => $holderName,
+        'account_no' => $accountNo,
+    ]);
+
+    return api_success(true);
 }
 
 function api_withdraw_submit_payload(array $input): array
@@ -4282,10 +4446,16 @@ function api_explicit_dynamic_response(string $endpoint, array $input): ?array
     if ($e === 'withdraw/getwithdrawbasicinfo') {
         return api_withdraw_basic_info_payload();
     }
+    if ($e === 'withdraw/getuserwithdrawwallet') {
+        return api_user_withdraw_wallet_payload($input);
+    }
+    if ($e === 'withdraw/adduserwithdrawwallet') {
+        return api_add_user_withdraw_wallet_payload($input);
+    }
     if ($e === 'withdraw/getwithdrawhistory' || $e === 'withdraw/getwithdrawrecordpage') {
         return api_withdraw_history_payload($input);
     }
-    if ($e === 'withdraw/sumitwithdraw' || $e === 'withdraw/submitwithdraw' || $e === 'withdraw/addwithdraworder') {
+    if ($e === 'withdraw/withdrawapply' || $e === 'withdraw/sumitwithdraw' || $e === 'withdraw/submitwithdraw' || $e === 'withdraw/addwithdraworder') {
         return api_withdraw_submit_payload($input);
     }
     return null;

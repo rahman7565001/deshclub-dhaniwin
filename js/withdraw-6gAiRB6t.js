@@ -285,6 +285,70 @@ const Te = () => {
                 }
             }]
         },
+        BKASH: {
+            title: "bKash",
+            list_title: "bKash",
+            tip: e("t71"),
+            list: [{
+                title: "",
+                modelKey: "holderName",
+                rules: [{
+                    required: !0,
+                    message: e("t146")
+                }],
+                props: {
+                    placeholder: e("t72"),
+                    iconName: "icon_user"
+                },
+                OnInput: a => {
+                    const t = /[0-9`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、\f\n\r\t\v\d]/g;
+                    return a.target.value.replace(t, "").replace(/ {2,}/g, " ")
+                }
+            }, {
+                title: "",
+                modelKey: "accountNo",
+                rules: [{
+                    validator: a => a ? !0 : new Error(e("t146")),
+                    message: e("t146")
+                }],
+                props: {
+                    placeholder: e("t74"),
+                    iconName: "icon_phone"
+                }
+            }]
+        },
+        NAGAD: {
+            title: "Nagad",
+            list_title: "Nagad",
+            tip: e("t71"),
+            list: [{
+                title: "",
+                modelKey: "holderName",
+                rules: [{
+                    required: !0,
+                    message: e("t146")
+                }],
+                props: {
+                    placeholder: e("t72"),
+                    iconName: "icon_user"
+                },
+                OnInput: a => {
+                    const t = /[0-9`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘'，。、\f\n\r\t\v\d]/g;
+                    return a.target.value.replace(t, "").replace(/ {2,}/g, " ")
+                }
+            }, {
+                title: "",
+                modelKey: "accountNo",
+                rules: [{
+                    validator: a => a ? !0 : new Error(e("t146")),
+                    message: e("t146")
+                }],
+                props: {
+                    placeholder: e("t74"),
+                    iconName: "icon_phone"
+                }
+            }]
+        },
         UPI: {
             title: e("t156"),
             list_title: e("t157"),
