@@ -126,6 +126,8 @@ $validTabs = [
     'wingo_30s', 'wingo_1m', 'wingo_3m', 'wingo_5m',
     'k3_1m', 'k3_3m', 'k3_5m', 'k3_10m',
     'd5_1m', 'd5_3m', 'd5_5m', 'd5_10m',
+    'trxwingo_1m', 'trxwingo_3m', 'trxwingo_5m', 'trxwingo_10m',
+    'motorace_1m', 'motorace_3m', 'motorace_5m', 'motorace_10m',
     'add_upi', 'usdt_rate', 'add_usdt', 'add_upi_image', 'add_usdt_image', 'upi_withdraw', 'withdraw_sent', 'withdraw_reject',
     'support_deposit', 'support_withdraw', 'support_ifsc', 'support_bank', 'support_game',
     'bonus_manage', 'admin_password', 'check_same_ip', 'site_maintenance', 'banned_users', 'daily_salary', 'gift_code', 'add_admin', 'demo_user', 'agent_user'
@@ -162,6 +164,16 @@ $requiredPermissions = [
     'd5_3m' => 'game_control',
     'd5_5m' => 'game_control',
     'd5_10m' => 'game_control',
+    // TrxWinGo
+    'trxwingo_1m' => 'game_control',
+    'trxwingo_3m' => 'game_control',
+    'trxwingo_5m' => 'game_control',
+    'trxwingo_10m' => 'game_control',
+    // Moto Racing
+    'motorace_1m' => 'game_control',
+    'motorace_3m' => 'game_control',
+    'motorace_5m' => 'game_control',
+    'motorace_10m' => 'game_control',
     // Finance
     'add_upi' => 'settings',
     'usdt_rate' => 'settings',
@@ -191,6 +203,279 @@ $requiredPermissions = [
 ];
 
 $hasAccess = admin_has_permission($requiredPermissions[$tab]);
+
+// Full Metadata Registry for All Games on Deshclub
+$allGameMeta = [
+    // WinGo (Color & Number Prediction)
+    'WinGo_30S' => [
+        'tab' => 'wingo_30s',
+        'name_bn' => 'WinGo ৩০ সেকেন্ড',
+        'name_en' => 'WinGo 30s',
+        'category' => 'কালার ও সংখ্যা প্রেডিকশন',
+        'category_badge' => 'Color & Number',
+        'badge_class' => 'bg-warning text-dark',
+        'duration' => '30s',
+        'duration_bn' => '৩০ সেকেন্ড',
+        'desc' => '৩০ সেকেন্ড কাউন্টডাউনে লাল, সবুজ, বেগুনি কালার এবং ০-৯ সংখ্যার প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-gamepad text-gold',
+    ],
+    'WinGo_1M' => [
+        'tab' => 'wingo_1m',
+        'name_bn' => 'WinGo ১ মিনিট',
+        'name_en' => 'WinGo 1M',
+        'category' => 'কালার ও সংখ্যা প্রেডিকশন',
+        'category_badge' => 'Color & Number',
+        'badge_class' => 'bg-warning text-dark',
+        'duration' => '1M',
+        'duration_bn' => '১ মিনিট',
+        'desc' => '১ মিনিট কাউন্টডাউনে লাল, সবুজ, বেগুনি কালার এবং ০-৯ সংখ্যার প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-gamepad text-gold',
+    ],
+    'WinGo_3M' => [
+        'tab' => 'wingo_3m',
+        'name_bn' => 'WinGo ৩ মিনিট',
+        'name_en' => 'WinGo 3M',
+        'category' => 'কালার ও সংখ্যা প্রেডিকশন',
+        'category_badge' => 'Color & Number',
+        'badge_class' => 'bg-warning text-dark',
+        'duration' => '3M',
+        'duration_bn' => '৩ মিনিট',
+        'desc' => '৩ মিনিট কাউন্টডাউনে লাল, সবুজ, বেগুনি কালার এবং ০-৯ সংখ্যার প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-gamepad text-gold',
+    ],
+    'WinGo_5M' => [
+        'tab' => 'wingo_5m',
+        'name_bn' => 'WinGo ৫ মিনিট',
+        'name_en' => 'WinGo 5M',
+        'category' => 'কালার ও সংখ্যা প্রেডিকশন',
+        'category_badge' => 'Color & Number',
+        'badge_class' => 'bg-warning text-dark',
+        'duration' => '5M',
+        'duration_bn' => '৫ মিনিট',
+        'desc' => '৫ মিনিট কাউন্টডাউনে লাল, সবুজ, বেগুনি কালার এবং ০-৯ সংখ্যার প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-gamepad text-gold',
+    ],
+
+    // K3 (Dice Prediction)
+    'K3_1M' => [
+        'tab' => 'k3_1m',
+        'name_bn' => 'K3 ১ মিনিট',
+        'name_en' => 'K3 1M',
+        'category' => 'ডাইস / ছক্কার ড্র লটারি',
+        'category_badge' => 'Dice / ছক্কা',
+        'badge_class' => 'bg-primary',
+        'duration' => '1M',
+        'duration_bn' => '১ মিনিট',
+        'desc' => '১ মিনিটে ৩টি ছক্কার যোগফল (Sum 3-18), Big/Small, Odd/Even ও ট্রিপল ডাইস কম্বিনেশন।',
+        'override_hint' => 'যেমন: Sum 3-18, Big, Small, 111, 222',
+        'icon' => 'fas fa-dice text-blue',
+    ],
+    'K3_3M' => [
+        'tab' => 'k3_3m',
+        'name_bn' => 'K3 ৩ মিনিট',
+        'name_en' => 'K3 3M',
+        'category' => 'ডাইস / ছক্কার ড্র লটারি',
+        'category_badge' => 'Dice / ছক্কা',
+        'badge_class' => 'bg-primary',
+        'duration' => '3M',
+        'duration_bn' => '৩ মিনিট',
+        'desc' => '৩ মিনিটে ৩টি ছক্কার যোগফল (Sum 3-18), Big/Small, Odd/Even ও ট্রিপল ডাইস কম্বিনেশন।',
+        'override_hint' => 'যেমন: Sum 3-18, Big, Small, 111, 222',
+        'icon' => 'fas fa-dice text-blue',
+    ],
+    'K3_5M' => [
+        'tab' => 'k3_5m',
+        'name_bn' => 'K3 ৫ মিনিট',
+        'name_en' => 'K3 5M',
+        'category' => 'ডাইস / ছক্কার ড্র লটারি',
+        'category_badge' => 'Dice / ছক্কা',
+        'badge_class' => 'bg-primary',
+        'duration' => '5M',
+        'duration_bn' => '৫ মিনিট',
+        'desc' => '৫ মিনিটে ৩টি ছক্কার যোগফল (Sum 3-18), Big/Small, Odd/Even ও ট্রিপল ডাইস কম্বিনেশন।',
+        'override_hint' => 'যেমন: Sum 3-18, Big, Small, 111, 222',
+        'icon' => 'fas fa-dice text-blue',
+    ],
+    'K3_10M' => [
+        'tab' => 'k3_10m',
+        'name_bn' => 'K3 ১০ মিনিট',
+        'name_en' => 'K3 10M',
+        'category' => 'ডাইস / ছক্কার ড্র লটারি',
+        'category_badge' => 'Dice / ছক্কা',
+        'badge_class' => 'bg-primary',
+        'duration' => '10M',
+        'duration_bn' => '১০ মিনিট',
+        'desc' => '১০ মিনিটে ৩টি ছক্কার যোগফল (Sum 3-18), Big/Small, Odd/Even ও ট্রিপল ডাইস কম্বিনেশন।',
+        'override_hint' => 'যেমন: Sum 3-18, Big, Small, 111, 222',
+        'icon' => 'fas fa-dice text-blue',
+    ],
+
+    // 5D (5-Digit Lottery)
+    'D5_1M' => [
+        'tab' => 'd5_1m',
+        'name_bn' => '5D ১ মিনিট',
+        'name_en' => '5D 1M',
+        'category' => 'পাঁচ ডিজিট লটারি',
+        'category_badge' => '5D Lottery',
+        'badge_class' => 'bg-purple',
+        'duration' => '1M',
+        'duration_bn' => '১ মিনিট',
+        'desc' => '১ মিনিটে A, B, C, D, E মোট ৫টি বলের ০-৯ নম্বর ও মোট যোগফলের প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 5 Digits যেমন 12345, Big, Small',
+        'icon' => 'fas fa-gem text-purple',
+    ],
+    'D5_3M' => [
+        'tab' => 'd5_3m',
+        'name_bn' => '5D ৩ মিনিট',
+        'name_en' => '5D 3M',
+        'category' => 'পাঁচ ডিজিট লটারি',
+        'category_badge' => '5D Lottery',
+        'badge_class' => 'bg-purple',
+        'duration' => '3M',
+        'duration_bn' => '৩ মিনিট',
+        'desc' => '৩ মিনিটে A, B, C, D, E মোট ৫টি বলের ০-৯ নম্বর ও মোট যোগফলের প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 5 Digits যেমন 12345, Big, Small',
+        'icon' => 'fas fa-gem text-purple',
+    ],
+    'D5_5M' => [
+        'tab' => 'd5_5m',
+        'name_bn' => '5D ৫ মিনিট',
+        'name_en' => '5D 5M',
+        'category' => 'পাঁচ ডিজিট লটারি',
+        'category_badge' => '5D Lottery',
+        'badge_class' => 'bg-purple',
+        'duration' => '5M',
+        'duration_bn' => '৫ মিনিট',
+        'desc' => '৫ মিনিটে A, B, C, D, E মোট ৫টি বলের ০-৯ নম্বর ও মোট যোগফলের প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 5 Digits যেমন 12345, Big, Small',
+        'icon' => 'fas fa-gem text-purple',
+    ],
+    'D5_10M' => [
+        'tab' => 'd5_10m',
+        'name_bn' => '5D ১০ মিনিট',
+        'name_en' => '5D 10M',
+        'category' => 'পাঁচ ডিজিট লটারি',
+        'category_badge' => '5D Lottery',
+        'badge_class' => 'bg-purple',
+        'duration' => '10M',
+        'duration_bn' => '১০ মিনিট',
+        'desc' => '১০ মিনিটে A, B, C, D, E মোট ৫টি বলের ০-৯ নম্বর ও মোট যোগফলের প্রেডিকশন ড্র।',
+        'override_hint' => 'যেমন: 5 Digits যেমন 12345, Big, Small',
+        'icon' => 'fas fa-gem text-purple',
+    ],
+
+    // TrxWinGo (Tron Blockchain)
+    'TrxWinGo_1M' => [
+        'tab' => 'trxwingo_1m',
+        'name_bn' => 'TrxWinGo ১ মিনিট',
+        'name_en' => 'TrxWinGo 1M',
+        'category' => 'TRX ব্লকচেইন কালার',
+        'category_badge' => 'Tron Blockchain',
+        'badge_class' => 'bg-info text-dark',
+        'duration' => '1M',
+        'duration_bn' => '১ মিনিট',
+        'desc' => '১ মিনিট Tron ব্লকচেইনের রিয়েল ব্লক হ্যাশ ভিত্তিক রেড, গ্রিন ও সংখ্যার ক্রিপ্টো ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-coins text-warning',
+    ],
+    'TrxWinGo_3M' => [
+        'tab' => 'trxwingo_3m',
+        'name_bn' => 'TrxWinGo ৩ মিনিট',
+        'name_en' => 'TrxWinGo 3M',
+        'category' => 'TRX ব্লকচেইন কালার',
+        'category_badge' => 'Tron Blockchain',
+        'badge_class' => 'bg-info text-dark',
+        'duration' => '3M',
+        'duration_bn' => '৩ মিনিট',
+        'desc' => '৩ মিনিট Tron ব্লকচেইনের রিয়েল ব্লক হ্যাশ ভিত্তিক রেড, গ্রিন ও সংখ্যার ক্রিপ্টো ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-coins text-warning',
+    ],
+    'TrxWinGo_5M' => [
+        'tab' => 'trxwingo_5m',
+        'name_bn' => 'TrxWinGo ৫ মিনিট',
+        'name_en' => 'TrxWinGo 5M',
+        'category' => 'TRX ব্লকচেইন কালার',
+        'category_badge' => 'Tron Blockchain',
+        'badge_class' => 'bg-info text-dark',
+        'duration' => '5M',
+        'duration_bn' => '৫ মিনিট',
+        'desc' => '৫ মিনিট Tron ব্লকচেইনের রিয়েল ব্লক হ্যাশ ভিত্তিক রেড, গ্রিন ও সংখ্যার ক্রিপ্টো ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-coins text-warning',
+    ],
+    'TrxWinGo_10M' => [
+        'tab' => 'trxwingo_10m',
+        'name_bn' => 'TrxWinGo ১০ মিনিট',
+        'name_en' => 'TrxWinGo 10M',
+        'category' => 'TRX ব্লকচেইন কালার',
+        'category_badge' => 'Tron Blockchain',
+        'badge_class' => 'bg-info text-dark',
+        'duration' => '10M',
+        'duration_bn' => '১০ মিনিট',
+        'desc' => '১০ মিনিট Tron ব্লকচেইনের রিয়েল ব্লক হ্যাশ ভিত্তিক রেড, গ্রিন ও সংখ্যার ক্রিপ্টো ড্র।',
+        'override_hint' => 'যেমন: 0-9, Green, Red, Violet, Big, Small',
+        'icon' => 'fas fa-coins text-warning',
+    ],
+
+    // Moto Racing (Speed Motor Racing)
+    'MotoRace_1M' => [
+        'tab' => 'motorace_1m',
+        'name_bn' => 'Moto Racing ১ মিনিট',
+        'name_en' => 'Moto Racing 1M',
+        'category' => 'মোটর বাইক স্পিড রেস',
+        'category_badge' => 'Moto Racing',
+        'badge_class' => 'bg-danger',
+        'duration' => '1M',
+        'duration_bn' => '১ মিনিট',
+        'desc' => '১ মিনিটে ১০টি হাই-স্পিড মোটরবাইকের চ্যাম্পিয়ন পজিশন ও রেস র‍্যাংক প্রেডিকশন।',
+        'override_hint' => 'যেমন: 1, 2, 3.. 10 (বাইক নম্বর)',
+        'icon' => 'fas fa-motorcycle text-danger',
+    ],
+    'MotoRace_3M' => [
+        'tab' => 'motorace_3m',
+        'name_bn' => 'Moto Racing ৩ মিনিট',
+        'name_en' => 'Moto Racing 3M',
+        'category' => 'মোটর বাইক স্পিড রেস',
+        'category_badge' => 'Moto Racing',
+        'badge_class' => 'bg-danger',
+        'duration' => '3M',
+        'duration_bn' => '৩ মিনিট',
+        'desc' => '৩ মিনিটে ১০টি হাই-স্পিড মোটরবাইকের চ্যাম্পিয়ন পজিশন ও রেস র‍্যাংক প্রেডিকশন।',
+        'override_hint' => 'যেমন: 1, 2, 3.. 10 (বাইক নম্বর)',
+        'icon' => 'fas fa-motorcycle text-danger',
+    ],
+    'MotoRace_5M' => [
+        'tab' => 'motorace_5m',
+        'name_bn' => 'Moto Racing ৫ মিনিট',
+        'name_en' => 'Moto Racing 5M',
+        'category' => 'মোটর বাইক স্পিড রেস',
+        'category_badge' => 'Moto Racing',
+        'badge_class' => 'bg-danger',
+        'duration' => '5M',
+        'duration_bn' => '৫ মিনিট',
+        'desc' => '৫ মিনিটে ১০টি হাই-স্পিড মোটরবাইকের চ্যাম্পিয়ন পজিশন ও রেস র‍্যাংক প্রেডিকশন।',
+        'override_hint' => 'যেমন: 1, 2, 3.. 10 (বাইক নম্বর)',
+        'icon' => 'fas fa-motorcycle text-danger',
+    ],
+    'MotoRace_10M' => [
+        'tab' => 'motorace_10m',
+        'name_bn' => 'Moto Racing ১০ মিনিট',
+        'name_en' => 'Moto Racing 10M',
+        'category' => 'মোটর বাইক স্পিড রেস',
+        'category_badge' => 'Moto Racing',
+        'badge_class' => 'bg-danger',
+        'duration' => '10M',
+        'duration_bn' => '১০ মিনিট',
+        'desc' => '১০ মিনিটে ১০টি হাই-স্পিড মোটরবাইকের চ্যাম্পিয়ন পজিশন ও রেস র‍্যাংক প্রেডিকশন।',
+        'override_hint' => 'যেমন: 1, 2, 3.. 10 (বাইক নম্বর)',
+        'icon' => 'fas fa-motorcycle text-danger',
+    ],
+];
 
 // Include Header & Viewport Wrapper
 ?>
@@ -347,8 +632,20 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
 
         <?php if ($tab === 'live'): 
           $liveGames = [];
+          $aviatorStats = ['bets' => 0, 'stakes' => 0.0, 'payouts' => 0.0, 'override' => 'Automatic (RNG)'];
           $pdo = api_pdo();
           if ($pdo) {
+              $avBets = (int)$pdo->query("SELECT COUNT(*) FROM aviator_bets")->fetchColumn();
+              $avStakes = (float)$pdo->query("SELECT SUM(stake_amount) FROM aviator_bets")->fetchColumn();
+              $avPayouts = (float)$pdo->query("SELECT SUM(payout_amount) FROM aviator_bets WHERE status = 'won'")->fetchColumn();
+              $avOverride = $pdo->query("SELECT value FROM aviator_settings WHERE key = 'next_crash_multiplier'")->fetchColumn();
+              $aviatorStats = [
+                  'bets' => $avBets,
+                  'stakes' => $avStakes,
+                  'payouts' => $avPayouts,
+                  'override' => (!empty($avOverride) && is_numeric($avOverride)) ? $avOverride . 'x' : 'Auto (RNG)',
+              ];
+
               foreach (api_lottery_game_list() as $game) {
                   $code = $game['gameCode'];
                   $issue = api_lottery_issue_data($code);
@@ -369,23 +666,119 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
           }
         ?>
           <div id="live-view">
-            <h2 class="fw-bold mb-4"><i class="fas fa-play-circle text-gold me-2"></i> Live Game Visualizer</h2>
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+              <div>
+                <h2 class="fw-bold mb-1"><i class="fas fa-tower-broadcast text-danger me-2"></i> গেম কন্ট্রোল হাব - ২১ টি লাইভ গেম (Game Control Hub)</h2>
+                <p class="text-secondary mb-0">ওয়েবসাইটের মোট ২১টি গেমের লাইভ স্ট্যাটাস, চলতি রাউন্ড এবং বাজি পর্যবেক্ষণ ও ফলাফল নিয়ন্ত্রণ (Force Outcome) করুন।</p>
+              </div>
+              <span class="badge bg-gold text-dark fs-6 py-2 px-3 fw-bold">
+                <i class="fas fa-gamepad me-1"></i> মোট ২১ টি অ্যাক্টিভ গেম
+              </span>
+            </div>
+
             <div class="row g-4">
-              <?php foreach ($liveGames as $item): ?>
-                <div class="col-xl-4 col-md-6">
-                  <div class="glass-panel p-4 h-100">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+              <!-- 1. AVIATOR CRASH ENGINE CARD -->
+              <div class="col-xl-4 col-md-6">
+                <div class="glass-panel p-4 h-100 border" style="border-color: rgba(239, 68, 68, 0.4) !important; background: rgba(26, 17, 24, 0.6);">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="d-flex align-items-center gap-2">
+                      <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(239,68,68,0.2); display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-plane text-danger fs-5"></i>
+                      </div>
                       <div>
-                        <h5 class="fw-bold mb-0 text-white"><?php echo htmlspecialchars($item['game']['gameCode']); ?></h5>
-                        <span class="text-secondary small"><?php echo htmlspecialchars($item['game']['lotteryCode']); ?> | <?php echo $item['issue']['intervalMinute'] * 60; ?>s interval</span>
+                        <h5 class="fw-bold mb-0 text-white">Aviator (এভিয়েটর ক্র্যাশ গেম)</h5>
+                        <span class="badge bg-danger text-white mt-1" style="font-size: 10px;">Real-Time Crash Game</span>
+                      </div>
+                    </div>
+                    <span class="pulse-green"></span>
+                  </div>
+                  
+                  <p class="text-secondary small mb-3" style="font-size: 12px; line-height: 1.4;">
+                    স্প্রাইব স্টাইল রিয়েল-টাইম এয়ারপ্লেন ফ্লাইট ও ক্র্যাশ মাল্টিপ্লায়ার কন্ট্রোল ইঞ্জিন।
+                  </p>
+
+                  <div class="p-3 mb-3 text-center border rounded" style="background: rgba(7,9,19,0.6); border-color: rgba(239,68,68,0.3) !important;">
+                    <span class="text-secondary small d-block">NEXT ROUND CRASH POINT</span>
+                    <strong class="fs-4 text-warning"><?php echo htmlspecialchars($aviatorStats['override']); ?></strong>
+                    <span class="text-muted d-block small mt-1">Status: Live Engine Active</span>
+                  </div>
+
+                  <div class="row g-2 mb-3 text-center">
+                    <div class="col-4 border-end" style="border-color: var(--border-light) !important;">
+                      <span class="text-muted small">Total Bets</span>
+                      <div class="fw-bold text-white"><?php echo number_format($aviatorStats['bets']); ?></div>
+                    </div>
+                    <div class="col-4 border-end" style="border-color: var(--border-light) !important;">
+                      <span class="text-muted small">Total Pool</span>
+                      <div class="fw-bold text-success">৳<?php echo number_format($aviatorStats['stakes'], 2); ?></div>
+                    </div>
+                    <div class="col-4">
+                      <span class="text-muted small">Payouts</span>
+                      <div class="fw-bold text-warning">৳<?php echo number_format($aviatorStats['payouts'], 2); ?></div>
+                    </div>
+                  </div>
+
+                  <form action="api.php" method="post" class="mb-2">
+                    <input type="hidden" name="action" value="set_aviator_multiplier">
+                    <input type="hidden" name="csrf" value="<?php echo $csrfToken; ?>">
+                    <div class="input-group">
+                      <input name="multiplier" step="0.01" min="1.00" class="form-control form-control-premium" placeholder="Next Crash (e.g. 1.50, 5.00)">
+                      <button type="submit" class="btn btn-danger fw-bold">Set Crash</button>
+                    </div>
+                  </form>
+                  <a href="/admin/aviator.php" class="btn btn-sm btn-outline-danger w-100">
+                    <i class="fas fa-sliders-h me-1"></i> Open Aviator Full Desk
+                  </a>
+                </div>
+              </div>
+
+              <!-- 20 LOTTERY PREDICTION GAMES CARDS -->
+              <?php foreach ($liveGames as $item): 
+                $code = $item['game']['gameCode'];
+                $meta = $allGameMeta[$code] ?? [
+                    'name_bn' => str_replace('_', ' ', $code),
+                    'name_en' => $code,
+                    'category' => 'Lottery Prediction',
+                    'category_badge' => 'Lottery',
+                    'badge_class' => 'bg-secondary',
+                    'duration' => '1M',
+                    'duration_bn' => '১ মিনিট',
+                    'desc' => 'অনলাইন প্রেডিকশন ড্র লটারি গেম।',
+                    'override_hint' => 'e.g. 5, Green, Big',
+                    'icon' => 'fas fa-gamepad text-gold',
+                    'tab' => 'dashboard'
+                ];
+              ?>
+                <div class="col-xl-4 col-md-6">
+                  <div class="glass-panel p-4 h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <div class="d-flex align-items-center gap-2">
+                        <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+                          <i class="<?php echo htmlspecialchars($meta['icon']); ?> fs-5"></i>
+                        </div>
+                        <div>
+                          <h5 class="fw-bold mb-0 text-white"><?php echo htmlspecialchars($meta['name_bn']); ?></h5>
+                          <span class="text-secondary small"><?php echo htmlspecialchars($meta['name_en']); ?></span>
+                        </div>
                       </div>
                       <span class="pulse-green"></span>
                     </div>
-                    <div class="p-3 mb-3 text-center border rounded" style="background: rgba(7,9,19,0.5); border-color: var(--border-light) !important;">
-                      <span class="text-secondary small d-block">CURRENT ACTIVE PERIOD</span>
-                      <strong class="fs-4 text-gold"><?php echo htmlspecialchars($item['issue']['issueNumber']); ?></strong>
-                      <span class="text-muted d-block small mt-1">Countdown: <?php echo $item['issue']['countdown']; ?>s</span>
+
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                      <span class="badge <?php echo $meta['badge_class']; ?>" style="font-size: 10px;"><?php echo htmlspecialchars($meta['category_badge']); ?></span>
+                      <span class="badge bg-secondary" style="font-size: 10px;"><?php echo htmlspecialchars($meta['duration_bn']); ?> ড্র</span>
                     </div>
+
+                    <p class="text-secondary small mb-3" style="font-size: 12px; line-height: 1.4;">
+                      <?php echo htmlspecialchars($meta['desc']); ?>
+                    </p>
+
+                    <div class="p-3 mb-3 text-center border rounded mt-auto" style="background: rgba(7,9,19,0.5); border-color: var(--border-light) !important;">
+                      <span class="text-secondary small d-block">CURRENT ACTIVE PERIOD (চলতি পিরিয়ড)</span>
+                      <strong class="fs-4 text-gold"><?php echo htmlspecialchars($item['issue']['issueNumber']); ?></strong>
+                      <span class="text-muted d-block small mt-1">কাউন্টডাউন: <?php echo $item['issue']['countdown']; ?>s</span>
+                    </div>
+
                     <div class="row g-2 mb-3 text-center">
                       <div class="col-4 border-end" style="border-color: var(--border-light) !important;">
                         <span class="text-muted small">Bets</span>
@@ -400,16 +793,21 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                         <div class="fw-bold text-warning">৳<?php echo number_format((float)$item['stats']['win_total'], 2); ?></div>
                       </div>
                     </div>
-                    <form action="api.php" method="post">
+
+                    <form action="api.php" method="post" class="mb-2">
                       <input type="hidden" name="action" value="add_to_queue">
                       <input type="hidden" name="csrf" value="<?php echo $csrfToken; ?>">
                       <input type="hidden" name="game_code" value="<?php echo htmlspecialchars($item['game']['gameCode']); ?>">
                       <input type="hidden" name="issue_number" value="<?php echo htmlspecialchars($item['issue']['issueNumber']); ?>">
                       <div class="input-group">
-                        <input name="premium" class="form-control form-control-premium" placeholder="Force premium outcome">
+                        <input name="premium" class="form-control form-control-premium" placeholder="<?php echo htmlspecialchars($meta['override_hint']); ?>">
                         <button type="submit" class="btn btn-premium">Force</button>
                       </div>
                     </form>
+
+                    <a href="/admin/?tab=<?php echo htmlspecialchars($meta['tab']); ?>" class="btn btn-sm btn-outline-gold w-100">
+                      <i class="fas fa-sliders-h me-1"></i> কন্ট্রোল ডেস্কে যান (Open Desk)
+                    </a>
                   </div>
                 </div>
               <?php endforeach; ?>
@@ -1171,53 +1569,97 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
 
         <!-- NEW COLLAPSIBLE TABS VIEWPORTS -->
 
-        <!-- 1. Generic Game Manager View -->
+        <!-- 1. Dedicated Game Manager View for all 20 Lottery Games -->
         <?php 
-          $isGameTab = (strpos($tab, 'wingo_') === 0 || strpos($tab, 'k3_') === 0 || strpos($tab, 'd5_') === 0);
+          $isGameTab = (
+              strpos($tab, 'wingo_') === 0 || 
+              strpos($tab, 'k3_') === 0 || 
+              strpos($tab, 'd5_') === 0 || 
+              strpos($tab, 'trxwingo_') === 0 || 
+              strpos($tab, 'motorace_') === 0
+          );
           if ($isGameTab): 
             $parts = explode('_', $tab);
-            $base = $parts[0] === 'd5' ? 'D5' : ($parts[0] === 'k3' ? 'K3' : 'WinGo');
+            $prefix = strtolower($parts[0]);
+            $base = match($prefix) {
+                'd5' => 'D5',
+                'k3' => 'K3',
+                'trxwingo' => 'TrxWinGo',
+                'motorace' => 'MotoRace',
+                default => 'WinGo'
+            };
             $interval = strtoupper($parts[1]);
             $gameCode = $base . '_' . $interval;
+            $meta = $allGameMeta[$gameCode] ?? [
+                'name_bn' => str_replace('_', ' ', $gameCode),
+                'name_en' => $gameCode,
+                'category' => 'Lottery Prediction',
+                'category_badge' => 'Lottery',
+                'badge_class' => 'bg-primary',
+                'duration' => $interval,
+                'duration_bn' => $interval,
+                'desc' => 'রিয়েল-টাইম অনলাইন প্রেডিকশন ড্র লটারি গেম।',
+                'override_hint' => 'যেমন: 5, Green, Big',
+                'icon' => 'fas fa-gamepad text-gold',
+            ];
         ?>
           <div id="game-manager-view" data-game-code="<?php echo htmlspecialchars($gameCode); ?>">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold m-0"><i class="fas fa-gamepad text-gold me-2"></i> <?php echo htmlspecialchars(str_replace('_', ' ', $gameCode)); ?> Control Desk</h2>
-                <span class="badge bg-danger fs-6 py-2 px-3"><span id="game-timer">00:00</span></span>
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge <?php echo $meta['badge_class']; ?>"><?php echo htmlspecialchars($meta['category_badge']); ?></span>
+                        <span class="badge bg-secondary"><?php echo htmlspecialchars($meta['duration_bn']); ?> ড্র</span>
+                        <span class="badge bg-dark border border-secondary text-gold">Code: <?php echo htmlspecialchars($gameCode); ?></span>
+                    </div>
+                    <h2 class="fw-bold m-0 text-white">
+                        <i class="<?php echo htmlspecialchars($meta['icon']); ?> me-2"></i>
+                        <?php echo htmlspecialchars($meta['name_bn']); ?> (<?php echo htmlspecialchars($meta['name_en']); ?>) - কন্ট্রোল ডেস্ক
+                    </h2>
+                    <p class="text-secondary small mt-1 mb-0">
+                        <strong>খেলার নিয়ম ও বিবরণ:</strong> <?php echo htmlspecialchars($meta['desc']); ?>
+                    </p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="/admin/?tab=live" class="btn btn-secondary-premium btn-sm"><i class="fas fa-th-large me-1"></i> সকল ২১ গেম হাব</a>
+                    <span class="badge bg-danger fs-6 py-2 px-3 shadow"><i class="fas fa-stopwatch me-1"></i> <span id="game-timer">00:00</span></span>
+                </div>
             </div>
 
             <div class="row g-4">
               <!-- Left Column: Current Issue and Override -->
               <div class="col-lg-5">
                 <div class="glass-panel p-4 mb-4">
-                  <h4 class="fw-bold mb-3 text-gold">Current Issue Details</h4>
+                  <h4 class="fw-bold mb-3 text-gold">চলতি পিরিয়ড তথ্য (Current Issue Details)</h4>
                   <div class="p-3 mb-3 border rounded bg-dark border-secondary">
-                    <span class="text-secondary small d-block">ACTIVE PERIOD NUMBER</span>
+                    <span class="text-secondary small d-block">ACTIVE PERIOD NUMBER (চলতি রাউন্ড নম্বর)</span>
                     <strong class="fs-4 text-white" id="game-active-issue">--</strong>
                     <span class="text-muted d-block small mt-2">Next Forced Outcome: <span id="game-forced-status" class="text-warning fw-bold">None</span></span>
                   </div>
 
-                  <h4 class="fw-bold mb-3 text-gold">Override Result</h4>
-                  <form id="form-game-override" class="row g-2">
+                  <h4 class="fw-bold mb-3 text-gold">ফলাফল নিয়ন্ত্রণ (Override Result)</h4>
+                  <form id="form-game-override" class="row g-2 mb-2">
                     <div class="col-8">
-                       <input name="premium" id="override-premium-value" class="form-control form-control-premium" placeholder="e.g. 5, Green, Big" required>
+                       <input name="premium" id="override-premium-value" class="form-control form-control-premium" placeholder="<?php echo htmlspecialchars($meta['override_hint']); ?>" required>
                     </div>
                     <div class="col-4 d-flex gap-2">
                        <button type="submit" class="btn btn-premium w-100 justify-content-center">SET</button>
                        <button type="button" id="btn-unset-override" class="btn btn-secondary-premium">UNSET</button>
                     </div>
                   </form>
+                  <small class="text-muted d-block" style="font-size: 11px;">
+                    <i class="fas fa-info-circle text-gold me-1"></i> <strong>উদাহরণ:</strong> <?php echo htmlspecialchars($meta['override_hint']); ?> লিখে <strong>SET</strong> চাপুন। স্বয়ংক্রিয় করতে <strong>UNSET</strong> চাপুন।
+                  </small>
                 </div>
 
                 <div class="glass-panel p-4">
-                  <h4 class="fw-bold mb-3 text-gold">Recently Completed Periods</h4>
+                  <h4 class="fw-bold mb-3 text-gold">পূর্ববর্তী ড্র ফলাফল (Recently Completed Periods)</h4>
                   <div class="table-responsive table-responsive-premium">
                     <table class="table small" id="game-history-table">
                       <thead>
                         <tr>
-                          <th>Period</th>
-                          <th>Result Value</th>
-                          <th>Colors / Sum</th>
+                          <th>পিরিয়ড (Period)</th>
+                          <th>ফলাফল (Result Value)</th>
+                          <th>কালার / যোগফল (Sum / Colors)</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1233,7 +1675,7 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                 <div class="glass-panel p-4 mb-4">
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
-                      <span class="text-secondary small">ACTIVE STAKES POOL</span>
+                      <span class="text-secondary small">ACTIVE STAKES POOL (চলতি রাউন্ডের মোট বাজি)</span>
                       <h3 class="fw-bold text-success m-0" id="game-total-pool">৳0.00</h3>
                     </div>
                     <i class="fas fa-coins text-gold fs-2"></i>
@@ -1241,15 +1683,15 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                 </div>
 
                 <div class="glass-panel p-4">
-                  <h4 class="fw-bold mb-3 text-gold">Stakes Placed in Current Period</h4>
+                  <h4 class="fw-bold mb-3 text-gold">চলতি পিরিয়ডের বাজি সমূহ (Stakes in Current Period)</h4>
                   <div class="table-responsive table-responsive-premium">
                     <table class="table small" id="game-bets-table">
                       <thead>
                         <tr>
-                          <th>Player ID</th>
-                          <th>Username</th>
-                          <th>Bet Option</th>
-                          <th>Amount</th>
+                          <th>Player ID (প্লেয়ার আইডি)</th>
+                          <th>Username (ইউজারনেম)</th>
+                          <th>Bet Option (বাজির ধরণ)</th>
+                          <th>Amount (টাকা)</th>
                         </tr>
                       </thead>
                       <tbody>

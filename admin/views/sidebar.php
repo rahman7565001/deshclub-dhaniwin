@@ -5,6 +5,8 @@ $currentTab = (string)($_GET['tab'] ?? 'dashboard');
 $wingoTabs = ['wingo_30s', 'wingo_1m', 'wingo_3m', 'wingo_5m'];
 $k3Tabs = ['k3_1m', 'k3_3m', 'k3_5m', 'k3_10m'];
 $d5Tabs = ['d5_1m', 'd5_3m', 'd5_5m', 'd5_10m'];
+$trxTabs = ['trxwingo_1m', 'trxwingo_3m', 'trxwingo_5m', 'trxwingo_10m'];
+$motoTabs = ['motorace_1m', 'motorace_3m', 'motorace_5m', 'motorace_10m'];
 $financeTabs = ['gateways', 'add_upi', 'usdt_rate', 'add_usdt', 'add_upi_image', 'add_usdt_image', 'recharges', 'withdrawals', 'upi_withdraw', 'withdraw_sent', 'withdraw_reject'];
 $supportTabs = ['support_deposit', 'support_withdraw', 'support_ifsc', 'support_bank', 'support_game'];
 $adminManageTabs = ['bonus_manage', 'admin_password', 'check_same_ip', 'site_maintenance', 'banned_users', 'users', 'daily_salary', 'gift_code', 'add_admin', 'demo_user', 'agent_user'];
@@ -63,59 +65,155 @@ $adminManageTabs = ['bonus_manage', 'admin_password', 'check_same_ip', 'site_mai
         <span>Dashboard</span>
     </a>
 
-    <!-- WINGO MANAGER -->
+    <!-- GAME CONTROL HUB (ALL 21 GAMES) -->
+    <a class="sidebar-nav-link <?php echo $currentTab === 'live' ? 'active' : ''; ?>" href="/admin/?tab=live">
+        <i class="fas fa-tower-broadcast text-danger"></i>
+        <span>Game Control Hub</span>
+        <span class="badge bg-gold text-dark ms-auto" style="font-size: 10px; font-weight: 700;">২১ গেম</span>
+    </a>
+
+    <!-- 1. WINGO MANAGER -->
     <?php $wingoOpen = in_array($currentTab, $wingoTabs, true); ?>
     <div class="sidebar-dropdown">
         <a class="sidebar-nav-link sidebar-dropdown-toggle <?php echo $wingoOpen ? 'active' : ''; ?>" 
            data-bs-toggle="collapse" href="#wingoCollapse" role="button" aria-expanded="<?php echo $wingoOpen ? 'true' : 'false'; ?>">
             <i class="fas fa-gamepad text-gold"></i>
-            <span>WinGo Manager</span>
+            <span>WinGo (কালার ও সংখ্যা)</span>
         </a>
         <div class="collapse <?php echo $wingoOpen ? 'show' : ''; ?>" id="wingoCollapse">
             <div class="sidebar-submenu">
-                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_30s' ? 'active' : ''; ?>" href="/admin/?tab=wingo_30s">WinGo 30 Sec</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_1m' ? 'active' : ''; ?>" href="/admin/?tab=wingo_1m">WinGo 1 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_3m' ? 'active' : ''; ?>" href="/admin/?tab=wingo_3m">WinGo 3 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_5m' ? 'active' : ''; ?>" href="/admin/?tab=wingo_5m">WinGo 5 Min</a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_30s' ? 'active' : ''; ?>" href="/admin/?tab=wingo_30s">
+                    <i class="far fa-clock me-1 text-muted"></i> WinGo 30s (৩০ সেকেন্ড)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_1m' ? 'active' : ''; ?>" href="/admin/?tab=wingo_1m">
+                    <i class="far fa-clock me-1 text-muted"></i> WinGo 1M (১ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_3m' ? 'active' : ''; ?>" href="/admin/?tab=wingo_3m">
+                    <i class="far fa-clock me-1 text-muted"></i> WinGo 3M (৩ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'wingo_5m' ? 'active' : ''; ?>" href="/admin/?tab=wingo_5m">
+                    <i class="far fa-clock me-1 text-muted"></i> WinGo 5M (৫ মিনিট)
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- K3 MANAGER -->
+    <!-- 2. K3 MANAGER -->
     <?php $k3Open = in_array($currentTab, $k3Tabs, true); ?>
     <div class="sidebar-dropdown">
         <a class="sidebar-nav-link sidebar-dropdown-toggle <?php echo $k3Open ? 'active' : ''; ?>" 
            data-bs-toggle="collapse" href="#k3Collapse" role="button" aria-expanded="<?php echo $k3Open ? 'true' : 'false'; ?>">
             <i class="fas fa-dice text-blue"></i>
-            <span>K3 Manager</span>
+            <span>K3 (ডাইস / ছক্কার ড্র)</span>
         </a>
         <div class="collapse <?php echo $k3Open ? 'show' : ''; ?>" id="k3Collapse">
             <div class="sidebar-submenu">
-                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_1m' ? 'active' : ''; ?>" href="/admin/?tab=k3_1m">K3 1 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_3m' ? 'active' : ''; ?>" href="/admin/?tab=k3_3m">K3 3 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_5m' ? 'active' : ''; ?>" href="/admin/?tab=k3_5m">K3 5 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_10m' ? 'active' : ''; ?>" href="/admin/?tab=k3_10m">K3 10 Min</a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_1m' ? 'active' : ''; ?>" href="/admin/?tab=k3_1m">
+                    <i class="far fa-clock me-1 text-muted"></i> K3 1M (১ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_3m' ? 'active' : ''; ?>" href="/admin/?tab=k3_3m">
+                    <i class="far fa-clock me-1 text-muted"></i> K3 3M (৩ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_5m' ? 'active' : ''; ?>" href="/admin/?tab=k3_5m">
+                    <i class="far fa-clock me-1 text-muted"></i> K3 5M (৫ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'k3_10m' ? 'active' : ''; ?>" href="/admin/?tab=k3_10m">
+                    <i class="far fa-clock me-1 text-muted"></i> K3 10M (১০ মিনিট)
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- 5D MANAGER -->
+    <!-- 3. 5D MANAGER -->
     <?php $d5Open = in_array($currentTab, $d5Tabs, true); ?>
     <div class="sidebar-dropdown">
         <a class="sidebar-nav-link sidebar-dropdown-toggle <?php echo $d5Open ? 'active' : ''; ?>" 
            data-bs-toggle="collapse" href="#d5Collapse" role="button" aria-expanded="<?php echo $d5Open ? 'true' : 'false'; ?>">
             <i class="fas fa-gem text-purple"></i>
-            <span>5D Manager</span>
+            <span>5D (পাঁচ ডিজিট লটারি)</span>
         </a>
         <div class="collapse <?php echo $d5Open ? 'show' : ''; ?>" id="d5Collapse">
             <div class="sidebar-submenu">
-                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_1m' ? 'active' : ''; ?>" href="/admin/?tab=d5_1m">5D 1 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_3m' ? 'active' : ''; ?>" href="/admin/?tab=d5_3m">5D 3 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_5m' ? 'active' : ''; ?>" href="/admin/?tab=d5_5m">5D 5 Min</a>
-                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_10m' ? 'active' : ''; ?>" href="/admin/?tab=d5_10m">5D 10 Min</a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_1m' ? 'active' : ''; ?>" href="/admin/?tab=d5_1m">
+                    <i class="far fa-clock me-1 text-muted"></i> 5D 1M (১ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_3m' ? 'active' : ''; ?>" href="/admin/?tab=d5_3m">
+                    <i class="far fa-clock me-1 text-muted"></i> 5D 3M (৩ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_5m' ? 'active' : ''; ?>" href="/admin/?tab=d5_5m">
+                    <i class="far fa-clock me-1 text-muted"></i> 5D 5M (৫ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'd5_10m' ? 'active' : ''; ?>" href="/admin/?tab=d5_10m">
+                    <i class="far fa-clock me-1 text-muted"></i> 5D 10M (১০ মিনিট)
+                </a>
             </div>
         </div>
     </div>
+
+    <!-- 4. TRX WINGO MANAGER -->
+    <?php $trxOpen = in_array($currentTab, $trxTabs, true); ?>
+    <div class="sidebar-dropdown">
+        <a class="sidebar-nav-link sidebar-dropdown-toggle <?php echo $trxOpen ? 'active' : ''; ?>" 
+           data-bs-toggle="collapse" href="#trxCollapse" role="button" aria-expanded="<?php echo $trxOpen ? 'true' : 'false'; ?>">
+            <i class="fas fa-coins text-warning"></i>
+            <span>TrxWinGo (TRX ব্লকচেইন)</span>
+        </a>
+        <div class="collapse <?php echo $trxOpen ? 'show' : ''; ?>" id="trxCollapse">
+            <div class="sidebar-submenu">
+                <a class="sidebar-sub-link <?php echo $currentTab === 'trxwingo_1m' ? 'active' : ''; ?>" href="/admin/?tab=trxwingo_1m">
+                    <i class="far fa-clock me-1 text-muted"></i> TrxWinGo 1M (১ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'trxwingo_3m' ? 'active' : ''; ?>" href="/admin/?tab=trxwingo_3m">
+                    <i class="far fa-clock me-1 text-muted"></i> TrxWinGo 3M (৩ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'trxwingo_5m' ? 'active' : ''; ?>" href="/admin/?tab=trxwingo_5m">
+                    <i class="far fa-clock me-1 text-muted"></i> TrxWinGo 5M (৫ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'trxwingo_10m' ? 'active' : ''; ?>" href="/admin/?tab=trxwingo_10m">
+                    <i class="far fa-clock me-1 text-muted"></i> TrxWinGo 10M (১০ মিনিট)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. MOTO RACING MANAGER -->
+    <?php $motoOpen = in_array($currentTab, $motoTabs, true); ?>
+    <div class="sidebar-dropdown">
+        <a class="sidebar-nav-link sidebar-dropdown-toggle <?php echo $motoOpen ? 'active' : ''; ?>" 
+           data-bs-toggle="collapse" href="#motoCollapse" role="button" aria-expanded="<?php echo $motoOpen ? 'true' : 'false'; ?>">
+            <i class="fas fa-motorcycle text-danger"></i>
+            <span>Moto Racing (বাইক রেস)</span>
+        </a>
+        <div class="collapse <?php echo $motoOpen ? 'show' : ''; ?>" id="motoCollapse">
+            <div class="sidebar-submenu">
+                <a class="sidebar-sub-link <?php echo $currentTab === 'motorace_1m' ? 'active' : ''; ?>" href="/admin/?tab=motorace_1m">
+                    <i class="far fa-clock me-1 text-muted"></i> Moto Race 1M (১ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'motorace_3m' ? 'active' : ''; ?>" href="/admin/?tab=motorace_3m">
+                    <i class="far fa-clock me-1 text-muted"></i> Moto Race 3M (৩ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'motorace_5m' ? 'active' : ''; ?>" href="/admin/?tab=motorace_5m">
+                    <i class="far fa-clock me-1 text-muted"></i> Moto Race 5M (৫ মিনিট)
+                </a>
+                <a class="sidebar-sub-link <?php echo $currentTab === 'motorace_10m' ? 'active' : ''; ?>" href="/admin/?tab=motorace_10m">
+                    <i class="far fa-clock me-1 text-muted"></i> Moto Race 10M (১০ মিনিট)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. AVIATOR CRASH ENGINE -->
+    <a class="sidebar-nav-link" href="/admin/aviator.php">
+        <i class="fas fa-plane text-danger"></i>
+        <span>Aviator Crash Control</span>
+        <span class="badge bg-danger text-white ms-auto" style="font-size: 10px; font-weight: 700;">Live Crash</span>
+    </a>
+
+    <!-- 7. RESULT QUEUE -->
+    <a class="sidebar-nav-link <?php echo $currentTab === 'queue' ? 'active' : ''; ?>" href="/admin/?tab=queue">
+        <i class="fas fa-list-check text-info"></i>
+        <span>Result Queue (ফোর্স রেজাল্ট)</span>
+    </a>
 
     <!-- FINANCE -->
     <?php $financeOpen = in_array($currentTab, $financeTabs, true); ?>
@@ -123,7 +221,7 @@ $adminManageTabs = ['bonus_manage', 'admin_password', 'check_same_ip', 'site_mai
         <a class="sidebar-nav-link sidebar-dropdown-toggle <?php echo $financeOpen ? 'active' : ''; ?>" 
            data-bs-toggle="collapse" href="#financeCollapse" role="button" aria-expanded="<?php echo $financeOpen ? 'true' : 'false'; ?>">
             <i class="fas fa-wallet text-green"></i>
-            <span>Finance</span>
+            <span>Finance (অর্থ লেনদেন)</span>
         </a>
         <div class="collapse <?php echo $financeOpen ? 'show' : ''; ?>" id="financeCollapse">
             <div class="sidebar-submenu">
@@ -136,7 +234,6 @@ $adminManageTabs = ['bonus_manage', 'admin_password', 'check_same_ip', 'site_mai
                 <a class="sidebar-sub-link <?php echo $currentTab === 'withdraw_sent' ? 'active' : ''; ?>" href="/admin/?tab=withdrawals">Withdraw Sent</a>
                 <a class="sidebar-sub-link <?php echo $currentTab === 'withdraw_reject' ? 'active' : ''; ?>" href="/admin/?tab=withdrawals">Withdraw Reject</a>
             </div>
-        </div>
     </div>
 
     <!-- SUPPORT -->

@@ -448,6 +448,24 @@ try {
             echo json_encode($res);
             break;
 
+        case 'set_aviator_multiplier':
+            if (!admin_has_permission('game_control')) {
+                throw new Exception('Permission denied: game_control');
+            }
+            $val = trim((string)($_POST['multiplier'] ?? ''));
+            $pdo = api_pdo();
+            if ($val !== '' && is_numeric($val) && (float)$val >= 1.0) {
+                $pdo->prepare("INSERT OR REPLACE INTO aviator_settings (key, value) VALUES ('next_crash_multiplier', ?)")
+                    ->execute([round((float)$val, 2)]);
+                $msg = "Next Aviator round crash point set to " . round((float)$val, 2) . "x!";
+            } else {
+                $pdo->exec("UPDATE aviator_settings SET value = '' WHERE key = 'next_crash_multiplier'");
+                $msg = "Aviator crash point reset to Automatic (RNG) mode.";
+            }
+            AuthController::logActivity($adminId, 'set_aviator_multiplier', 'aviator_settings', null, $msg);
+            echo json_encode(['success' => true, 'message' => $msg]);
+            break;
+
         case 'toggle_maintenance':
             if (!admin_has_permission('settings')) {
                 throw new Exception('Permission denied: settings');
