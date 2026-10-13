@@ -1,0 +1,6 @@
+.git
+.gitignore
+.gemini
+tests
+*.md
+render.yaml
