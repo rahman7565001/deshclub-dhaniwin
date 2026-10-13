@@ -1,25 +1,30 @@
 <?php
 return [
-    'timezone' => getenv('DHANI_TIMEZONE') ?: 'Asia/Kolkata',
+    'timezone' => getenv('SITE_TIMEZONE') ?: (getenv('DHANI_TIMEZONE') ?: 'Asia/Dhaka'),
     'site' => [
-        'name' => getenv('DHANI_SITE_NAME') ?: 'Deshclub',
-        'tenant_id' => (int) (getenv('DHANI_TENANT_ID') ?: 6006),
-        'currency' => getenv('DHANI_CURRENCY') ?: 'INR',
+        'name' => getenv('SITE_NAME') ?: (getenv('DHANI_SITE_NAME') ?: 'Deshclub'),
+        'tenant_id' => (int) (getenv('SITE_TENANT_ID') ?: (getenv('DHANI_TENANT_ID') ?: 6006)),
+        'currency' => getenv('SITE_CURRENCY') ?: (getenv('DHANI_CURRENCY') ?: 'BDT'),
     ],
     'db' => [
-        'driver' => getenv('DHANI_DB_DRIVER') ?: 'auto',
-        'sqlite_path' => getenv('DHANI_SQLITE_PATH') ?: __DIR__ . '/storage/dhaniwin.sqlite',
+        // 'auto' uses SQLite out-of-the-box (zero configuration needed on any hosting)
+        // If MySQL credentials are provided below, it connects to MySQL automatically.
+        'driver' => getenv('DB_DRIVER') ?: (getenv('DHANI_DB_DRIVER') ?: 'auto'),
+        'sqlite_path' => getenv('SQLITE_PATH') ?: (getenv('DHANI_SQLITE_PATH') ?: (
+            file_exists(__DIR__ . '/storage/deshclub.sqlite')
+                ? __DIR__ . '/storage/deshclub.sqlite'
+                : __DIR__ . '/storage/dhaniwin.sqlite'
+        )),
         'mysql' => [
-            'host' => getenv('DHANI_DB_HOST') ?: 'localhost',
-            'port' => getenv('DHANI_DB_PORT') ?: '3306',
-            'database' => getenv('DHANI_DB_NAME') ?: 'dhandawintrushme_thaperfectprovider45',
-            'username' => getenv('DHANI_DB_USER') ?: 'dhandawintrushme_thaperfectprovider45',
-            'password' => getenv('DHANI_DB_PASS') ?: 'dhandawintrushme_thaperfectprovider45',
+            'host' => getenv('DB_HOST') ?: (getenv('DHANI_DB_HOST') ?: 'localhost'),
+            'port' => getenv('DB_PORT') ?: (getenv('DHANI_DB_PORT') ?: '3306'),
+            'database' => getenv('DB_NAME') ?: (getenv('DHANI_DB_NAME') ?: ''),
+            'username' => getenv('DB_USER') ?: (getenv('DHANI_DB_USER') ?: ''),
+            'password' => getenv('DB_PASS') ?: (getenv('DHANI_DB_PASS') ?: ''),
         ],
     ],
     'admin' => [
-        'username' => getenv('DHANI_ADMIN_USER') ?: 'admin',
-        'password' => getenv('DHANI_ADMIN_PASS') ?: 'admin123',
+        'username' => getenv('ADMIN_USER') ?: (getenv('DHANI_ADMIN_USER') ?: 'admin'),
+        'password' => getenv('ADMIN_PASS') ?: (getenv('DHANI_ADMIN_PASS') ?: 'admin123'),
     ],
 ];
-

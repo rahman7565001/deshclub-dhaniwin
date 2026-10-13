@@ -15,6 +15,12 @@ function serve_static_file(string $path): void {
         'gif'  => 'image/gif',
         'svg'  => 'image/svg+xml',
         'ico'  => 'image/x-icon',
+        'avif' => 'image/avif',
+        'mp4'  => 'video/mp4',
+        'webm' => 'video/webm',
+        'mp3'  => 'audio/mpeg',
+        'wav'  => 'audio/wav',
+        'ogg'  => 'audio/ogg',
         'css'  => 'text/css; charset=utf-8',
         'js'   => 'application/javascript; charset=utf-8',
         'mjs'  => 'application/javascript; charset=utf-8',
@@ -23,14 +29,36 @@ function serve_static_file(string $path): void {
         'woff' => 'font/woff',
         'ttf'  => 'font/ttf',
         'otf'  => 'font/otf',
+        'eot'  => 'application/vnd.ms-fontobject',
+        'wasm' => 'application/wasm',
         'webmanifest' => 'application/manifest+json; charset=utf-8',
         'html' => 'text/html; charset=utf-8',
     ];
     header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, OPTIONS');
+    header('Access-Control-Allow-Methods: GET, HEAD, OPTIONS');
+    header('Accept-Ranges: bytes');
     if (isset($mimes[$ext])) {
         header('Content-Type: ' . $mimes[$ext]);
     }
+    $size = filesize($path);
+    if (isset($_SERVER['HTTP_RANGE'])) {
+        if (preg_match('/bytes=\s*(\d+)-(\d*)/i', $_SERVER['HTTP_RANGE'], $matches)) {
+            $start = (int)$matches[1];
+            $end = ($matches[2] !== '') ? (int)$matches[2] : ($size - 1);
+            if ($start <= $end && $start < $size) {
+                $len = $end - $start + 1;
+                http_response_code(206);
+                header("Content-Range: bytes $start-$end/$size");
+                header('Content-Length: ' . $len);
+                $fp = fopen($path, 'rb');
+                fseek($fp, $start);
+                echo fread($fp, $len);
+                fclose($fp);
+                exit;
+            }
+        }
+    }
+    header('Content-Length: ' . $size);
     readfile($path);
     exit;
 }
@@ -107,11 +135,29 @@ if (preg_match('#^/admin(/.*)?$#i', $uri, $m)) {
 // 5. Image / Asset fallback checks
 if (!file_exists($filePath) || is_dir($filePath)) {
     $candidates = [
+        $docRoot . '/0' . $uri,
+        $docRoot . '/6006' . $uri,
         $docRoot . '/pro-img.arsaaspub.com' . $uri,
         $docRoot . '/img' . $uri,
         $docRoot . '/assets' . $uri,
         $docRoot . '/images' . $uri,
+        $docRoot . '/draw.ar-lottery01.com' . $uri,
     ];
+    $strippedUri = preg_replace('#^/(?:img|images|assets|pro-img\.arsaaspub\.com|0|6006)/#i', '/', $uri);
+    if ($strippedUri !== $uri) {
+        $candidates[] = $docRoot . $strippedUri;
+        $candidates[] = $docRoot . '/img' . $strippedUri;
+        $candidates[] = $docRoot . '/assets' . $strippedUri;
+        $candidates[] = $docRoot . '/images' . $strippedUri;
+        $candidates[] = $docRoot . '/pro-img.arsaaspub.com' . $strippedUri;
+        $candidates[] = $docRoot . '/0' . $strippedUri;
+        $candidates[] = $docRoot . '/6006' . $strippedUri;
+    }
+    $baseName = basename($uri);
+    $candidates[] = $docRoot . '/assets/' . $baseName;
+    $candidates[] = $docRoot . '/images/' . $baseName;
+    $candidates[] = $docRoot . '/img/' . $baseName;
+
     foreach ($candidates as $cand) {
         if (file_exists($cand) && !is_dir($cand)) {
             $filePath = $cand;
@@ -146,6 +192,14 @@ if (is_dir($filePath)) {
 $ext = strtolower(pathinfo($uri, PATHINFO_EXTENSION));
 if ($ext === '' || $ext === 'html') {
     require $docRoot . '/index.php';
+    exit;
+}
+
+if (in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'ico'], true)) {
+    header('Content-Type: image/png');
+    header('Access-Control-Allow-Origin: *');
+    header('Cache-Control: public, max-age=86400');
+    echo base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
     exit;
 }
 

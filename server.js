@@ -18,11 +18,19 @@ const mimeTypes = {
   '.gif': 'image/gif',
   '.svg': 'image/svg+xml',
   '.webp': 'image/webp',
+  '.avif': 'image/avif',
   '.ico': 'image/x-icon',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
+  '.ogg': 'audio/ogg',
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
   '.ttf': 'font/ttf',
   '.otf': 'font/otf',
+  '.eot': 'application/vnd.ms-fontobject',
+  '.wasm': 'application/wasm',
   '.webmanifest': 'application/manifest+json; charset=utf-8'
 };
 
@@ -299,16 +307,45 @@ const server = http.createServer((req, res) => {
 
     // Asset fallback candidates
     const candidates = [
+      path.join(DOC_ROOT, '0', pathname),
+      path.join(DOC_ROOT, '6006', pathname),
       path.join(DOC_ROOT, 'pro-img.arsaaspub.com', pathname),
       path.join(DOC_ROOT, 'img', pathname),
       path.join(DOC_ROOT, 'assets', pathname),
-      path.join(DOC_ROOT, 'images', pathname)
+      path.join(DOC_ROOT, 'images', pathname),
+      path.join(DOC_ROOT, 'draw.ar-lottery01.com', pathname)
     ];
+
+    const stripped = pathname.replace(/^\/(?:img|images|assets|pro-img\.arsaaspub\.com|0|6006)\//i, '/');
+    if (stripped !== pathname) {
+      candidates.push(path.join(DOC_ROOT, stripped));
+      candidates.push(path.join(DOC_ROOT, 'img', stripped));
+      candidates.push(path.join(DOC_ROOT, 'assets', stripped));
+      candidates.push(path.join(DOC_ROOT, 'images', stripped));
+      candidates.push(path.join(DOC_ROOT, 'pro-img.arsaaspub.com', stripped));
+      candidates.push(path.join(DOC_ROOT, '0', stripped));
+      candidates.push(path.join(DOC_ROOT, '6006', stripped));
+    }
+
+    const baseName = path.basename(pathname);
+    candidates.push(path.join(DOC_ROOT, 'assets', baseName));
+    candidates.push(path.join(DOC_ROOT, 'images', baseName));
+    candidates.push(path.join(DOC_ROOT, 'img', baseName));
 
     for (const cand of candidates) {
       if (fs.existsSync(cand) && fs.statSync(cand).isFile()) {
         return serveFile(res, cand, mimeTypes[ext]);
       }
+    }
+
+    if (['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.ico'].includes(ext)) {
+      const transparentPixel = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
+      res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=86400'
+      });
+      return res.end(transparentPixel);
     }
 
     res.writeHead(404, { 'Content-Type': 'text/plain' });
