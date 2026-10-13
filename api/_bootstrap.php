@@ -3172,11 +3172,11 @@ function api_recharge_category_payload(): array
         $iconUrl = '/img/6006/bankLogo/051830120-34793-file_20260502171830107.webp';
         $selectedIconUrl = '/img/6006/bankLogo/051832502-34794-file_20260502171832499.webp';
         if (strpos($mName, 'bkash') !== false || $mType === 'BKASH') {
-            $iconUrl = '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp';
-            $selectedIconUrl = '/img/6006/bankLogo/052328901-34808-file_20260502172328900.webp';
+            $iconUrl = '/img/6006/bankLogo/bkash.svg';
+            $selectedIconUrl = '/img/6006/bankLogo/bkash.svg';
         } elseif (strpos($mName, 'nagad') !== false || $mType === 'NAGAD') {
-            $iconUrl = '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp';
-            $selectedIconUrl = '/img/6006/bankLogo/052214587-34804-file_20260502172214586.webp';
+            $iconUrl = '/img/6006/bankLogo/nagad.svg';
+            $selectedIconUrl = '/img/6006/bankLogo/nagad.svg';
         }
 
         $rows[] = [
@@ -3587,8 +3587,8 @@ function api_withdraw_basic_info_payload(): array
             'tenantId' => $tenantId,
             'withdrawType' => 'BKASH',
             'name' => 'bKash',
-            'iconUrl' => '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp',
-            'selectedIconUrl' => '/img/6006/bankLogo/052328901-34808-file_20260502172328900.webp',
+            'iconUrl' => '/img/6006/bankLogo/bkash.svg',
+            'selectedIconUrl' => '/img/6006/bankLogo/bkash.svg',
             'userMaxBindCount' => 5,
             'maxWithdrawTimes' => 10,
             'minAmount' => 100.0,
@@ -3608,8 +3608,8 @@ function api_withdraw_basic_info_payload(): array
             'tenantId' => $tenantId,
             'withdrawType' => 'NAGAD',
             'name' => 'Nagad',
-            'iconUrl' => '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp',
-            'selectedIconUrl' => '/img/6006/bankLogo/052214587-34804-file_20260502172214586.webp',
+            'iconUrl' => '/img/6006/bankLogo/nagad.svg',
+            'selectedIconUrl' => '/img/6006/bankLogo/nagad.svg',
             'userMaxBindCount' => 5,
             'maxWithdrawTimes' => 10,
             'minAmount' => 100.0,
@@ -3715,9 +3715,9 @@ function api_user_withdraw_wallet_payload(array $input): array
     $list = [];
     foreach ($rows as $row) {
         $wType = (string) $row['withdraw_type'];
-        $icon = '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp';
+        $icon = '/img/6006/bankLogo/bkash.svg';
         if (stripos($wType, 'nagad') !== false || stripos((string)$row['bank_code'], 'nagad') !== false) {
-            $icon = '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp';
+            $icon = '/img/6006/bankLogo/nagad.svg';
         } elseif (stripos($wType, 'bank') !== false) {
             $icon = '/img/6006/bankLogo/053755188-34816-file_20260502173755187.webp';
         }

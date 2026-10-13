@@ -88,6 +88,14 @@ if ($uri === '/webapi/v/firebaseConfig.js') {
     $filePath = $docRoot . $uri;
 }
 
+// Official bKash and Nagad logo alias for legacy URLs
+if (preg_match('#/bankLogo/(052326529|052328901)#i', $uri)) {
+    serve_static($docRoot . '/img/6006/bankLogo/bkash.svg');
+}
+if (preg_match('#/bankLogo/(052212261|052214587)#i', $uri)) {
+    serve_static($docRoot . '/img/6006/bankLogo/nagad.svg');
+}
+
 // 2. Direct API routes (Recharge, Withdraw, Activity, User, Home, Game, Lottery, ThirdGame, VipLevel, AgentRebate, WorkOrder)
 if (preg_match('#^/(?:webapi/|api/)?(Recharge|Withdraw|Activity|User|Home|Game|Lottery|ThirdGame|VipLevel|AgentRebate|WorkOrder)/(.*)$#i', $uri, $m)) {
     $_GET['path'] = $m[1] . '/' . $m[2];

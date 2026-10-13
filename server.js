@@ -106,8 +106,8 @@ const server = http.createServer((req, res) => {
           rechargeType: 'LocalUPI',
           state: 1,
           sort: 1,
-          iconUrl: '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp',
-          selectedIconUrl: '/img/6006/bankLogo/052328901-34808-file_20260502172328900.webp',
+          iconUrl: '/img/6006/bankLogo/bkash.svg',
+          selectedIconUrl: '/img/6006/bankLogo/bkash.svg',
           rate: 1,
           minAmount: 100,
           maxAmount: 25000,
@@ -137,8 +137,8 @@ const server = http.createServer((req, res) => {
           rechargeType: 'LocalUPI',
           state: 1,
           sort: 2,
-          iconUrl: '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp',
-          selectedIconUrl: '/img/6006/bankLogo/052214587-34804-file_20260502172214586.webp',
+          iconUrl: '/img/6006/bankLogo/nagad.svg',
+          selectedIconUrl: '/img/6006/bankLogo/nagad.svg',
           rate: 1,
           minAmount: 100,
           maxAmount: 25000,
@@ -221,8 +221,8 @@ const server = http.createServer((req, res) => {
             tenantId: 6006,
             withdrawType: 'BKASH',
             name: 'bKash',
-            iconUrl: '/img/6006/bankLogo/052326529-34807-file_20260502172326518.webp',
-            selectedIconUrl: '/img/6006/bankLogo/052328901-34808-file_20260502172328900.webp',
+            iconUrl: '/img/6006/bankLogo/bkash.svg',
+            selectedIconUrl: '/img/6006/bankLogo/bkash.svg',
             userMaxBindCount: 5,
             maxWithdrawTimes: 10,
             minAmount: 100.0,
@@ -242,8 +242,8 @@ const server = http.createServer((req, res) => {
             tenantId: 6006,
             withdrawType: 'NAGAD',
             name: 'Nagad',
-            iconUrl: '/img/6006/bankLogo/052212261-34803-file_20260502172212259.webp',
-            selectedIconUrl: '/img/6006/bankLogo/052214587-34804-file_20260502172214586.webp',
+            iconUrl: '/img/6006/bankLogo/nagad.svg',
+            selectedIconUrl: '/img/6006/bankLogo/nagad.svg',
             userMaxBindCount: 5,
             maxWithdrawTimes: 10,
             minAmount: 100.0,
@@ -417,6 +417,13 @@ const server = http.createServer((req, res) => {
   }
 
   // 3. Static files
+  if (/(?:052326529|052328901)/i.test(pathname)) {
+    return serveFile(res, path.join(DOC_ROOT, 'img', '6006', 'bankLogo', 'bkash.svg'), 'image/svg+xml');
+  }
+  if (/(?:052212261|052214587)/i.test(pathname)) {
+    return serveFile(res, path.join(DOC_ROOT, 'img', '6006', 'bankLogo', 'nagad.svg'), 'image/svg+xml');
+  }
+
   let targetPath = path.join(DOC_ROOT, pathname);
   const ext = path.extname(targetPath).toLowerCase();
 
