@@ -287,7 +287,7 @@
                     }
                     if (gameState.user.currency) {
                         window.userCurrencyCode = gameState.user.currency;
-                        window.userCurrencySymbol = gameState.user.symbol || '₹';
+                        window.userCurrencySymbol = gameState.user.symbol || '৳';
                     }
                 }
 
@@ -387,8 +387,8 @@
 
         btn.className = 'main-bet-btn';
 
-        const curCode = window.userCurrencyCode || 'INR';
-        const curSym = window.userCurrencySymbol || '₹';
+        const curCode = window.userCurrencyCode || 'BDT';
+        const curSym = window.userCurrencySymbol || '৳';
 
         if (panel.state === 'idle') {
             btn.classList.add('btn-bet');
@@ -416,7 +416,7 @@
     // Handle Main Button Action (Bet or Cash Out)
     window.handlePanelAction = async function(p) {
         const panel = panels[p];
-        const curSym = window.userCurrencySymbol || '₹';
+        const curSym = window.userCurrencySymbol || '৳';
 
         if (panel.state === 'idle') {
             // Place Bet
@@ -459,7 +459,7 @@
     // Execute Cashout API
     async function executeCashout(p) {
         const panel = panels[p];
-        const curSym = window.userCurrencySymbol || '₹';
+        const curSym = window.userCurrencySymbol || '৳';
         if (panel.state !== 'placed') return;
 
         try {
