@@ -150,14 +150,14 @@
                     "pwaBigImg": "/img/6006/other/043021744-29957-file_20260406043021730.webp",
                     "pwaSmallImg": "/img/6006/other/043027517-29958-file_20260406043027515.webp"
                 },
-                "pwaList": ["dhaniwin.vip", "dhaniwin.co", "dhanigame.com", "dhaniwin.pro", "dhaniregiste.com", "dhani.one", "dhani.fun", "dhani.top", "dhaniwin.net", "dhani.me", "api1fordhani.vip", "dhaniwin.help", "dhani.biz"]
+                "pwaList": ["deshclub.com", "deshclub.vip", "deshclub.net"]
             },
             "downloadConfig": {
                 "downloadConfig": {
                     "isOpenDownloadAppGuidePopup": "0",
                     "downloadAppGuidePopupTimePoint": "1",
                     "downloadAppGuidePopupIntervalHours": "1",
-                    "androidShellDownloadUrl": "https://apk.arsaaspub.com/3gxvPLYUr/Dhaniwin_376_399.apk",
+                    "androidShellDownloadUrl": "https://apk.arsaaspub.com/3gxvPLYUr/Deshclub.apk",
                     "iosShellDownloadUrl": "",
                     "landingPageDownloadMode": "0"
                 },
@@ -211,7 +211,7 @@
                     "linkIndex": 99,
                     "imgUrl": "/img/6006/other/095639761-33278-file_20260426095639760.webp",
                     "buttonText": "Telegram",
-                    "jumpUrl": "https://t.me/dhaniwinbot",
+                    "jumpUrl": "https://t.me/deshclub",
                     "state": 1
                 }]
             },

@@ -184,7 +184,7 @@ $amount = (float)$order['amount'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dhani Win - Premium Payment Gateway</title>
+    <title>Deshclub - Premium Payment Gateway</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -479,7 +479,7 @@ $amount = (float)$order['amount'];
             <a href="/#/wallet/recharge" style="position: absolute; left: 1rem; top: 1.2rem; color: #fff; font-size: 1.1rem; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; background: rgba(255,255,255,0.08); padding: 0.35rem 0.75rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);">
                 <i class="fas fa-chevron-left"></i> <span style="font-size: 0.85rem;">Back</span>
             </a>
-            <div class="gateway-logo mt-2">Dhani Win Gateway</div>
+            <div class="gateway-logo mt-2">Deshclub Gateway</div>
             <div class="text-secondary small">Manual Recharge Checkout</div>
             
             <?php if (strtolower($status) === 'pending' && !$successParam && !$cancelledParam): ?>

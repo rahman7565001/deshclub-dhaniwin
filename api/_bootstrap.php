@@ -396,7 +396,7 @@ function api_ensure_schema(PDO $pdo): void
 
         $stmt = $pdo->prepare("INSERT IGNORE INTO api_users (user_id, username, nickname, phone, wallet_balance, game_balance, can_bet) VALUES (132257, 'local_member', 'MemberNNGKLPHA', '919119098026', 0, 4.45, 1)");
         $stmt->execute();
-        $stmt = $pdo->prepare("INSERT IGNORE INTO payment_methods (id, method_name, method_type, account_name, account_value, qr_text, min_amount, max_amount, sort_order, enabled) VALUES (400101, 'PhonePe', 'UPI', 'Dhani Win', 'rajputajay22266-1@oksbi', 'upi://pay?pa=rajputajay22266-1@oksbi&pn=Dhani%20Win&cu=INR', 100, 50000, 10, 1)");
+        $stmt = $pdo->prepare("INSERT IGNORE INTO payment_methods (id, method_name, method_type, account_name, account_value, qr_text, min_amount, max_amount, sort_order, enabled) VALUES (400101, 'PhonePe', 'UPI', 'Deshclub', 'rajputajay22266-1@oksbi', 'upi://pay?pa=rajputajay22266-1@oksbi&pn=Deshclub&cu=INR', 100, 50000, 10, 1)");
         $stmt->execute();
 
         $pdo->exec("CREATE TABLE IF NOT EXISTS admin_roles (
@@ -727,7 +727,7 @@ function api_ensure_schema(PDO $pdo): void
 
         $stmt = $pdo->prepare("INSERT OR IGNORE INTO api_users (user_id, username, nickname, phone, wallet_balance, game_balance, can_bet) VALUES (132257, 'local_member', 'MemberNNGKLPHA', '919119098026', 0, 4.45, 1)");
         $stmt->execute();
-        $stmt = $pdo->prepare("INSERT OR IGNORE INTO payment_methods (id, method_name, method_type, account_name, account_value, qr_text, min_amount, max_amount, sort_order, enabled) VALUES (400101, 'PhonePe', 'UPI', 'Dhani Win', 'rajputajay22266-1@oksbi', 'upi://pay?pa=rajputajay22266-1@oksbi&pn=Dhani%20Win&cu=INR', 100, 50000, 10, 1)");
+        $stmt = $pdo->prepare("INSERT OR IGNORE INTO payment_methods (id, method_name, method_type, account_name, account_value, qr_text, min_amount, max_amount, sort_order, enabled) VALUES (400101, 'PhonePe', 'UPI', 'Deshclub', 'rajputajay22266-1@oksbi', 'upi://pay?pa=rajputajay22266-1@oksbi&pn=Deshclub&cu=INR', 100, 50000, 10, 1)");
         $stmt->execute();
 
         $pdo->exec("CREATE TABLE IF NOT EXISTS admin_roles (
@@ -978,7 +978,7 @@ function api_ensure_schema(PDO $pdo): void
         $stmt = $pdo->prepare("SELECT id FROM admin_users WHERE username = ? LIMIT 1");
         $stmt->execute([$adminUser]);
         if (!$stmt->fetch()) {
-            $stmt = $pdo->prepare("INSERT INTO admin_users (username, password_hash, role_id, email, status) VALUES (?, ?, 1, 'admin@dhani.win', 1)");
+            $stmt = $pdo->prepare("INSERT INTO admin_users (username, password_hash, role_id, email, status) VALUES (?, ?, 1, 'admin@deshclub.com', 1)");
             $stmt->execute([$adminUser, $passHash]);
         }
     } catch (Throwable $e) {}
@@ -3424,7 +3424,7 @@ function api_recharge_order_detail_payload(array $input): array
     $created = strtotime((string) ($row['created_at'] ?? '')) ?: time();
     $createTime = (int) api_param($input, 'createTime', $created * 1000);
     $frontType = api_recharge_front_type((string) ($method['method_type'] ?? 'UPI'));
-    $accountName = (string) ($method['account_name'] ?? api_setting('upi_display_name', 'Dhani Win'));
+    $accountName = (string) ($method['account_name'] ?? api_setting('upi_display_name', 'Deshclub'));
     $accountValue = (string) ($method['account_value'] ?? api_setting('upi_id', 'rajputajay22266-1@oksbi'));
     $qrText = (string) ($method['qr_text'] ?? '');
 
