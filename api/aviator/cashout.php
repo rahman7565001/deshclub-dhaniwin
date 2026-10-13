@@ -15,16 +15,18 @@ $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
 $token = trim((string)($input['token'] ?? ''));
 $panel = (int)($input['bet_panel'] ?? 1);
 
-if ($token === '') {
-    echo json_encode(['code' => 401, 'msg' => 'Please login.']);
-    exit;
+$db = aviator_db();
+$user = null;
+if ($token !== '') {
+    $tokenClean = trim(str_replace('Bearer ', '', $token));
+    $userStmt = $db->prepare("SELECT * FROM api_users WHERE token = ? LIMIT 1");
+    $userStmt->execute([$tokenClean]);
+    $user = $userStmt->fetch(PDO::FETCH_ASSOC);
 }
 
-$db = aviator_db();
-$tokenClean = trim(str_replace('Bearer ', '', $token));
-$userStmt = $db->prepare("SELECT * FROM api_users WHERE token = ? LIMIT 1");
-$userStmt->execute([$tokenClean]);
-$user = $userStmt->fetch(PDO::FETCH_ASSOC);
+if (!$user) {
+    $user = api_primary_user();
+}
 
 if (!$user) {
     echo json_encode(['code' => 401, 'msg' => 'Invalid session.']);

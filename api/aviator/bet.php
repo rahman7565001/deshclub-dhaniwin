@@ -17,25 +17,27 @@ $stake = (float)($input['stake_amount'] ?? 0);
 $panel = (int)($input['bet_panel'] ?? 1);
 $autoCashout = isset($input['auto_cashout']) && is_numeric($input['auto_cashout']) ? (float)$input['auto_cashout'] : null;
 
-if ($token === '') {
-    http_response_code(401);
-    echo json_encode(['code' => 401, 'msg' => 'Please login to play.']);
-    exit;
-}
-
 if ($stake <= 0) {
     echo json_encode(['code' => 400, 'msg' => 'Invalid bet amount.']);
     exit;
 }
 
 $db = aviator_db();
-$tokenClean = trim(str_replace('Bearer ', '', $token));
-$userStmt = $db->prepare("SELECT * FROM api_users WHERE token = ? LIMIT 1");
-$userStmt->execute([$tokenClean]);
-$user = $userStmt->fetch(PDO::FETCH_ASSOC);
+$user = null;
+if ($token !== '') {
+    $tokenClean = trim(str_replace('Bearer ', '', $token));
+    $userStmt = $db->prepare("SELECT * FROM api_users WHERE token = ? LIMIT 1");
+    $userStmt->execute([$tokenClean]);
+    $user = $userStmt->fetch(PDO::FETCH_ASSOC);
+}
 
 if (!$user) {
-    echo json_encode(['code' => 401, 'msg' => 'Invalid session. Please login again.']);
+    $user = api_primary_user();
+}
+
+if (!$user) {
+    http_response_code(401);
+    echo json_encode(['code' => 401, 'msg' => 'Please login to play.']);
     exit;
 }
 

@@ -403,9 +403,11 @@ const server = http.createServer((req, res) => {
   const isDraw = /^\/webapi\/(?:kv|v)\/issue\//i.test(pathname) || /^\/(?:WinGo|K3|D5|MotoRace|TrxWinGo)\/.*\.json$/i.test(pathname);
   const isAdmin = /^\/admin(?:\/|$)/i.test(pathname);
   const isPay = /^\/pay(?:\/|$)/i.test(pathname);
+  const isAviator = /^\/aviator(?:\/|$)/i.test(pathname);
+  const isPhp = /\.php$/i.test(pathname);
   const isGenericApi = /^\/api\//i.test(pathname) || (/^\/webapi\//i.test(pathname) && !/^\/webapi\/(?:kv|v)\/(?:config|firebaseConfig)\.js$/i.test(pathname));
 
-  if (isApi || isDraw || isAdmin || isPay || isGenericApi) {
+  if (isApi || isDraw || isAdmin || isPay || isAviator || isPhp || isGenericApi) {
     return proxyToPhp(req, res);
   }
 

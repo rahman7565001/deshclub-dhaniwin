@@ -4041,6 +4041,39 @@ function api_thirdgame_transfer_payload(array $input, bool $recover = false): ar
     ]);
 }
 
+function api_thirdgame_get_game_url(array $input): array
+{
+    $gameCode = (string)api_param($input, 'gameCode', api_param($input, 'game_code', ''));
+    $vendorCode = (string)api_param($input, 'vendorCode', '');
+    $gameId = (int)api_param($input, 'gameId', 0);
+
+    $headers = function_exists('getallheaders') ? getallheaders() : [];
+    $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+    $token = '';
+    if (preg_match('/Bearer\s+(\S+)/i', $authHeader, $m)) {
+        $token = $m[1];
+    } elseif (!empty($input['token'])) {
+        $token = (string)$input['token'];
+    }
+
+    if ($token === '') {
+        $user = api_primary_user();
+        $token = (string)($user['token'] ?? '');
+    }
+
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+        ? 'https' : 'http';
+    $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'] ?? 'localhost:8000';
+    $baseUrl = $protocol . '://' . $host;
+
+    $gameUrl = $baseUrl . '/aviator/index.php?token=' . urlencode($token);
+    return api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]);
+}
+
 function api_home_popup_payload(): array
 {
     $pdo = api_pdo();
@@ -4452,6 +4485,9 @@ function api_explicit_dynamic_response(string $endpoint, array $input): ?array
             'walletBalance' => (float) api_primary_user()['wallet_balance'],
             'gameBalance' => (float) api_primary_user()['game_balance'],
         ]);
+    }
+    if ($e === 'thirdgame/getgameurl' || $e === 'game/getgameurl') {
+        return api_thirdgame_get_game_url($input);
     }
     if ($e === 'game/gethotgamelist') {
         $home = api_read_snapshot_payload('Home/GetHomeAllGameList');

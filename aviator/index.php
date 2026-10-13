@@ -1,6 +1,11 @@
 <?php
 // aviator/index.php - Self-Hosted Spribe Aviator Game
+require_once dirname(__DIR__) . '/api/_bootstrap.php';
 $token = $_GET['token'] ?? '';
+if ($token === '') {
+    $u = api_primary_user();
+    $token = (string)($u['token'] ?? '');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

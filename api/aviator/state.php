@@ -50,6 +50,16 @@ if ($token !== '') {
     }
 }
 
+if (!$user) {
+    $user = api_primary_user();
+    if ($user && !empty($user['user_id'])) {
+        $betsStmt = $db->prepare("SELECT * FROM aviator_bets WHERE round_uuid = ? AND user_id = ?");
+        $betsStmt->execute([$round['round_uuid'], $user['user_id']]);
+        $myBets = $betsStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
+
 // Generate some authentic live players for the sidebar
 $fakePlayers = [
     ['user' => 'rahim***', 'stake' => 100, 'cashout' => 1.85, 'payout' => 185],
