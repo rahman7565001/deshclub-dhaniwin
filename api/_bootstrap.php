@@ -165,7 +165,7 @@ function api_pdo(): ?PDO
 
     if (!$pdo) {
         try {
-            $sqlitePath = $db['sqlite_path'] ?? (__DIR__ . '/storage/dhaniwin.sqlite');
+            $sqlitePath = $db['sqlite_path'] ?? (file_exists(__DIR__ . '/storage/deshclub.sqlite') ? __DIR__ . '/storage/deshclub.sqlite' : __DIR__ . '/storage/dhaniwin.sqlite');
             $sqliteDir = dirname($sqlitePath);
             if (!is_dir($sqliteDir)) {
                 @mkdir($sqliteDir, 0775, true);

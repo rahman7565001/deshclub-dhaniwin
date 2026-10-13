@@ -8,7 +8,7 @@
                 "floatIcon": "/img/6006/banner/040146030-37973-file_20260509160146027.webp",
                 "effectiveTimeType": 0,
                 "jumpType": 2,
-                "jumpDetail": "https://t.me/dhaniwinbot",
+                "jumpDetail": "https://t.me/deshclubbot",
                 "displayTarget": 1
             },
             {

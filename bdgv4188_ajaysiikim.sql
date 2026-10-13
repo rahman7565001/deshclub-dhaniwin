@@ -377,8 +377,8 @@ INSERT IGNORE INTO `api_settings` (`setting_key`, `setting_value`) VALUES
 ('block_enabled', '1'),
 ('api_url', '/api'),
 ('draw_url', '/'),
-('upi_display_name', 'Dhani Win'),
-('upi_id', 'dhaniwin@upi'),
+('upi_display_name', 'Deshclub'),
+('upi_id', 'deshclub@upi'),
 ('support_url', '/workOrder'),
 ('amount_coding', '4.11'),
 ('first_recharge_bonus_enabled', '1'),
@@ -393,7 +393,7 @@ INSERT IGNORE INTO `api_settings` (`setting_key`, `setting_value`) VALUES
 ('recharge_wheel_reward_up_amount', '29999'),
 ('agent_rebate_enabled', '1'),
 ('agent_commission_rate', '0'),
-('share_content', 'Invite your friends to join Dhaniwin and unlock bonus #inviteLink#'),
+('share_content', 'Invite your friends to join Deshclub and unlock bonus #inviteLink#'),
 ('share_domain', 'https://dhandawin.kkr7.online'),
 ('invite_code', 'Q8BRYAN'),
 ('popup_enabled', '1'),
@@ -431,7 +431,7 @@ INSERT IGNORE INTO `role_permissions` (`role_id`, `permission_id`) VALUES
 
 -- Seed Default Admin User (Password: admin123)
 INSERT INTO `admin_users` (`username`, `password_hash`, `role_id`, `email`, `status`) 
-SELECT 'admin', '$2y$10$9z/bxmGxc8I.KoAKY7zbfuskQzgQMoQWikdiVeEdlxtYVwDWvGZ8O', 1, 'admin@dhani.win', 1
+SELECT 'admin', '$2y$10$9z/bxmGxc8I.KoAKY7zbfuskQzgQMoQWikdiVeEdlxtYVwDWvGZ8O', 1, 'admin@deshclub.com', 1
 FROM dual WHERE NOT EXISTS (SELECT 1 FROM `admin_users` WHERE `username` = 'admin');
 
 -- Seed Default User (Password: admin123)
@@ -440,6 +440,6 @@ INSERT IGNORE INTO `api_users` (`user_id`, `username`, `nickname`, `phone`, `wal
 
 -- Seed Default Payment Method
 INSERT IGNORE INTO `payment_methods` (`id`, `method_name`, `method_type`, `account_name`, `account_value`, `qr_text`, `min_amount`, `max_amount`, `sort_order`, `enabled`) VALUES
-(400101, 'PhonePe', 'UPI', 'Dhani Win', 'dhaniwin@upi', 'upi://pay?pa=dhaniwin@upi&pn=Dhani%20Win&cu=INR', 100.0000, 50000.0000, 10, 1);
+(400101, 'PhonePe', 'UPI', 'Deshclub', 'deshclub@upi', 'upi://pay?pa=deshclub@upi&pn=Dhani%20Win&cu=INR', 100.0000, 50000.0000, 10, 1);
 
 COMMIT;
