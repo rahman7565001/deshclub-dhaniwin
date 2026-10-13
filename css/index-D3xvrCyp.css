@@ -1,0 +1,122 @@
+.notice-alert[data-v-adb8df98] {
+    width: .64rem;
+    height: .64rem;
+    flex-shrink: 0
+}
+
+.notice-page[data-v-adb8df98] {
+    min-height: 100vh;
+    background: var(--bg_color_L1);
+    color: var(--text_primary)
+}
+
+.notice-page__nav[data-v-adb8df98] {
+    background: var(--bg_color_L2)
+}
+
+.notice-page__nav[data-v-adb8df98]:after {
+    border: none
+}
+
+.notice-page__nav-icon[data-v-adb8df98],
+.notice-page__nav-title[data-v-adb8df98] {
+    font-size: .4rem;
+    color: var(--text_primary)
+}
+
+.notice-page__nav-title[data-v-adb8df98] {
+    font-size: .48rem;
+    font-weight: 600;
+    line-height: .72rem
+}
+
+.notice-page__content[data-v-adb8df98] {
+    padding: .32rem .4rem .48rem;
+    box-sizing: border-box
+}
+
+.notice-list[data-v-adb8df98] {
+    display: flex;
+    flex-direction: column;
+    gap: .32rem
+}
+
+.notice-card[data-v-adb8df98] {
+    display: flex;
+    flex-direction: column;
+    gap: .16rem;
+    padding: .32rem 0;
+    border-radius: .10667rem;
+    background: var(--bg_color_L2);
+    box-shadow: 0 .05333rem .05333rem #03112421
+}
+
+.notice-card.is-clickable[data-v-adb8df98] {
+    cursor: pointer
+}
+
+.notice-card__head[data-v-adb8df98] {
+    display: flow-root;
+    padding: 0 .32rem
+}
+
+.notice-card__icon[data-v-adb8df98] {
+    float: left;
+    width: .64rem;
+    height: .64rem;
+    margin-right: .26667rem;
+    object-fit: contain
+}
+
+html:lang(ar) .notice-card__icon[data-v-adb8df98] {
+    float: right;
+    margin-right: 0;
+    margin-left: .26667rem
+}
+
+.notice-card__title[data-v-adb8df98] {
+    margin: 0;
+    color: var(--text_secondary);
+    font-size: .34667rem;
+    font-weight: 500;
+    line-height: .45333rem;
+    word-break: break-word
+}
+
+.notice-card__preview[data-v-adb8df98] {
+    padding: 0 .32rem;
+    color: var(--text_tertiary);
+    font-size: .32rem;
+    line-height: .45333rem;
+    word-break: break-word
+}
+
+.notice-card__preview[data-v-adb8df98] p {
+    margin: 0
+}
+
+.notice-card__preview[data-v-adb8df98] img {
+    max-width: 100%;
+    height: auto
+}
+
+.notice-card__time[data-v-adb8df98] {
+    padding: 0 .32rem;
+    color: var(--text_tertiary);
+    font-size: .32rem;
+    line-height: .45333rem;
+    text-align: left
+}
+
+.notice-card__action[data-v-adb8df98] {
+    align-self: flex-start;
+    margin: 0 .32rem;
+    height: .85333rem;
+    padding: 0 .32rem;
+    border: none;
+    border-radius: .42667rem;
+    background: linear-gradient(180deg, #ffec7a, #e8a911);
+    color: #20133e;
+    font-size: .32rem;
+    font-weight: 600
+}

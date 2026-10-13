@@ -1,0 +1,40 @@
+.soundSuffix[data-v-0d5b7466] {
+    --van-switch-width: 1.13333rem;
+    --van-switch-disabled-opacity: 1
+}
+
+.soundSuffix[data-v-0d5b7466] .van-switch__node {
+    top: .06667rem
+}
+
+.noActive[data-v-0d5b7466] .van-switch__node {
+    background-color: var(--main_color)
+}
+
+.pre[data-v-0d5b7466] {
+    width: .53333rem;
+    height: .53333rem;
+    margin-right: .21333rem
+}
+
+.suffix[data-v-0d5b7466] {
+    font-size: .32rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: .10667rem;
+    color: #da4966
+}
+
+.versionSuffix[data-v-0d5b7466] {
+    color: #fff;
+    font-size: .32rem
+}
+
+.languageSuffix[data-v-0d5b7466] {
+    font-size: .32rem;
+    color: var(--text_btn_main);
+    padding: .08rem .26667rem;
+    border-radius: .10667rem;
+    background: var(--secondary_color2)
+}

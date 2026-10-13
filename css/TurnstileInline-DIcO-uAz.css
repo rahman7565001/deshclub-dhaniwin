@@ -1,0 +1,28 @@
+.turnstile-inline .turnstile-box[data-v-d8bba3fb] {
+    box-sizing: border-box
+}
+
+.turnstile-inline #turnstile-widget[data-v-d8bba3fb] {
+    min-height: .93333rem;
+    width: 100%
+}
+
+.turnstile-inline #turnstile-widget[data-v-d8bba3fb] iframe {
+    min-height: .86667rem !important;
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: auto !important
+}
+
+.turnstile-inline .loading-text[data-v-d8bba3fb] {
+    font-size: .32rem;
+    color: var(--text_secondary);
+    margin-top: .21333rem
+}
+
+.turnstile-inline .error-msg[data-v-d8bba3fb] {
+    font-size: .32rem;
+    color: #ff4d4f;
+    margin-top: .21333rem
+}

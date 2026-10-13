@@ -1,0 +1,275 @@
+.payment-methods[data-v-58b2f983] {
+    margin-bottom: .4rem
+}
+
+.payment-methods .section-title[data-v-58b2f983] {
+    color: #fff;
+    font-size: .34667rem;
+    font-weight: 400;
+    margin-bottom: .32rem
+}
+
+.payment-methods .section-title span[data-v-58b2f983] {
+    color: #ffe76b;
+    font-size: .34667rem
+}
+
+.payment-options[data-v-58b2f983] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .13333rem;
+    list-style: none;
+    padding: 0;
+    margin-bottom: .32rem
+}
+
+.payment-item[data-v-58b2f983] {
+    position: relative;
+    display: flex;
+    min-height: 1.36rem;
+    padding: .05333rem;
+    justify-content: center;
+    align-items: center;
+    gap: .13333rem;
+    border-radius: .16rem;
+    background: #360d13;
+    height: auto
+}
+
+.payment-item .name[data-v-58b2f983] {
+    flex: none;
+    color: #cebfc2;
+    font-size: .37333rem;
+    width: 1.86667rem;
+    word-break: break-all;
+    line-height: .4rem;
+    overflow: hidden
+}
+
+.payment-item.active[data-v-58b2f983] {
+    border: .02667rem solid #EABD7A;
+    background: linear-gradient(180deg, #220108, #a71232)
+}
+
+.payment-item.active[data-v-58b2f983]:before {
+    content: "";
+    width: .48rem;
+    height: .48rem;
+    position: absolute;
+    top: -.24rem;
+    left: -.24rem;
+    background: url(/images/icon_act-DssI4Qpi.svg) no-repeat;
+    background-size: cover
+}
+
+.payment-item.active[data-v-58b2f983]:after {
+    content: "";
+    width: .70667rem;
+    height: .56rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: url("data:image/svg+xml,%3csvg%20width='53'%20height='42'%20viewBox='0%200%2053%2042'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M52.2439%2030V0.5L0%2042H40.2439C46.8713%2042%2052.2439%2036.6274%2052.2439%2030ZM48.0283%2017.0207C48.7024%2017.5022%2048.8585%2018.4391%2048.377%2019.1132L35.0552%2037.7632L35.0431%2037.7804C34.5616%2038.4545%2033.6248%2038.6106%2032.9507%2038.1291L24.0851%2031.7964C23.411%2031.3149%2023.2549%2030.3781%2023.7364%2029.704C24.2179%2029.0298%2025.1548%2028.8737%2025.8289%2029.3552L33.4737%2034.816L45.9358%2017.3694C46.4174%2016.6953%2047.3542%2016.5392%2048.0283%2017.0207Z'%20fill='url(%23paint0_linear_282_2249)'/%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_282_2249'%20x1='26.122'%20y1='0.5'%20x2='26.122'%20y2='42'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23F8C667'/%3e%3cstop%20offset='1'%20stop-color='%23D28442'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e") no-repeat;
+    background-size: cover
+}
+
+.payment-item.active .rechargeRifts[data-v-58b2f983] {
+    border-radius: 0 .16rem;
+    background: linear-gradient(90deg, #f8c667, #d28442);
+    color: #360d13;
+    font-size: .26667rem;
+    font-weight: 400
+}
+
+.payment_img[data-v-58b2f983] {
+    width: .64rem;
+    height: .64rem;
+    display: flex;
+    justify-items: center;
+    flex: none
+}
+
+.payment_img img[data-v-58b2f983] {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto
+}
+
+.recommended[data-v-58b2f983] {
+    position: absolute;
+    top: -.13333rem;
+    left: -.13333rem;
+    width: .32rem;
+    height: .32rem;
+    background-color: #ffe76b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.qrcode-container[data-v-58b2f983] {
+    align-items: center;
+    margin-top: .13333rem
+}
+
+.qrcode-button[data-v-58b2f983] {
+    display: flex;
+    width: 2.66667rem;
+    height: .96rem;
+    justify-content: center;
+    align-items: center;
+    gap: .13333rem;
+    flex-shrink: 0;
+    border-radius: .21333rem;
+    border: .02667rem solid #50232A;
+    background: #110104
+}
+
+.qrcode-button span[data-v-58b2f983] {
+    color: #cebfc280
+}
+
+.qrcode-button .qrcode-icon[data-v-58b2f983] {
+    width: .53333rem;
+    height: .53333rem;
+    background: url(/images/icon_QR-B9qWAMcY.svg) no-repeat center center;
+    background-size: contain
+}
+
+.qrcode-button[data-v-58b2f983]:hover {
+    background-color: #5a1220
+}
+
+.qrcode-button.active[data-v-58b2f983] {
+    background-color: #5a1220;
+    box-shadow: 0 0 0 .02667rem #ffe76b
+}
+
+.qrcode-help-section[data-v-58b2f983] {
+    margin-top: .13333rem;
+    width: 3.33333rem;
+    height: 1.08rem;
+    line-height: 1.08rem;
+    font-size: .32rem;
+    color: #da4966;
+    background: url(/images/icon_union-D7MUWPuk.svg) no-repeat center center;
+    background-size: auto 1.08rem
+}
+
+.qrcode-help-link[data-v-58b2f983]:hover {
+    background-color: #da49661a
+}
+
+.rechargeRifts[data-v-58b2f983] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    border-radius: 0 .16rem;
+    background: #770924;
+    display: flex;
+    width: 1.06667rem;
+    height: .29333rem;
+    justify-content: center;
+    align-items: center;
+    gap: .13333rem;
+    font-size: .26667rem
+}
+
+.payment-dialog .amount-title[data-v-58b2f983] {
+    color: var(--text_primary);
+    text-align: center;
+    font-size: .48rem;
+    font-weight: 600;
+    margin-bottom: .33333rem
+}
+
+.payment-dialog ul[data-v-58b2f983] {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: .32rem;
+    align-items: flex-start;
+    gap: .4rem;
+    max-height: 7.46667rem;
+    overflow-y: auto;
+    border-radius: .21333rem;
+    background: var(--bg_color_L4);
+    margin-bottom: .4rem
+}
+
+.payment-dialog ul li[data-v-58b2f983] {
+    border-radius: .21333rem;
+    border: .02667rem solid var(--Stroke_color);
+    background: var(--bg_color_L2);
+    display: flex;
+    height: 1.17333rem;
+    width: 100%;
+    padding: 0 .32rem;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    position: relative
+}
+
+.payment-dialog ul li .payment[data-v-58b2f983] {
+    display: flex;
+    align-items: center;
+    gap: .13333rem;
+    height: 1.17333rem;
+    color: var(--norm_hint_color);
+    font-size: .37333rem
+}
+
+.payment-dialog ul li .selectList[data-v-58b2f983] {
+    width: .48rem;
+    height: .48rem;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.payment-dialog ul li .selectList svg[data-v-58b2f983] {
+    width: .48rem;
+    height: .48rem;
+    line-height: inset
+}
+
+.payment-dialog ul li .rechargeTips[data-v-58b2f983] {
+    position: absolute;
+    left: 50%;
+    top: -.26667rem;
+    background-image: url(/images/rechargeTip-UescS2iF.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% .73333rem;
+    padding: 0 .13333rem;
+    min-width: 2.24rem;
+    height: .73333rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fed058;
+    font-size: .32rem;
+    font-weight: 600
+}
+
+.payment-dialog .gift-amount[data-v-58b2f983] {
+    color: #ffe76b;
+    font-size: .34667rem;
+    font-weight: 500
+}
+
+.payment-dialog .confirmBtn[data-v-58b2f983] {
+    background: var(--main_gradient_color);
+    border-radius: .66667rem;
+    width: 3.41333rem;
+    text-align: center;
+    height: .85333rem;
+    line-height: .85333rem;
+    margin: 0 auto;
+    font-size: .37333rem;
+    color: var(--text_btn_main)
+}

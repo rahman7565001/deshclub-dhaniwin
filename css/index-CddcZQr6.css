@@ -1,0 +1,211 @@
+.history-main[data-v-fefeb66e] {
+    min-height: calc(100vh - 2.66667rem)
+}
+
+.recharge-history[data-v-fefeb66e] {
+    padding: 0 .4rem;
+    height: .53333rem
+}
+
+.recharge-history .history-header[data-v-fefeb66e] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .21333rem
+}
+
+.recharge-history .history-header span[data-v-fefeb66e] {
+    color: var(--text_primary);
+    font-size: .34667rem
+}
+
+.recharge-history .history-header .total-count span[data-v-fefeb66e] {
+    color: var(--norm_hint_color)
+}
+
+.recharge-history .dateSelect[data-v-fefeb66e] {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    padding: .21333rem 0;
+    position: relative;
+    margin-bottom: .32rem;
+    border-bottom: .01333rem solid var(--Dividing_line_color)
+}
+
+.recharge-history .dateSelect div[data-v-fefeb66e] {
+    display: flex
+}
+
+.recharge-history .dateSelect div span[data-v-fefeb66e] {
+    color: var(--text_tertiary);
+    font-size: .34667rem
+}
+
+.recharge-history .dateSelect div span.active[data-v-fefeb66e] {
+    color: var(--main_color);
+    border-bottom: .02667rem solid var(--main_color)
+}
+
+.history-item[data-v-fefeb66e] {
+    border-radius: .21333rem;
+    background: var(--bg_color_L2);
+    display: flex;
+    margin-bottom: .21333rem;
+    padding: .32rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: .26667rem
+}
+
+.history-item .img[data-v-fefeb66e] {
+    width: .74667rem;
+    height: .74667rem
+}
+
+.history-item .item-content[data-v-fefeb66e] {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    gap: .05333rem
+}
+
+.history-item p[data-v-fefeb66e] {
+    color: var(--text_secondary);
+    font-size: .32rem;
+    display: flex;
+    justify-content: space-between
+}
+
+.history-item p span[data-v-fefeb66e] {
+    display: flex;
+    align-items: center;
+    gap: .10667rem
+}
+
+.history-item p .time[data-v-fefeb66e] {
+    color: var(--main_color)
+}
+
+.history-item p .balance[data-v-fefeb66e] {
+    color: var(--norm_hint_color)
+}
+
+.history-item p .state[data-v-fefeb66e] {
+    color: var(--text_primary)
+}
+
+.history-item .item-mount[data-v-fefeb66e],
+.history-item .item-mount p[data-v-fefeb66e] {
+    text-align: right
+}
+
+.copyIcon[data-v-fefeb66e] {
+    background: url(data:image/webp;base64,UklGRtgAAABXRUJQVlA4WAoAAAAQAAAAFwAAFwAAQUxQSFgAAAABR2CQbeTcHcHV7BU+IiKu9oBpZNtODvlJHG38WqjgSyQSmeH2TU4+ov8TALhF6yoEvLYzoN2xU+t8lMwtWlelZF7bhWTtjv1ZeqQJDwDX1Tsp4OaNJgQAVlA4IFoAAAAwAwCdASoYABgAPlEij0SjoiGUBVQ4BQSgC/RBHQI4lvAAAP71WJWP9L3+sT5R2OZq/8l39u+yzjveG7IPHbdC6Xgww/uPsJ1XIzofJqLZu883L8f/g386gAA=) no-repeat center center;
+    background-size: cover;
+    width: .32rem;
+    height: .32rem;
+    display: inline-block
+}
+
+.remark-btn[data-v-fefeb66e] {
+    width: 7.54667rem;
+    height: 1.17333rem;
+    background: var(--main_gradient_color);
+    background-size: cover;
+    margin-top: .32rem;
+    color: #fff;
+    text-align: center;
+    font-size: .37333rem;
+    font-weight: 400;
+    line-height: 1.17333rem;
+    border-radius: .66667rem
+}
+
+.remark-btn.report-b[data-v-fefeb66e] {
+    margin-bottom: .13333rem
+}
+
+.rechargeh__header[data-v-fefeb66e] {
+    text-align: center;
+    font-size: .42667rem;
+    background: linear-gradient(180deg, #ffeebc 20.58%, #f09e47 56.6%, #fed397 86.82%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: .2rem 0
+}
+
+.rechargeh__item-body[data-v-fefeb66e] {
+    padding: 0 .53333rem
+}
+
+.rechargeh__item-body>div[data-v-fefeb66e] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .13333rem 0;
+    height: .8rem
+}
+
+.rechargeh__item-body>div[data-v-fefeb66e]:first-child {
+    margin-bottom: .26667rem
+}
+
+.rechargeh__item-body>div[data-v-fefeb66e] .van-field {
+    border-radius: .21333rem;
+    border: .01333rem solid #5A222D;
+    background: #230a0e;
+    width: 6.66667rem
+}
+
+.rechargeh__item-body>div span[data-v-fefeb66e] {
+    color: #cebfc2;
+    font-size: .34667rem
+}
+
+.rechargeh__item-body>div .price[data-v-fefeb66e] {
+    color: #ffe76b
+}
+
+.rechargeh__item-body>div .order[data-v-fefeb66e] {
+    width: 5.33333rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right
+}
+
+.rechargeh__item-foot[data-v-fefeb66e] {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: .26667rem 0;
+    background: #230a0d;
+    margin-top: .26667rem
+}
+
+.rechargeh__item-foot>div[data-v-fefeb66e] {
+    flex: 1;
+    height: .85333rem;
+    font-size: .42667rem;
+    line-height: .85333rem;
+    text-align: center;
+    color: #ddb4ba;
+    background: url(data:image/webp;base64,UklGRi4CAABXRUJQVlA4WAoAAAAQAAAA/wAAPwAAQUxQSLcAAAABZ2CQbeTYHcHX5D4iIljXewBubduqqoNL7E7EoAZq8A4k9g4YZFaAe+q567dbFRIu0h/Rf4Vt2yDp4ATqB/JUuv2ncNrWbfKu3J9iKvJGRWHleCH0y2WufTJTYEXfOrtNFFoekS82eQkpuLRVOsYTHe+NTuybTuuHTv+Pzlbh9e8/HwD+34f/9+L//fh/zw0dX4aOmf/3lzvd95AJGyvf98L7fh/A93wqS/d9RWrUkReWh/C+vwAAVlA4IFABAABQDACdASoAAUAAPlEokEajoqGhIIhgcAoJZ27dXGPJnfAHlAdLMAFNWQSSWiqy9ELRUAl0v+G+tq1XmTbVS4n/4v7oqsvRCiexh5I2KThjkMuc9gzmUL6y7CJF9Zddui0VWXohaKrL0QmMgAD++YFnztABQxkX/WWe/dj2zpYWZ/9lv/gL0E51L+ocF4Gacut9cUI3lvX8PqnHz7aQlkQwbtYh3F4T6zbzMXhiuxx2z/m/IO6w5wFf4aqevfhIL4y8bpzfuTywwYtrGaP6Mg8AVgPcQy88VYhmEJiAbAtt+ugnhiukcaZ3f761YRHxxFYRCZnyDuPmnEj29wS5KEJar9l0DhQigAOCWAAAA5ibREbR6ZXmyLVAmD+If823nGvV8hWoxFg1ToUTZ1KnRT7KTw8LWh3vWK32el4clmQpIdiZuMD/5CcElxS1yWzAAAA=) no-repeat center center;
+    background-size: 3.41333rem auto
+}
+
+.rechargeh__item-foot>div[data-v-fefeb66e]:last-child {
+    background: url(/images/dialogBtn-DHFr1cbR.webp) no-repeat center center;
+    background-size: 3.41333rem auto;
+    border-left: .01333rem solid #5C2A2B;
+    color: #fff
+}
+
+.recharge-popup {
+    border-radius: .21333rem .21333rem 0 0;
+    background: linear-gradient(180deg, #3a0f18, #2d0d12);
+    height: 6.93333rem
+}

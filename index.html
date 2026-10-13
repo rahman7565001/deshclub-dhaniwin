@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="preconnect" href="https://pro-img.arsaaspub.com" crossorigin>
+    <link rel="dns-prefetch" href="https://sdk.rum.aliyuncs.com">
+
+    <link rel="preload" href="/assets/css/92-b97e8e95.css" as="style">
+    <link rel="preload" href="/assets/css/ar_saas08-d60690c4.css" as="style">
+    <link rel="preload" href="/assets/css/ar_saas09-d08c3b51.css" as="style">
+    <link rel="preload" href="/assets/css/blue-9fc913b9.css" as="style">
+    <link rel="preload" href="/assets/css/darkBlue07-6a1dbdcd.css" as="style">
+    <link rel="preload" href="/assets/css/darkBlue-4c6e5058.css" as="style">
+    <link rel="preload" href="/assets/css/darkPurple-1af2b838.css" as="style">
+    <link rel="preload" href="/assets/css/darkRed-26452b45.css" as="style">
+    <link rel="preload" href="/assets/css/deepOrange-07a19c0a.css" as="style">
+    <link rel="preload" href="/assets/css/deepYellow-914dd515.css" as="style">
+    <link rel="preload" href="/assets/css/lightBlue-28ab5309.css" as="style">
+    <link rel="preload" href="/assets/css/red92-a0400b99.css" as="style">
+    <link rel="preload" href="/assets/css/red-51348544.css" as="style">
+    <title>Deshclub</title>
+    <!--app_config-->
+    <!--seo_meta-->
+
+    <script>
+        // Force lottery module to use this server only. This also clears old browser values saved by previous builds.
+        (function(){
+            try {
+                localStorage.setItem('ar_g_api_url', JSON.stringify({api:'', draw:''}));
+                localStorage.removeItem('api_url');
+                localStorage.removeItem('draw_url');
+            } catch(e) {}
+            window._CONFIG_ = window._CONFIG_ || {};
+            window._CONFIG_.api = '';
+            window._CONFIG_.draw = '';
+            window.__FORCE_LOCAL_API__ = true;
+
+            // Global fetch interceptor to catch login/register response and sync currency
+            const origFetch = window.fetch;
+            window.fetch = async function(...args) {
+                const res = await origFetch.apply(this, args);
+                try {
+                    const url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url ? args[0].url : '');
+                    if (url.includes('Login') || url.includes('Register') || url.includes('GetUserInfo') || url.includes('login') || url.includes('register')) {
+                        const clone = res.clone();
+                        clone.json().then(data => {
+                            if (data && data.data) {
+                                const payload = data.data;
+                                const userPhone = (payload.userName || payload.phone || payload.verifyMethods?.phone || '').toString();
+                                let isBD = false;
+                                if (payload.currency === 'BDT' || userPhone.startsWith('+880') || userPhone.startsWith('880') || userPhone.startsWith('01') || /^1[3-9]\d{8}$/.test(userPhone)) {
+                                    isBD = true;
+                                }
+                                const targetCurr = isBD ? 'BDT' : 'INR';
+                                const targetSymbol = isBD ? '৳' : '₹';
+                                const prevSign = sessionStorage.getItem('dollarSign');
+                                if (prevSign !== targetSymbol) {
+                                    sessionStorage.setItem('dollarSign', targetSymbol);
+                                    if (window._DATA_ && window._DATA_.homeSetting && window._DATA_.homeSetting.tenantConfig) {
+                                        window._DATA_.homeSetting.tenantConfig.tenantCurrency = targetCurr;
+                                        window._DATA_.homeSetting.tenantConfig.tenantCurrencyMarkCode = targetSymbol;
+                                    }
+                                    // Slight reload if currency changed upon successful login to refresh all view components
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 400);
+                                }
+                            }
+                        }).catch(() => {});
+                    }
+                } catch(e) {}
+                return res;
+            };
+        })();
+    </script>
+    <script type="module" crossorigin src="/js/index-BgAwOX9Q.js"></script>
+    <link rel="stylesheet" crossorigin href="/css/index-DgM0Jizq.css">
+
+
+    <style id="manual-gateway-responsive-fix">
+        /* v24: manual UPI gateway mobile polish */
+        .rechargeDetail__container,
+        .ar-dialog,
+        .bankInfo-main {
+            box-sizing: border-box;
+        }
+        .rechargeDetail__container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100dvh;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+        .rechargeDetail__container-header,
+        .rechargeDetail__container-body,
+        .Recharge__container-intro,
+        .bankInfo-main {
+            border-radius: 14px;
+        }
+        .bankInfo-main ul,
+        .bankInfo-main li {
+            width: 100%;
+            min-width: 0;
+        }
+        .bankInfo-main li p,
+        .bankInfo-main li div,
+        .list-detail-copy,
+        .rechargeDetail__container-body-input {
+            min-width: 0;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+        .rechargeDetail__container-body-input {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rechargeDetail__container-body-input .amount-input {
+            flex: 1 1 auto;
+            min-width: 0;
+            font-size: 16px;
+        }
+        .rechargeDetail__container-body-input .place-btn {
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+        .rechargeDetail__container-foot.fixBtn,
+        .rechargeDetail__container-foot {
+            width: 100%;
+            max-width: 430px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-sizing: border-box;
+            padding-left: 14px;
+            padding-right: 14px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
+        }
+        .rechargeDetail__container-foot button {
+            min-height: 44px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+        @media (max-width: 390px) {
+            .rechargeDetail__container-header,
+            .rechargeDetail__container-body {
+                margin-left: 10px !important;
+                margin-right: 10px !important;
+            }
+            .bankInfo-main li {
+                gap: 6px;
+            }
+            .bankInfo-main li span {
+                flex: 0 0 96px;
+            }
+        }
+    </style>
+
+    <script>
+        window.__VERSION__ = "1780451400000";
+        window.__BUILD_INFO__ = {
+            "version": "1780451400000",
+            "timestamp": "1780451400000",
+            "buildEnv": "production",
+            "buildMode": "production",
+            "buildId": "v24-history-myrecord-gateway",
+            "buildTime": "2026-06-03T01:40:00Z"
+        };
+    </script>
+    <meta name="description" content="Deshclub – Where the wealth happens.
+Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place. Enjoy rich events, high win potential, and massive rewards every day. With exciting gameplay and frequent bonuses, every round gives you a real chance to win big. Join now and start your winning journey."></meta>
+    <meta name="keywords" content="Deshclub"></meta>
+    <meta name="renderer" content="webkit"></meta>
+    <meta name="force-rendering" content="webkit"></meta>
+    <meta name="twitter:card" content="summary_large_image"></meta>
+    <meta name="twitter:title" content="Deshclub"></meta>
+    <meta name="twitter:url" content="dhaniwin.org"></meta>
+    <meta name="twitter:description" content="Deshclub – Where the wealth happens.
+Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place. Enjoy rich events, high win potential, and massive rewards every day. With exciting gameplay and frequent bonuses, every round gives you a real chance to win big. Join now and start your winning journey."></meta>
+    <meta name="twitter:image" content="/img/6006/other/083934987-42192-file_20260520083934973.webp"></meta>
+    <meta property="og:title" content="Deshclub"></meta>
+    <meta property="og:description" content="Deshclub – Where the wealth happens.
+Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place. Enjoy rich events, high win potential, and massive rewards every day. With exciting gameplay and frequent bonuses, every round gives you a real chance to win big. Join now and start your winning journey."></meta>
+    <meta property="og:type" content="website"></meta>
+    <meta property="og:url" content="dhaniwin.org"></meta>
+    <meta property="og:image" content="/img/6006/other/083934987-42192-file_20260520083934973.webp"></meta>
+    <meta property="og:site_name" content="Deshclub"></meta>
+    <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"></meta>
+    <meta name="apple-mobile-web-app-title" content="yes"></meta>
+    <meta name="mobile-web-app-capable" content="yes"></meta>
+    <meta name="format-detection" content="telephone=no,email=no,address=no"></meta>
+    <meta name="msapplication-TileColor" content="#24262b"></meta>
+    <link rel="icon" type="image/x-icon" href="/img/6006/other/043033085-29959-file_20260406043033085.webp"></link>
+    <link rel="icon" type="image/png" sizes="256x256" href="/img/6006/other/043027517-29958-file_20260406043027515.webp"></link>
+    <link rel="icon" type="image/png" sizes="512x512" href="/img/6006/other/043021744-29957-file_20260406043021730.webp"></link>
+    <link rel="manifest" href="/manifest.webmanifest"></link>
+    <link rel="canonical" href="https://dhaniwin.org"></link>
+    <link></link>
+    <script type="text/javascript" src="/webapi/kv/config.js"></script>
+    <script type="text/javascript" id="">
+        window._CONFIG_ = {
+            "ip": "2a06:98c0:3600::103",
+            "api": "",
+            "draw": "",
+            "country": "SG",
+            "host": "dhaniwin.org",
+            "tenantId": 6006,
+            "domainType": 1,
+            "status": 200
+        };
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        window.__rum = {
+            "pid": "1kryfn64w78@8b0a4884a38b6e4",
+            "endpoint": "https://1kryfn64w78-default-sea.rum.aliyuncs.com",
+            "env": "prod",
+            "spaMode": "history",
+            "collectors": {
+                "perf": true,
+                "webVitals": true,
+                "api": true,
+                "staticResource": true,
+                "jsError": true,
+                "consoleError": true,
+                "action": true
+            },
+            "tracing": true
+        };
+    </script>
+    <script>
+        (function() {
+            var l = function() {
+                var s = document.createElement('script');
+                s.src = 'data:text/javascript,/* rum disabled local build */';
+                s.crossOrigin = 'anonymous';
+                s.async = true;
+                document.head.appendChild(s);
+            };
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(l, {
+                    timeout: 3000
+                });
+            } else {
+                setTimeout(l, 2000);
+            }
+        })();
+    </script>
+    <script>
+        (function() {
+            let isFetching = false;
+            let categoriesData = null;
+
+            async function ensurePaymentMethods() {
+                const isRecharge = window.location.pathname.includes('/wallet/recharge') || 
+                                   window.location.hash.includes('/wallet/recharge') || 
+                                   !!document.querySelector('.payment-methods, .Recharge__container');
+                if (!isRecharge) return;
+
+                const optsContainer = document.querySelector('.payment-methods .payment-options, .payment-methods ul');
+                if (!optsContainer) return;
+
+                if (optsContainer.children.length > 0 && optsContainer.querySelector('.payment-item')) return;
+
+                if (isFetching) return;
+                isFetching = true;
+
+                try {
+                    if (!categoriesData) {
+                        const res = await fetch('/api/Recharge/GetRechargeCategoryList', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: '{}'
+                        });
+                        const data = await res.json();
+                        if (data && data.code === 0 && Array.isArray(data.data) && data.data.length > 0) {
+                            categoriesData = data.data;
+                        }
+                    }
+
+                    if (categoriesData && categoriesData.length > 0) {
+                        if (optsContainer.children.length === 0 || !optsContainer.querySelector('.payment-item')) {
+                            optsContainer.innerHTML = '';
+                            categoriesData.forEach((pm, idx) => {
+                                const li = document.createElement('li');
+                                li.style.cursor = 'pointer';
+                                const itemDiv = document.createElement('div');
+                                itemDiv.className = 'payment-item' + (idx === 0 ? ' active' : '');
+                                itemDiv.setAttribute('data-id', pm.id);
+                                itemDiv.innerHTML = '<div class="payment_img"><img class="img" src="' + (pm.iconUrl || pm.selectedIconUrl) + '" alt="' + pm.name + '"></div><div class="name">' + pm.name + '</div>';
+                                
+                                itemDiv.onclick = function() {
+                                    document.querySelectorAll('.payment-item').forEach(el => el.classList.remove('active'));
+                                    itemDiv.classList.add('active');
+                                    window.__SELECTED_PAYMENT_METHOD__ = pm;
+                                    updateLimitsAndAmounts(pm);
+                                };
+                                li.appendChild(itemDiv);
+                                optsContainer.appendChild(li);
+                            });
+
+                            window.__SELECTED_PAYMENT_METHOD__ = categoriesData[0];
+                            updateLimitsAndAmounts(categoriesData[0]);
+                        }
+                    }
+                } catch(e) {
+                    console.error('ensurePaymentMethods error:', e);
+                } finally {
+                    isFetching = false;
+                }
+            }
+
+            function updateLimitsAndAmounts(pm) {
+                // Update Min/Max display
+                const allP = Array.from(document.querySelectorAll('p, span, div'));
+                const minMaxEl = allP.find(el => el.innerText && el.innerText.includes('Min:') && el.innerText.includes('Max:'));
+                if (minMaxEl) {
+                    minMaxEl.innerHTML = 'Min: ৳' + (pm.minAmount || 100) + ' Max: ৳' + (pm.maxAmount || 25000);
+                }
+
+                // Update amount-grid if empty
+                const amountGrid = document.querySelector('.amount-grid');
+                if (amountGrid && amountGrid.children.length === 0) {
+                    const quicks = [100, 200, 300, 500, 1000, 2000, 5000, 10000];
+                    amountGrid.innerHTML = '';
+                    quicks.forEach((amt, i) => {
+                        const li = document.createElement('li');
+                        li.className = 'amount-item' + (i === 0 ? ' active' : '');
+                        li.style.cursor = 'pointer';
+                        li.innerHTML = '<span class="amount">৳' + amt + '</span>';
+                        li.onclick = function() {
+                            amountGrid.querySelectorAll('.amount-item').forEach(el => el.classList.remove('active'));
+                            li.classList.add('active');
+                            const input = document.querySelector('input[type="number"], .input-wrapper input, .recharge-input input');
+                            if (input) {
+                                input.value = amt;
+                                input.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        };
+                        amountGrid.appendChild(li);
+                    });
+
+                    // Set initial input amount to 100
+                    const input = document.querySelector('input[type="number"], .input-wrapper input, .recharge-input input');
+                    if (input && !input.value) {
+                        input.value = 100;
+                        input.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                }
+            }
+
+            // Global delegated click listener for "Pay now" button to guarantee instant checkout redirect
+            document.addEventListener('click', function(e) {
+                const target = e.target;
+                if (!target) return;
+                const btn = target.closest('.text_btn_main, .red-btn, .btn_main_style, [class*="btn_main"]');
+                if (!btn) return;
+                
+                const isRechargePage = window.location.hash.includes('/wallet/recharge') || window.location.pathname.includes('/wallet/recharge');
+                const text = (btn.innerText || '').trim().toLowerCase();
+                const isPayBtn = text.includes('pay') || text.includes('recharge') || text.includes('deposit') || btn.classList.contains('text_btn_main') || btn.classList.contains('red-btn');
+                
+                if (!isRechargePage && !isPayBtn) return;
+                if (!isPayBtn && !btn.classList.contains('text_btn_main')) return;
+
+                console.log('[INDEX_CLICK] INSTANT REDIRECT TO CASHIER! Text:', text);
+                e.preventDefault();
+                e.stopPropagation();
+
+                let amt = window.__SELECTED_AMOUNT__ || 100;
+                const input = document.querySelector('input[type="number"], .recharge-input input, .input-wrapper input');
+                if (input && input.value && Number(input.value) > 0) {
+                    amt = Number(input.value);
+                } else {
+                    const activeAmtEl = document.querySelector('.amount-grid .active, .amount-item.active');
+                    if (activeAmtEl) {
+                        const parsed = parseInt(activeAmtEl.innerText.replace(/[^0-9]/g, ''));
+                        if (parsed > 0) amt = parsed;
+                    }
+                }
+
+                let catId = 400102;
+                if (window.__SELECTED_PAYMENT_METHOD__ && window.__SELECTED_PAYMENT_METHOD__.id) {
+                    catId = Number(window.__SELECTED_PAYMENT_METHOD__.id);
+                } else {
+                    const activePm = document.querySelector('.payment-item.active');
+                    if (activePm && activePm.getAttribute('data-id')) {
+                        catId = Number(activePm.getAttribute('data-id'));
+                    }
+                }
+
+                const orderNo = 'PAY' + (new Date()).toISOString().replace(/[^0-9]/g, '').slice(0, 14) + Math.floor(1000 + Math.random() * 9000);
+                const dest = '/pay/?orderNo=' + encodeURIComponent(orderNo) + '&amount=' + encodeURIComponent(amt) + '&catId=' + encodeURIComponent(catId);
+
+                btn.innerText = 'Redirecting...';
+                btn.style.opacity = '0.7';
+
+                console.log('[INDEX_CLICK] Navigating now to:', dest);
+                window.location.href = dest;
+            }, true);
+
+            window.addEventListener('hashchange', ensurePaymentMethods);
+            window.addEventListener('popstate', ensurePaymentMethods);
+            setInterval(ensurePaymentMethods, 400);
+        })();
+    </script>
+</body>
+
+</html>

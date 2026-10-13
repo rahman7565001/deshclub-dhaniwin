@@ -1,0 +1,38 @@
+.new-subordinates-page[data-v-b5f35dfc] {
+    padding: 0 .4rem .32rem
+}
+
+.container[data-v-b5f35dfc] {
+    display: flex;
+    flex-direction: column;
+    padding: .32rem;
+    border-radius: .21333rem;
+    background: var(--bg_color_L2);
+    margin-top: .42667rem
+}
+
+.container .item[data-v-b5f35dfc] {
+    padding: .32rem 0
+}
+
+.container .item+.item[data-v-b5f35dfc] {
+    border-top: .01333rem solid var(--Dividing_line_color)
+}
+
+.container .item>div[data-v-b5f35dfc] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text_secondary);
+    font-size: .32rem;
+    gap: .16rem;
+    height: .53333rem
+}
+
+.container .item>div .d[data-v-b5f35dfc] {
+    color: var(--text_primary)
+}
+
+.container .item>div .b[data-v-b5f35dfc] {
+    font-size: .34667rem
+}

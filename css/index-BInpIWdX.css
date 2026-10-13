@@ -1,0 +1,123 @@
+.page-wrapper[data-v-f21f2634] {
+    width: 100%;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    background: var(--bg_color_L1);
+    padding-top: 1.44rem
+}
+
+.page-wrapper header[data-v-f21f2634] {
+    width: 100%;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    right: 0;
+    top: 0;
+    height: 1.44rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 .4rem;
+    z-index: 50
+}
+
+.page-wrapper header .head-left[data-v-f21f2634] {
+    position: relative;
+    z-index: 10;
+    display: flex
+}
+
+.page-wrapper header.bg[data-v-f21f2634] {
+    background: var(--bg_color_L2)
+}
+
+.page-wrapper header .back[data-v-f21f2634] {
+    width: .66667rem;
+    height: .66667rem
+}
+
+.page-wrapper header .head-title[data-v-f21f2634] {
+    margin-right: auto;
+    position: relative;
+    width: 100%;
+    height: 100%
+}
+
+.page-wrapper header .noTitle[data-v-f21f2634] {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    pointer-events: none;
+    font-size: .48rem;
+    color: var(--text_primary);
+    font-weight: 600;
+    margin-right: initial
+}
+
+.page-wrapper header .route-name[data-v-f21f2634] {
+    line-height: 1.44rem
+}
+
+.page-wrapper header .extra[data-v-f21f2634] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .21333rem
+}
+
+.page-wrapper header .extra .ar_icon[data-v-f21f2634] {
+    --secondary_color5: var(--main_color)
+}
+
+.page-wrapper header .extra>img[data-v-f21f2634] {
+    width: .53333rem;
+    height: .53333rem
+}
+
+.page-wrapper header .amount[data-v-f21f2634] {
+    min-width: 2.66667rem;
+    height: .85333rem;
+    padding: 0 .16rem;
+    display: flex;
+    align-items: center;
+    border-radius: .66667rem;
+    background: #2b1c1f;
+    box-shadow: 0 -.05333rem .05333rem #fc365740 inset
+}
+
+.page-wrapper header .amount img[data-v-f21f2634] {
+    width: .56rem;
+    height: .61333rem
+}
+
+.page-wrapper header .amount span[data-v-f21f2634] {
+    width: calc(100% - .56rem);
+    color: #fff;
+    text-align: center;
+    font-size: .37333rem;
+    font-weight: 400;
+    line-height: .48rem
+}
+
+.page-wrapper .icon[data-v-f21f2634] {
+    width: .64rem;
+    height: .64rem
+}
+
+.isOverfllow[data-v-f21f2634] {
+    overflow-x: hidden
+}
+
+.rich_div {
+    overflow-y: auto;
+    max-height: 10.66667rem
+}
+
+.rich_div p img {
+    width: 100%;
+    height: auto;
+    object-fit: contain
+}

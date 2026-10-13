@@ -1,0 +1,17 @@
+.vip_rules_body[data-v-b5b5896e] {
+    padding: .32rem .32rem .42667rem;
+    color: var(--text_primary);
+    font-size: .37333rem;
+    line-height: 1.6
+}
+
+.vip_rules_body[data-v-b5b5896e] img {
+    max-width: 100%;
+    height: auto
+}
+
+.vip_rules_body--fallback[data-v-b5b5896e] {
+    display: flex;
+    flex-direction: column;
+    gap: .42667rem
+}

@@ -1,0 +1,37 @@
+.badge-wrapper[data-v-da7837f1] {
+    position: relative
+}
+
+.badge[data-v-da7837f1] {
+    top: .10667rem;
+    right: 0;
+    transform: translate(50%, -50%);
+    transform-origin: 100%;
+    position: absolute;
+    padding: 0 .10667rem;
+    min-width: .53333rem;
+    height: .32rem;
+    box-sizing: border-box;
+    line-height: .32rem;
+    border-radius: .66667rem;
+    background: var(--main_gradient_color, linear-gradient(180deg, #06D6FD 0%, #0070F4 100%));
+    color: #fff;
+    font-size: .26667rem;
+    font-weight: 400
+}
+
+.badge.dot[data-v-da7837f1] {
+    width: .10667rem;
+    height: .10667rem;
+    padding: 0;
+    border-radius: 50%;
+    background: #fc2b53;
+    border: none;
+    transform: translate(50%, -50%)
+}
+
+.tab[data-v-da7837f1] {
+    right: -.37333rem;
+    line-height: 1.5;
+    font-size: .26667rem
+}

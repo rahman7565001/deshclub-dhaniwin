@@ -1,0 +1,35 @@
+13L Dhani.win fixes applied
+
+1) Lottery history/result compatibility
+- WinGo, K3, 5D/D5, TRX WinGo and MotoRace/MotoRacing now normalize gameCode, lotteryCode, typeId/gameType.
+- History response now includes multiple aliases used by different frontend builds: issueNumber, issueNo, issue, number, numberValue, resultNumber, premium, result, openCode, sum, sumValue.
+- MotoRace history returns 10-rank comma premium and first-rank number.
+
+2) Bet history / game history
+- GetRecordPage resolves gameCode from request and settles only completed old issues.
+- Current active issue stays pending, so the UI does not show an instant loss before result.
+- GetWinLossResult returns isPending/state fields for pending bets.
+
+3) Payout rates
+- WinGo/TRX number bet payout changed to 8.2x.
+- WinGo/TRX red/green and big/small payout changed to 1.8x.
+- Violet remains 4.5x.
+
+4) Spin wheel
+- Daily spin defaults are protected with minimum count.
+- Extra spin fallback setting added: wheel_allow_daily_extra_spin = 1.
+- Spin APIs keep compatible prizeAmount/rewardAmount/isWin fields.
+
+5) Game list
+- Lottery/GetGameList now returns grouped category data with gameList arrays, so the frontend can switch games correctly.
+- Game/GetGameDrawTimeList still uses the flat list.
+
+6) Admin panel UI
+- Admin sidebar and navbar updated to a more premium dark glass UI.
+- Sidebar icons added for dashboard, live, API, games, results, users, UPI, orders, bonus, wheel, agents, settings, security, popups, tester and audit.
+- Cards, buttons, table hover, inputs and live cards improved.
+
+Important deployment notes:
+- Upload all files, not only api/_bootstrap.php, because admin/index.php is also updated.
+- If using MySQL, set DHANI_DB_DRIVER=mysql and DB credentials in environment or config.
+- If SQLite is used, server PHP must have pdo_sqlite enabled.

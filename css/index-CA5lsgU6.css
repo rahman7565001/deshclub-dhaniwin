@@ -1,0 +1,43 @@
+.lang_container[data-v-4e91800d] {
+    padding: .21333rem .4rem
+}
+
+.c[data-v-4e91800d] {
+    background: var(--bg_color_L2);
+    color: var(--text_color_L1);
+    border-radius: .16rem;
+    padding: 0 .32rem
+}
+
+.c .i[data-v-4e91800d] {
+    height: 1.28rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.c .i+.i[data-v-4e91800d] {
+    border-top: .01333rem solid var(--Dividing_line_color)
+}
+
+.c .i>div[data-v-4e91800d] {
+    display: flex;
+    align-items: center;
+    gap: .21333rem
+}
+
+.c .i span[data-v-4e91800d] {
+    font-size: .37333rem;
+    font-weight: 500;
+    color: var(--text_primary);
+    text-transform: uppercase
+}
+
+.c .language[data-v-4e91800d] {
+    width: .64rem;
+    height: .64rem
+}
+
+.c .tick[data-v-4e91800d] {
+    color: var(--text_color_L1)
+}
