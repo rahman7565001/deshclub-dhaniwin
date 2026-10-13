@@ -3703,11 +3703,6 @@ function api_user_withdraw_wallet_payload(array $input): array
             $stmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE user_id = ? AND withdraw_type = ? AND status = 1 ORDER BY id DESC");
             $stmt->execute([$userId, $withdrawType]);
             $rows = $stmt->fetchAll();
-            if (empty($rows)) {
-                $stmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE user_id = ? AND status = 1 ORDER BY id DESC");
-                $stmt->execute([$userId]);
-                $rows = $stmt->fetchAll();
-            }
         } else {
             $stmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE user_id = ? AND status = 1 ORDER BY id DESC");
             $stmt->execute([$userId]);
