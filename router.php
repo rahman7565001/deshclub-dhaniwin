@@ -98,6 +98,10 @@ if (preg_match('#/bankLogo/(052212261|052214587)#i', $uri)) {
 
 // 2. Direct API routes (Recharge, Withdraw, Activity, User, Home, Game, Lottery, ThirdGame, VipLevel, AgentRebate, WorkOrder)
 if (preg_match('#^/(?:webapi/|api/)?(Recharge|Withdraw|Activity|User|Home|Game|Lottery|ThirdGame|VipLevel|AgentRebate|WorkOrder)/(.*)$#i', $uri, $m)) {
+    if (file_exists($filePath) && !is_dir($filePath) && pathinfo($filePath, PATHINFO_EXTENSION) === 'php') {
+        require $filePath;
+        exit;
+    }
     $_GET['path'] = $m[1] . '/' . $m[2];
     require $docRoot . '/api/_router.php';
     exit;

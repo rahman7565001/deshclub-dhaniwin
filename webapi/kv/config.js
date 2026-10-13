@@ -4,6 +4,7 @@
         "game": [],
         "homeSetting": {
             "baseConfig": {
+                "selfLotteryMode": "0",
                 "webSiteName": "Deshclub",
                 "headerLogo": "/img/6006/other/042954624-29954-file_20260406042954622.webp",
                 "headerLogo2": "/img/6006/other/043007516-29955-file_20260406043007514.webp",

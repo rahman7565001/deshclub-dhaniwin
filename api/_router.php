@@ -27,6 +27,14 @@ if ($dynamic !== null) {
 
 // 2. Load and execute physical subfolder PHP endpoint files if they exist and are not router stubs
 $phpFile = __DIR__ . '/' . $endpoint . '.php';
+if (!file_exists($phpFile)) {
+    $parts = explode('/', $endpoint);
+    $parts[0] = ucfirst(strtolower($parts[0]));
+    $alt = __DIR__ . '/' . implode('/', $parts) . '.php';
+    if (file_exists($alt)) {
+        $phpFile = $alt;
+    }
+}
 if (file_exists($phpFile)) {
     $content = file_get_contents($phpFile);
     if (strpos($content, '_router.php') === false) {

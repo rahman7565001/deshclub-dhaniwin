@@ -4067,7 +4067,46 @@ function api_thirdgame_get_game_url(array $input): array
     $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'] ?? 'localhost:8000';
     $baseUrl = $protocol . '://' . $host;
 
-    $gameUrl = $baseUrl . '/aviator/index.php?token=' . urlencode($token);
+    // 1. Lottery games
+    $isLottery = ($vendorCode === 'ARLottery') 
+        || preg_match('/^(WinGo|K3|D5|5D|TrxWinGo|MotoRace|VideoWinGo)/i', $gameCode);
+
+    if ($isLottery) {
+        $lottery = 'WinGo';
+        if (stripos($gameCode, 'TrxWinGo') === 0) {
+            $lottery = 'TrxWinGo';
+        } elseif (stripos($gameCode, 'WinGo') === 0) {
+            $lottery = 'WinGo';
+        } elseif (stripos($gameCode, 'K3') === 0) {
+            $lottery = 'K3';
+        } elseif (stripos($gameCode, 'D5') === 0 || stripos($gameCode, '5D') === 0) {
+            $lottery = 'D5';
+        } elseif (stripos($gameCode, 'MotoRace') === 0) {
+            $lottery = 'MotoRace';
+        } elseif (stripos($gameCode, 'VideoWinGo') === 0) {
+            $lottery = 'VideoWinGo';
+        } else {
+            $parts = explode('_', $gameCode);
+            $lottery = $parts[0] ?: 'WinGo';
+        }
+        $gameUrl = $baseUrl . '/#/' . $lottery . '/' . urlencode($gameCode) . '?Token=' . urlencode($token) . '&token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 2. Aviator
+    if ($gameCode === '804' || stripos($gameCode, 'aviator') !== false || $gameCode === 'Spribe_Aviator' || $gameId === 23604 || stripos($vendorCode, 'aviator') !== false) {
+        $gameUrl = $baseUrl . '/aviator/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 3. Slot / Casino games
+    $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
     return api_success([
         'url' => $gameUrl,
         'returnType' => 1
