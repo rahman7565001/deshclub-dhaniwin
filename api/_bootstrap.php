@@ -3817,6 +3817,40 @@ function api_add_user_withdraw_wallet_payload(array $input): array
     return api_success(true);
 }
 
+function api_delete_user_withdraw_wallet_payload(array $input): array
+{
+    $pdo = api_pdo();
+    $user = api_primary_user();
+    $userId = (int) ($user['user_id'] ?? 599822);
+    $walletId = (int) api_param($input, 'walletId', api_param($input, 'id', 0));
+    $withdrawType = trim((string) api_param($input, 'withdrawType', ''));
+
+    if ($pdo) {
+        try {
+            if ($walletId > 0) {
+                $stmt = $pdo->prepare("DELETE FROM user_withdraw_wallets WHERE user_id = ? AND id = ?");
+                $stmt->execute([$userId, $walletId]);
+            } elseif ($withdrawType !== '') {
+                $stmt = $pdo->prepare("DELETE FROM user_withdraw_wallets WHERE user_id = ? AND withdraw_type = ?");
+                $stmt->execute([$userId, $withdrawType]);
+            } else {
+                $stmt = $pdo->prepare("DELETE FROM user_withdraw_wallets WHERE user_id = ?");
+                $stmt->execute([$userId]);
+            }
+        } catch (Throwable $e) {
+            return api_error('Failed to remove withdrawal account: ' . $e->getMessage(), 500, -1);
+        }
+    }
+
+    api_audit('delete_withdraw_wallet', (string) $walletId, [
+        'user_id' => $userId,
+        'wallet_id' => $walletId,
+        'withdraw_type' => $withdrawType,
+    ]);
+
+    return api_success(true);
+}
+
 function api_withdraw_submit_payload(array $input): array
 {
     if (!api_setting_bool('withdraw_enabled', true)) {
@@ -4451,6 +4485,9 @@ function api_explicit_dynamic_response(string $endpoint, array $input): ?array
     }
     if ($e === 'withdraw/adduserwithdrawwallet') {
         return api_add_user_withdraw_wallet_payload($input);
+    }
+    if ($e === 'withdraw/deleteuserwithdrawwallet' || $e === 'withdraw/removeuserwithdrawwallet' || $e === 'withdraw/deluserwithdrawwallet') {
+        return api_delete_user_withdraw_wallet_payload($input);
     }
     if ($e === 'withdraw/getwithdrawhistory' || $e === 'withdraw/getwithdrawrecordpage') {
         return api_withdraw_history_payload($input);
