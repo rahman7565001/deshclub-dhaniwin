@@ -339,6 +339,7 @@ const server = http.createServer((req, res) => {
       const createTime = Date.now();
 
       // Forward to PHP in background so order is recorded into SQLite recharge_orders table
+      const forwardPayload = JSON.stringify({ ...parsed, orderNo: orderNo, amount: amount, rechargeCategoryId: catId });
       const backgroundReq = http.request({
         hostname: '127.0.0.1',
         port: PHP_PORT,
@@ -346,11 +347,11 @@ const server = http.createServer((req, res) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(bodyStr || '{}')
+          'Content-Length': Buffer.byteLength(forwardPayload)
         }
       }, () => {});
       backgroundReq.on('error', () => {});
-      backgroundReq.write(bodyStr || '{}');
+      backgroundReq.write(forwardPayload);
       backgroundReq.end();
 
       const clientHost = req.headers['x-forwarded-host'] || req.headers.host || `localhost:${PORT}`;

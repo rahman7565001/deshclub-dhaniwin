@@ -84,15 +84,15 @@ $recentBets = $db->query("SELECT * FROM aviator_bets ORDER BY id DESC LIMIT 15")
         </div>
         <div class="card">
             <div class="title">Total Stakes</div>
-            <div class="value">₹<?= number_format($totalStakes, 2) ?></div>
+            <div class="value">৳<?= number_format($totalStakes, 2) ?></div>
         </div>
         <div class="card">
             <div class="title">Total Payouts</div>
-            <div class="value">₹<?= number_format($totalPayouts, 2) ?></div>
+            <div class="value">৳<?= number_format($totalPayouts, 2) ?></div>
         </div>
         <div class="card">
             <div class="title">House Net Profit</div>
-            <div class="value profit">₹<?= number_format($profit, 2) ?></div>
+            <div class="value profit">৳<?= number_format($profit, 2) ?></div>
         </div>
     </div>
 

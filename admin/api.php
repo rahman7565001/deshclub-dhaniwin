@@ -42,17 +42,32 @@ function verify_csrf(): bool
     return $sessionToken !== '' && hash_equals($sessionToken, $token);
 }
 
-// 1. Check logged in status
-if (!AuthController::checkRememberMe() && empty($_SESSION['admin_logged_in'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized. Please login.']);
-    exit;
-}
-
 $action = (string)($_REQUEST['action'] ?? '');
 if ($action === '') {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Action parameter is required']);
+    exit;
+}
+
+if ($action === 'login') {
+    $username = trim((string)($_POST['username'] ?? ''));
+    $password = (string)($_POST['password'] ?? '');
+    $remember = !empty($_POST['remember']);
+    $res = AuthController::login($username, $password, $remember);
+    if ($res['success']) {
+        if (empty($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = bin2hex(random_bytes(32));
+        }
+        $res['csrf'] = $_SESSION['csrf'];
+    }
+    echo json_encode($res);
+    exit;
+}
+
+// 1. Check logged in status
+if (!AuthController::checkRememberMe() && empty($_SESSION['admin_logged_in'])) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => 'Unauthorized. Please login.']);
     exit;
 }
 

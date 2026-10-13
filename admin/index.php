@@ -278,31 +278,31 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
               <!-- 2. User Wallet (Purple Accent) -->
               <div class="glass-panel stat-card" style="border-left: 4px solid var(--accent-purple);">
                 <div class="stat-title text-purple">Total User Wallets</div>
-                <div class="stat-value text-white" id="stat-user-wallet">₹0.00</div>
+                <div class="stat-value text-white" id="stat-user-wallet">৳0.00</div>
                 <div class="stat-change text-purple"><i class="fas fa-wallet"></i> Database holdings</div>
               </div>
               <!-- 3. Today's Recharge (Green Accent) -->
               <div class="glass-panel stat-card" style="border-left: 4px solid var(--accent-green);">
                 <div class="stat-title text-green">Today's Recharges</div>
-                <div class="stat-value text-white" id="stat-today-recharges">₹0.00</div>
-                <div class="stat-change text-green" id="stat-total-recharges"><i class="fas fa-arrow-circle-down"></i> Total: ₹0.00</div>
+                <div class="stat-value text-white" id="stat-today-recharges">৳0.00</div>
+                <div class="stat-change text-green" id="stat-total-recharges"><i class="fas fa-arrow-circle-down"></i> Total: ৳0.00</div>
               </div>
               <!-- 4. Today's Withdrawal (Red Accent) -->
               <div class="glass-panel stat-card" style="border-left: 4px solid var(--accent-red);">
                 <div class="stat-title text-red">Today's Withdrawals</div>
-                <div class="stat-value text-white" id="stat-today-withdrawals">₹0.00</div>
-                <div class="stat-change text-red" id="stat-total-withdrawals"><i class="fas fa-arrow-circle-up"></i> Total: ₹0.00</div>
+                <div class="stat-value text-white" id="stat-today-withdrawals">৳0.00</div>
+                <div class="stat-change text-red" id="stat-total-withdrawals"><i class="fas fa-arrow-circle-up"></i> Total: ৳0.00</div>
               </div>
               <!-- 5. Pending Recharge (Orange Accent) -->
               <div class="glass-panel stat-card" style="border-left: 4px solid var(--accent-orange);">
                 <div class="stat-title text-orange">Pending Deposits</div>
-                <div class="stat-value text-white" id="stat-pending-recharges">₹0.00</div>
+                <div class="stat-value text-white" id="stat-pending-recharges">৳0.00</div>
                 <div class="stat-change text-orange" id="stat-pending-recharges-count"><i class="fas fa-clock"></i> 0 requests pending</div>
               </div>
               <!-- 6. Today's Profit (Gold Accent) -->
               <div class="glass-panel stat-card" style="border-left: 4px solid var(--accent-gold);">
                 <div class="stat-title text-gold">Today's Net Profit</div>
-                <div class="stat-value text-white" id="stat-today-profit">₹0.00</div>
+                <div class="stat-value text-white" id="stat-today-profit">৳0.00</div>
                 <div class="stat-change text-gold"><i class="fas fa-chart-line"></i> Financial net index</div>
               </div>
             </div>
@@ -393,11 +393,11 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                       </div>
                       <div class="col-4 border-end" style="border-color: var(--border-light) !important;">
                         <span class="text-muted small">Total Pool</span>
-                        <div class="fw-bold text-success">₹<?php echo number_format((float)$item['stats']['stake_total'], 2); ?></div>
+                        <div class="fw-bold text-success">৳<?php echo number_format((float)$item['stats']['stake_total'], 2); ?></div>
                       </div>
                       <div class="col-4">
                         <span class="text-muted small">Payout</span>
-                        <div class="fw-bold text-warning">₹<?php echo number_format((float)$item['stats']['win_total'], 2); ?></div>
+                        <div class="fw-bold text-warning">৳<?php echo number_format((float)$item['stats']['win_total'], 2); ?></div>
                       </div>
                     </div>
                     <form action="api.php" method="post">
@@ -566,8 +566,7 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                     <button id="btn-bulk-approve-recharge" class="btn btn-success"><i class="fas fa-check-double"></i> Bulk Approve</button>
                     <select id="recharge-status-filter" class="form-select form-control-premium" style="width: 180px;">
                         <option value="">All Statuses</option>
-                        <option value="Pending" selected>Pending</option>
-                        <option value="PendingReview">Pending Review</option>
+                        <option value="Pending" selected>Pending / Review</option>
                         <option value="Approved">Approved</option>
                         <option value="Rejected">Rejected</option>
                     </select>
@@ -619,7 +618,7 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                 <h2 class="fw-bold m-0"><i class="fas fa-arrow-alt-circle-up text-gold me-2"></i> Withdrawal Payouts</h2>
                 <select id="withdrawal-status-filter" class="form-select form-control-premium" style="width: 180px;">
                     <option value="">All Statuses</option>
-                    <option value="Pending" selected>Pending</option>
+                    <option value="Pending" selected>Pending / Review</option>
                     <option value="Approved">Approved</option>
                     <option value="Rejected">Rejected</option>
                 </select>
@@ -684,7 +683,7 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                           </div>
                           <div class="col-6">
                             <div>Total Commission</div>
-                            <strong class="text-success fs-6">₹<?php echo number_format($stats['total_commission'], 2); ?></strong>
+                            <strong class="text-success fs-6">৳<?php echo number_format($stats['total_commission'], 2); ?></strong>
                           </div>
                         </div>
                       </div>
@@ -722,8 +721,8 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                                     <td><?php echo htmlspecialchars($comm['player_name'] ?? 'Player ' . $comm['from_user_id']); ?></td>
                                     <td><code><?php echo $comm['bet_order_no']; ?></code></td>
                                     <td>L<?php echo $comm['commission_level']; ?></td>
-                                    <td>₹<?php echo number_format((float)$comm['bet_amount'], 2); ?></td>
-                                    <td class="text-success fw-bold">+₹<?php echo number_format((float)$comm['commission_amount'], 4); ?></td>
+                                    <td>৳<?php echo number_format((float)$comm['bet_amount'], 2); ?></td>
+                                    <td class="text-success fw-bold">+৳<?php echo number_format((float)$comm['commission_amount'], 4); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                             <?php if (empty($agentCommissions)): ?>
@@ -1235,7 +1234,7 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
                       <span class="text-secondary small">ACTIVE STAKES POOL</span>
-                      <h3 class="fw-bold text-success m-0" id="game-total-pool">₹0.00</h3>
+                      <h3 class="fw-bold text-success m-0" id="game-total-pool">৳0.00</h3>
                     </div>
                     <i class="fas fa-coins text-gold fs-2"></i>
                   </div>
@@ -1309,7 +1308,7 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                         <input name="code" class="form-control form-control-premium" placeholder="e.g. WELCOME500" required>
                       </div>
                       <div class="mb-3">
-                        <label class="form-label text-secondary small fw-bold">Prize Value (₹)</label>
+                        <label class="form-label text-secondary small fw-bold">Prize Value (৳)</label>
                         <input type="number" name="prize_amount" step="0.01" class="form-control form-control-premium" placeholder="e.g. 50" required>
                       </div>
                       <div class="mb-3">
@@ -1362,13 +1361,13 @@ $hasAccess = admin_has_permission($requiredPermissions[$tab]);
                     <input type="hidden" name="csrf" value="<?php echo $csrfToken; ?>">
                     
                     <div class="col-md-6">
-                        <label class="form-label text-secondary small fw-bold">Active Members Requirement (Recharge >= ₹500)</label>
+                        <label class="form-label text-secondary small fw-bold">Active Members Requirement (Recharge >= ৳500)</label>
                         <?php $req = api_setting('salary_req_members', '5'); ?>
                         <input name="setting_value" class="form-control form-control-premium" value="<?php echo htmlspecialchars($req); ?>">
                         <input type="hidden" name="setting_key" value="salary_req_members">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label text-secondary small fw-bold">Daily Salary Payout (₹)</label>
+                        <label class="form-label text-secondary small fw-bold">Daily Salary Payout (৳)</label>
                         <?php $pay = api_setting('salary_payout_amount', '500'); ?>
                         <input name="setting_value" class="form-control form-control-premium" value="<?php echo htmlspecialchars($pay); ?>">
                         <input type="hidden" name="setting_key" value="salary_payout_amount">

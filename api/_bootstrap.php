@@ -3303,7 +3303,10 @@ function api_recharge_to_pay_payload(array $input): array
         return api_error('Amount outside payment method limit', 410, -1);
     }
 
-    $orderNo = 'PAY' . date('YmdHis') . mt_rand(1000, 9999);
+    $orderNo = trim((string) api_param($input, 'orderNo', api_param($input, 'merchantOrderNo', api_param($input, 'order_no', ''))));
+    if ($orderNo === '') {
+        $orderNo = 'PAY' . date('YmdHis') . mt_rand(1000, 9999);
+    }
     $createTime = api_now_ms();
     $frontType = api_recharge_front_type((string) ($method['method_type'] ?? 'UPI'));
     $raw = [
@@ -3861,7 +3864,49 @@ function api_withdraw_submit_payload(array $input): array
         return api_error('Insufficient balance', 142, -1, ['balance' => (float) $user['wallet_balance']]);
     }
     $orderNo = 'WD' . date('YmdHis') . mt_rand(1000, 9999);
+    $wType = strtoupper((string) api_param($input, 'withdrawType', 'BKASH'));
+    $walletId = (int) api_param($input, 'walletId', api_param($input, 'userWithdrawWalletId', 0));
+    $accountData = [];
+
     if ($pdo) {
+        if ($walletId > 0) {
+            $wStmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE id = ? LIMIT 1");
+            $wStmt->execute([$walletId]);
+            $wRow = $wStmt->fetch();
+            if ($wRow) {
+                $accountData = [
+                    'walletId' => (int) $wRow['id'],
+                    'accountNo' => (string) $wRow['account_no'],
+                    'holderName' => (string) $wRow['holder_name'],
+                    'withdrawType' => (string) $wRow['withdraw_type'],
+                    'bankName' => (string) ($wRow['bank_name'] ?: $wRow['withdraw_type']),
+                    'mobileNo' => (string) ($wRow['mobile_no'] ?: $wRow['account_no']),
+                ];
+                $wType = strtoupper((string) $wRow['withdraw_type']);
+            }
+        }
+        if (empty($accountData)) {
+            $wStmt = $pdo->prepare("SELECT * FROM user_withdraw_wallets WHERE user_id = ? AND UPPER(withdraw_type) = ? AND status = 1 ORDER BY id DESC LIMIT 1");
+            $wStmt->execute([$user['id'], $wType]);
+            $wRow = $wStmt->fetch();
+            if ($wRow) {
+                $accountData = [
+                    'walletId' => (int) $wRow['id'],
+                    'accountNo' => (string) $wRow['account_no'],
+                    'holderName' => (string) $wRow['holder_name'],
+                    'withdrawType' => (string) $wRow['withdraw_type'],
+                    'bankName' => (string) ($wRow['bank_name'] ?: $wRow['withdraw_type']),
+                    'mobileNo' => (string) ($wRow['mobile_no'] ?: $wRow['account_no']),
+                ];
+            } else {
+                $accountData = [
+                    'accountNo' => (string) api_param($input, 'accountNo', api_param($input, 'mobileNo', '')),
+                    'holderName' => (string) api_param($input, 'holderName', $user['username'] ?? 'Member'),
+                    'withdrawType' => $wType,
+                ];
+            }
+        }
+
         try {
             $pdo->beginTransaction();
             $stmt = $pdo->prepare("UPDATE api_users SET wallet_balance = wallet_balance - ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND wallet_balance >= ?");
@@ -3870,17 +3915,31 @@ function api_withdraw_submit_payload(array $input): array
                 $pdo->rollBack();
                 return api_error('Insufficient balance', 142, -1, ['balance' => (float) $user['wallet_balance']]);
             }
-            $stmt = $pdo->prepare("INSERT INTO withdraw_orders (order_no, user_id, withdraw_type, amount, status, account_json, updated_at) VALUES (?, ?, ?, ?, 'Pending', ?, CURRENT_TIMESTAMP)");
-            $stmt->execute([$orderNo, $user['id'], (string) api_param($input, 'withdrawType', 'UPI'), $amount, api_json_value($input['params'] ?? [])]);
+
+            $accountJson = json_encode($accountData, JSON_UNESCAPED_UNICODE);
+            $stmt = $pdo->prepare("INSERT INTO withdraw_orders (order_no, user_id, withdraw_type, amount, status, account_json, payment_type, created_at, updated_at) VALUES (?, ?, ?, ?, 'Pending', ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+            $stmt->execute([$orderNo, $user['id'], $wType, $amount, $accountJson, $wType]);
+
+            $oldBal = (float) $user['wallet_balance'];
+            $newBal = $oldBal - $amount;
+            $logStmt = $pdo->prepare("INSERT INTO wallet_logs (user_id, type, amount, balance_before, balance_after, notes) VALUES (?, 'withdraw', ?, ?, ?, ?)");
+            $logStmt->execute([
+                (int) ($user['user_id'] ?? 599822),
+                -$amount,
+                $oldBal,
+                $newBal,
+                "Withdrawal application submitted ($wType: " . ($accountData['accountNo'] ?? '') . ", Order: $orderNo)"
+            ]);
+
             $pdo->commit();
         } catch (Throwable $e) {
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
             }
-            return api_error('Withdraw failed', 403, -1);
+            return api_error('Withdraw failed: ' . $e->getMessage(), 403, -1);
         }
     }
-    api_audit('withdraw_order', $orderNo, ['amount' => $amount]);
+    api_audit('withdraw_order', $orderNo, ['amount' => $amount, 'method' => $wType]);
     return api_success(['orderNo' => $orderNo, 'amount' => $amount, 'status' => 'Pending']);
 }
 
@@ -4487,7 +4546,7 @@ function api_explicit_dynamic_response(string $endpoint, array $input): ?array
     if ($e === 'withdraw/getwithdrawhistory' || $e === 'withdraw/getwithdrawrecordpage') {
         return api_withdraw_history_payload($input);
     }
-    if ($e === 'withdraw/withdrawapply' || $e === 'withdraw/sumitwithdraw' || $e === 'withdraw/submitwithdraw' || $e === 'withdraw/addwithdraworder') {
+    if ($e === 'withdraw/withdrawapply' || $e === 'withdraw/applywithdraw' || $e === 'withdraw/sumitwithdraw' || $e === 'withdraw/submitwithdraw' || $e === 'withdraw/addwithdraworder') {
         return api_withdraw_submit_payload($input);
     }
     return null;

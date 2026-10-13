@@ -51,18 +51,18 @@ $(document).ready(function() {
                 $('#stat-total-users').text(s.users.total);
                 $('#stat-today-users').html('<i class="fas fa-user-plus"></i> +' + s.users.today + ' today');
                 
-                $('#stat-user-wallet').text('₹' + s.user_wallet.total.toFixed(2));
+                $('#stat-user-wallet').text('৳' + s.user_wallet.total.toFixed(2));
                 
-                $('#stat-today-recharges').text('₹' + s.recharge.today.toFixed(2));
-                $('[id="stat-total-recharges"]').html('<i class="fas fa-arrow-circle-down"></i> Total: ₹' + s.recharge.total.toFixed(2));
+                $('#stat-today-recharges').text('৳' + s.recharge.today.toFixed(2));
+                $('[id="stat-total-recharges"]').html('<i class="fas fa-arrow-circle-down"></i> Total: ৳' + s.recharge.total.toFixed(2));
                 
-                $('#stat-today-withdrawals').text('₹' + s.withdraw.today.toFixed(2));
-                $('[id="stat-total-withdrawals"]').html('<i class="fas fa-arrow-circle-up"></i> Total: ₹' + s.withdraw.total.toFixed(2));
+                $('#stat-today-withdrawals').text('৳' + s.withdraw.today.toFixed(2));
+                $('[id="stat-total-withdrawals"]').html('<i class="fas fa-arrow-circle-up"></i> Total: ৳' + s.withdraw.total.toFixed(2));
                 
-                $('#stat-pending-recharges').text('₹' + s.recharge.pending.toFixed(2));
+                $('#stat-pending-recharges').text('৳' + s.recharge.pending.toFixed(2));
                 $('#stat-pending-recharges-count').html('<i class="fas fa-clock"></i> ' + s.recharge.pending_count + ' requests pending');
                 
-                $('#stat-today-profit').text('₹' + s.profit.today.toFixed(2));
+                $('#stat-today-profit').text('৳' + s.profit.today.toFixed(2));
             }
         });
     }
@@ -138,8 +138,8 @@ $(document).ready(function() {
                 { data: 'username' },
                 { data: 'nickname' },
                 { data: 'phone' },
-                { data: 'wallet_balance', render: d => '₹' + d.toFixed(2) },
-                { data: 'game_balance', render: d => '₹' + d.toFixed(2) },
+                { data: 'wallet_balance', render: d => '৳' + d.toFixed(2) },
+                { data: 'game_balance', render: d => '৳' + d.toFixed(2) },
                 { 
                     data: 'can_bet',
                     render: function(d, t, row) {
@@ -248,7 +248,7 @@ $(document).ready(function() {
                 { data: 'order_no' },
                 { data: 'player_id' },
                 { data: 'username' },
-                { data: 'amount', render: d => '₹' + d.toFixed(2) },
+                { data: 'amount', render: d => '৳' + d.toFixed(2) },
                 { data: 'payment_type' },
                 { 
                     data: 'status',
@@ -270,7 +270,7 @@ $(document).ready(function() {
                 {
                     data: 'id',
                     render: function(d, t, row) {
-                        if (row.status === 'Pending' || row.status === 'PendingReview') {
+                        if (row.status === 'Pending' || row.status === 'PendingReview' || row.status === 'Wait' || row.status === 'Processing') {
                             return `
                                 <button class="btn btn-sm btn-success approve-recharge-btn" data-id="${d}">Approve</button>
                                 <button class="btn btn-sm btn-danger reject-recharge-btn" data-id="${d}">Reject</button>
@@ -366,7 +366,7 @@ $(document).ready(function() {
                 { data: 'order_no' },
                 { data: 'player_id' },
                 { data: 'username' },
-                { data: 'amount', render: d => '₹' + d.toFixed(2) },
+                { data: 'amount', render: d => '৳' + d.toFixed(2) },
                 { data: 'payment_type' },
                 { 
                     data: 'status',
@@ -397,7 +397,7 @@ $(document).ready(function() {
                 {
                     data: 'id',
                     render: function(d, t, row) {
-                        if (row.status === 'Pending') {
+                        if (row.status === 'Pending' || row.status === 'PendingReview' || row.status === 'Wait' || row.status === 'Processing') {
                             return `
                                 <button class="btn btn-sm btn-success approve-withdraw-btn" data-id="${d}">Approve</button>
                                 <button class="btn btn-sm btn-danger reject-withdraw-btn" data-id="${d}">Reject</button>
@@ -569,7 +569,7 @@ $(document).ready(function() {
                     // Update UI Labels
                     $('#game-active-issue').text(currentIssueNumber);
                     $('#game-forced-status').text(data.forced_outcome ? data.forced_outcome : 'None');
-                    $('#game-total-pool').text('₹' + data.total_bets_pool.toFixed(2));
+                    $('#game-total-pool').text('৳' + data.total_bets_pool.toFixed(2));
                     
                     // Update timer minutes/seconds
                     const countdown = parseInt(data.issue.countdown);
@@ -588,7 +588,7 @@ $(document).ready(function() {
                                     <td>${b.player_id}</td>
                                     <td><strong>${b.username}</strong></td>
                                     <td><span class="badge bg-secondary">${b.bet_content}</span></td>
-                                    <td class="text-white">₹${b.stake_amount.toFixed(2)}</td>
+                                    <td class="text-white">৳${b.stake_amount.toFixed(2)}</td>
                                 </tr>
                             `;
                         });
@@ -672,7 +672,7 @@ $(document).ready(function() {
                         html += `
                             <tr>
                                 <td><strong>${c.code}</strong></td>
-                                <td>₹${parseFloat(c.prize_amount).toFixed(2)}</td>
+                                <td>৳${parseFloat(c.prize_amount).toFixed(2)}</td>
                                 <td>${c.max_redeem}</td>
                                 <td>${c.redeemed_count}</td>
                                 <td>

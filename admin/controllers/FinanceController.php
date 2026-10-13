@@ -27,8 +27,12 @@ class FinanceController
             }
             
             if ($statusFilter !== "") {
-                $conditions[] = "r.status = ?";
-                $args[] = $statusFilter;
+                if (strtolower($statusFilter) === 'pending') {
+                    $conditions[] = "(r.status = 'Pending' OR r.status = 'PendingReview' OR r.status = 'Wait')";
+                } else {
+                    $conditions[] = "r.status = ?";
+                    $args[] = $statusFilter;
+                }
             }
 
             $whereClause = !empty($conditions) ? " WHERE " . implode(" AND ", $conditions) : "";
@@ -36,7 +40,7 @@ class FinanceController
             $totalQuery = "SELECT COUNT(*) FROM recharge_orders";
             $totalRecords = (int)$pdo->query($totalQuery)->fetchColumn();
 
-            $filteredQuery = "SELECT COUNT(*) FROM recharge_orders r LEFT JOIN api_users u ON u.id = r.user_id" . $whereClause;
+            $filteredQuery = "SELECT COUNT(*) FROM recharge_orders r LEFT JOIN api_users u ON (u.id = r.user_id OR u.user_id = r.user_id)" . $whereClause;
             $stmt = $pdo->prepare($filteredQuery);
             $stmt->execute($args);
             $filteredRecords = (int)$stmt->fetchColumn();
@@ -45,7 +49,7 @@ class FinanceController
             $dataQuery = "
                 SELECT r.*, u.username, u.nickname, u.phone AS user_phone, u.user_id AS player_id
                 FROM recharge_orders r 
-                LEFT JOIN api_users u ON u.id = r.user_id 
+                LEFT JOIN api_users u ON (u.id = r.user_id OR u.user_id = r.user_id) 
                 " . $whereClause . " 
                 ORDER BY r.id DESC 
                 LIMIT $length OFFSET $start
@@ -56,15 +60,16 @@ class FinanceController
 
             $data = [];
             foreach ($rows as $row) {
+                $playerId = !empty($row['player_id']) ? (int)$row['player_id'] : (int)$row['user_id'];
                 $data[] = [
                     'id' => (int)$row['id'],
                     'order_no' => $row['order_no'],
-                    'player_id' => (int)$row['player_id'],
+                    'player_id' => $playerId,
                     'username' => htmlspecialchars((string)($row['username'] ?? 'Anonymous')),
                     'nickname' => htmlspecialchars((string)($row['nickname'] ?? 'Member')),
                     'amount' => (float)$row['amount'],
-                    'payment_type' => $row['payment_type'] ?? 'UPI',
-                    'method_name' => $row['method_name'] ?? 'UPI Gateway',
+                    'payment_type' => $row['payment_type'] ?? ($row['method_name'] ?? 'BKASH'),
+                    'method_name' => $row['method_name'] ?? 'bKash / Nagad',
                     'status' => $row['status'],
                     'utr' => htmlspecialchars((string)($row['utr'] ?? '')),
                     'screenshot_url' => $row['screenshot_url'],
@@ -107,8 +112,12 @@ class FinanceController
             }
             
             if ($statusFilter !== "") {
-                $conditions[] = "w.status = ?";
-                $args[] = $statusFilter;
+                if (strtolower($statusFilter) === 'pending') {
+                    $conditions[] = "(w.status = 'Pending' OR w.status = 'PendingReview' OR w.status = 'Wait' OR w.status = 'Processing')";
+                } else {
+                    $conditions[] = "w.status = ?";
+                    $args[] = $statusFilter;
+                }
             }
 
             $whereClause = !empty($conditions) ? " WHERE " . implode(" AND ", $conditions) : "";
@@ -116,7 +125,7 @@ class FinanceController
             $totalQuery = "SELECT COUNT(*) FROM withdraw_orders";
             $totalRecords = (int)$pdo->query($totalQuery)->fetchColumn();
 
-            $filteredQuery = "SELECT COUNT(*) FROM withdraw_orders w LEFT JOIN api_users u ON u.id = w.user_id" . $whereClause;
+            $filteredQuery = "SELECT COUNT(*) FROM withdraw_orders w LEFT JOIN api_users u ON (u.id = w.user_id OR u.user_id = w.user_id)" . $whereClause;
             $stmt = $pdo->prepare($filteredQuery);
             $stmt->execute($args);
             $filteredRecords = (int)$stmt->fetchColumn();
@@ -125,7 +134,7 @@ class FinanceController
             $dataQuery = "
                 SELECT w.*, u.username, u.nickname, u.phone AS user_phone, u.user_id AS player_id
                 FROM withdraw_orders w 
-                LEFT JOIN api_users u ON u.id = w.user_id 
+                LEFT JOIN api_users u ON (u.id = w.user_id OR u.user_id = w.user_id) 
                 " . $whereClause . " 
                 ORDER BY w.id DESC 
                 LIMIT $length OFFSET $start
@@ -136,14 +145,15 @@ class FinanceController
 
             $data = [];
             foreach ($rows as $row) {
+                $playerId = !empty($row['player_id']) ? (int)$row['player_id'] : (int)$row['user_id'];
                 $data[] = [
                     'id' => (int)$row['id'],
                     'order_no' => $row['order_no'],
-                    'player_id' => (int)$row['player_id'],
+                    'player_id' => $playerId,
                     'username' => htmlspecialchars((string)($row['username'] ?? 'Anonymous')),
                     'nickname' => htmlspecialchars((string)($row['nickname'] ?? 'Member')),
                     'amount' => (float)$row['amount'],
-                    'payment_type' => $row['payment_type'] ?? 'UPI',
+                    'payment_type' => $row['payment_type'] ?? ($row['withdraw_type'] ?? 'BKASH'),
                     'status' => $row['status'],
                     'account_json' => $row['account_json'],
                     'remarks' => htmlspecialchars((string)($row['remarks'] ?? '')),
@@ -207,16 +217,17 @@ class FinanceController
                 $totalAdd = (float)$order['amount'] + $bonus;
 
                 // Fetch user details
-                $stmt = $pdo->prepare("SELECT user_id, wallet_balance FROM api_users WHERE id = ? LIMIT 1");
-                $stmt->execute([$order['user_id']]);
+                $stmt = $pdo->prepare("SELECT id, user_id, wallet_balance FROM api_users WHERE id = ? OR user_id = ? LIMIT 1");
+                $stmt->execute([$order['user_id'], $order['user_id']]);
                 $userRow = $stmt->fetch();
                 if ($userRow) {
+                    $realId = (int)$userRow['id'];
                     $playerUserId = (int)$userRow['user_id'];
                     $oldBal = (float)$userRow['wallet_balance'];
                     $newBal = $oldBal + $totalAdd;
 
                     $stmt = $pdo->prepare("UPDATE api_users SET wallet_balance = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?");
-                    $stmt->execute([$newBal, $order['user_id']]);
+                    $stmt->execute([$newBal, $realId]);
 
                     // Wallet log
                     $stmt = $pdo->prepare("INSERT INTO wallet_logs (user_id, type, amount, balance_before, balance_after, notes) VALUES (?, 'wallet', ?, ?, ?, ?)");
@@ -270,16 +281,17 @@ class FinanceController
             if (in_array(strtolower($status), ['rejected', 'cancelled', 'canceled', 'failed'], true)) {
                 $amount = (float)$order['amount'];
 
-                $stmt = $pdo->prepare("SELECT user_id, wallet_balance FROM api_users WHERE id = ? LIMIT 1");
-                $stmt->execute([$order['user_id']]);
+                $stmt = $pdo->prepare("SELECT id, user_id, wallet_balance FROM api_users WHERE id = ? OR user_id = ? LIMIT 1");
+                $stmt->execute([$order['user_id'], $order['user_id']]);
                 $userRow = $stmt->fetch();
                 if ($userRow) {
+                    $realId = (int)$userRow['id'];
                     $playerUserId = (int)$userRow['user_id'];
                     $oldBal = (float)$userRow['wallet_balance'];
                     $newBal = $oldBal + $amount;
 
                     $stmt = $pdo->prepare("UPDATE api_users SET wallet_balance = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?");
-                    $stmt->execute([$newBal, $order['user_id']]);
+                    $stmt->execute([$newBal, $realId]);
 
                     // Wallet log
                     $stmt = $pdo->prepare("INSERT INTO wallet_logs (user_id, type, amount, balance_before, balance_after, notes) VALUES (?, 'wallet', ?, ?, ?, ?)");
