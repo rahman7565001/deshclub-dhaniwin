@@ -4265,6 +4265,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'coinflip' || $code === 'coin_flip' || $code === '106' || $code === '815' || stripos($name, 'coin flip') !== false || stripos($name, 'coinflip') !== false || stripos($code, 'coin') !== false) {
         return true;
     }
+    // Game 17: Crazy Wheel
+    if ($code === 'crazywheel' || $code === 'crazy_wheel' || $code === '107' || $code === '816' || stripos($name, 'crazy wheel') !== false || stripos($name, 'crazywheel') !== false || stripos($code, 'crazy') !== false || stripos($code, 'wheel') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;

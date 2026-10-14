@@ -185,10 +185,21 @@ if ($isCoinFlip) {
     ]));
 }
 
-// 14. Fallback for all other Slot & Casino games
+// 14. Check if Crazy Wheel
+$isCrazyWheel = ($gameCode === 'crazywheel' || $gameCode === 'crazy_wheel' || $gameCode === '107' || $gameCode === '816' || stripos($gameCode, 'crazywheel') !== false || stripos($gameCode, 'crazy') !== false || stripos($gameCode, 'wheel') !== false);
+if ($isCrazyWheel) {
+    $gameUrl = $baseUrl . '/crazywheel/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 15. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,
     'returnType' => 1
 ]));
+
 
