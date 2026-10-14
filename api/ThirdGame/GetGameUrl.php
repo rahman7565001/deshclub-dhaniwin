@@ -135,7 +135,17 @@ if ($isRouletteGame) {
     ]));
 }
 
-// 9. Fallback for all other Slot & Casino games
+// 9. Check if Space Dice (Cosmic Dice)
+$isSpaceDice = ($gameCode === 'space_dice' || $gameCode === 'dice' || $gameCode === '102' || stripos($gameCode, 'space_dice') !== false || stripos($gameCode, 'dice') !== false);
+if ($isSpaceDice) {
+    $gameUrl = $baseUrl . '/space_dice/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 10. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,

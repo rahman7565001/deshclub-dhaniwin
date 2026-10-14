@@ -4245,6 +4245,10 @@ function api_is_game_allowed(array $g): bool
     if ($vendor === 'Card365' && $code === '921') {
         return true;
     }
+    // Game 12: Space Dice / Cosmic Dice
+    if ($code === 'space_dice' || $code === 'dice' || $code === '102' || stripos($name, 'space dice') !== false || stripos($name, 'dice') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;
