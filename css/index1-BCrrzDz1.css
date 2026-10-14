@@ -1,0 +1,81 @@
+/* Deshclub Top Navigation Header for Game/Inside-link */
+.game-top-nav-bar {
+    width: 100% !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    background: #121620 !important;
+    background: linear-gradient(180deg, #1b2130 0%, #121620 100%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
+    z-index: 100000 !important;
+    color: #ffffff !important;
+    user-select: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6) !important;
+    flex-shrink: 0 !important;
+}
+
+.game-nav-back-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    padding: 5px 12px !important;
+    border-radius: 9999px !important;
+    transition: all 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.game-nav-back-btn:active {
+    background: rgba(255, 255, 255, 0.25) !important;
+    transform: scale(0.96) !important;
+}
+
+.nav-arrow-icon {
+    font-size: 13px !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+}
+
+.nav-back-label {
+    letter-spacing: 0.3px !important;
+}
+
+.game-nav-brand-title {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    color: #fbbf24 !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+    text-align: center !important;
+    flex: 1 !important;
+}
+
+.game-nav-exit-btn {
+    width: 32px !important;
+    height: 32px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #d1d5db !important;
+    transition: all 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.game-nav-exit-btn:active {
+    background: rgba(239, 68, 68, 0.35) !important;
+    color: #f87171 !important;
+    transform: scale(0.94) !important;
+}

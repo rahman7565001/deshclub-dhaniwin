@@ -21,7 +21,7 @@ if ($token === '') {
         <!-- Top Navbar -->
         <header class="game-header">
             <div class="logo-area">
-                <a href="/" class="back-btn" title="Back to Lobby">
+                <a href="/" class="back-btn" title="Back to Lobby" onclick="exitAviator(event)">
                     <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                 </a>
                 <span class="aviator-logo">Aviator</span>
@@ -120,7 +120,7 @@ if ($token === '') {
                             </div>
                             <button id="main-btn-1" class="main-bet-btn btn-bet" onclick="handlePanelAction(1)">
                                 <span class="btn-primary-text">BET</span>
-                                <span class="btn-sub-text" id="btn-sub-1">100.00 INR</span>
+                                <span class="btn-sub-text" id="btn-sub-1">100.00 BDT</span>
                             </button>
                         </div>
                         <div class="quick-chips">
@@ -150,7 +150,7 @@ if ($token === '') {
                             </div>
                             <button id="main-btn-2" class="main-bet-btn btn-bet" onclick="handlePanelAction(2)">
                                 <span class="btn-primary-text">BET</span>
-                                <span class="btn-sub-text" id="btn-sub-2">50.00 INR</span>
+                                <span class="btn-sub-text" id="btn-sub-2">50.00 BDT</span>
                             </button>
                         </div>
                         <div class="quick-chips">
@@ -170,6 +170,17 @@ if ($token === '') {
 
     <script>
         window.AVIATOR_TOKEN = "<?= htmlspecialchars($token, ENT_QUOTES, 'UTF-8') ?>";
+        window.userCurrencyCode = 'BDT';
+        window.userCurrencySymbol = '৳';
+        function exitAviator(e) {
+            if (e) e.preventDefault();
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage('game', '*');
+                try { window.top.location.href = '/'; } catch(err) {}
+            } else {
+                window.location.href = '/';
+            }
+        }
     </script>
     <script src="aviator.js"></script>
 </body>

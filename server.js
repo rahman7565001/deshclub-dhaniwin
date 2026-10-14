@@ -404,10 +404,11 @@ const server = http.createServer((req, res) => {
   const isAdmin = /^\/admin(?:\/|$)/i.test(pathname);
   const isPay = /^\/pay(?:\/|$)/i.test(pathname);
   const isAviator = /^\/aviator(?:\/|$)/i.test(pathname);
+  const isGame = /^\/game(?:\/|$)/i.test(pathname);
   const isPhp = /\.php$/i.test(pathname);
   const isGenericApi = /^\/api\//i.test(pathname) || (/^\/webapi\//i.test(pathname) && !/^\/webapi\/(?:kv|v)\/(?:config|firebaseConfig)\.js$/i.test(pathname));
 
-  if (isApi || isDraw || isAdmin || isPay || isAviator || isPhp || isGenericApi) {
+  if (isApi || isDraw || isAdmin || isPay || isAviator || isGame || isPhp || isGenericApi) {
     return proxyToPhp(req, res);
   }
 
@@ -476,6 +477,24 @@ const server = http.createServer((req, res) => {
         'Cache-Control': 'public, max-age=86400'
       });
       return res.end(transparentPixel);
+    }
+
+    if (ext === '.css') {
+      res.writeHead(200, {
+        'Content-Type': 'text/css; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=3600'
+      });
+      return res.end('/* deshclub fallback css */');
+    }
+
+    if (ext === '.js' || ext === '.mjs') {
+      res.writeHead(200, {
+        'Content-Type': 'application/javascript; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=3600'
+      });
+      return res.end('export default {}; export const N = {};');
     }
 
     res.writeHead(404, { 'Content-Type': 'text/plain' });

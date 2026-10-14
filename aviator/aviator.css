@@ -590,14 +590,50 @@ body, html {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+    body, html {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    #aviator-app {
+        min-height: 100vh;
+        min-height: 100dvh;
+        height: auto;
+    }
     .bets-sidebar {
         display: none;
+    }
+    .stage-container {
+        padding: 6px;
+        min-height: 0;
+        gap: 6px;
+    }
+    .canvas-wrapper {
+        min-height: 200px;
+        height: 38vh;
     }
     .bet-panels-container {
         height: auto;
         flex-direction: column;
+        gap: 6px;
+    }
+    .panel-controls {
+        height: 48px;
+    }
+    .amount-stepper {
+        border-radius: 6px;
+    }
+    .step-btn {
+        width: 34px;
+        font-size: 18px;
+    }
+    .stake-input {
+        font-size: 16px;
+    }
+    .quick-chips button {
+        padding: 5px 0;
+        font-size: 11px;
     }
     .multiplier-display {
-        font-size: 52px;
+        font-size: 48px;
     }
 }

@@ -215,5 +215,21 @@ if (in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'ico'], true)) {
     exit;
 }
 
+if ($ext === 'css') {
+    header('Content-Type: text/css; charset=utf-8');
+    header('Access-Control-Allow-Origin: *');
+    header('Cache-Control: public, max-age=3600');
+    echo "/* deshclub fallback css */";
+    exit;
+}
+
+if ($ext === 'js' || $ext === 'mjs') {
+    header('Content-Type: application/javascript; charset=utf-8');
+    header('Access-Control-Allow-Origin: *');
+    header('Cache-Control: public, max-age=3600');
+    echo "export default {}; export const N = {};";
+    exit;
+}
+
 http_response_code(404);
 echo "404 Not Found";
