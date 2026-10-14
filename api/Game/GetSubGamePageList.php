@@ -7,6 +7,11 @@ if ($override) {
     $decoded = api_json_decode_lenient((string) $override['content']);
     if ($decoded['ok']) {
         $payload = $decoded['data'];
+        if (!empty($payload['data']['list']) && is_array($payload['data']['list'])) {
+            $payload['data']['list'] = array_values(array_filter($payload['data']['list'], 'api_is_game_allowed'));
+            $payload['data']['totalCount'] = count($payload['data']['list']);
+            $payload['data']['totalPage'] = 1;
+        }
         api_refresh_times($payload);
         api_emit($payload);
     }
@@ -308,5 +313,10 @@ Tycoon II',
         'serverTime' => 1780316654590,
     ];
 
+if (!empty($payload['data']['list']) && is_array($payload['data']['list'])) {
+    $payload['data']['list'] = array_values(array_filter($payload['data']['list'], 'api_is_game_allowed'));
+    $payload['data']['totalCount'] = count($payload['data']['list']);
+    $payload['data']['totalPage'] = 1;
+}
 api_refresh_times($payload);
 api_emit($payload);

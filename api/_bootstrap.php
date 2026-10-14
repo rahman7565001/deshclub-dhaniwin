@@ -4181,6 +4181,140 @@ function api_thirdgame_get_game_url(array $input): array
     ]);
 }
 
+/**
+ * Check if a game is allowed to be visible on the website:
+ * 1. ALL Lottery & Color Prediction games are visible (WinGo, K3, 5D, TrxWinGo, MotoRace).
+ * 2. ONLY the 11 custom-built games are visible (Aviator, Chicken Road, Mines, Jackpot Fishing,
+ *    Roulette 3D, JDB Dragon Fishing, JDB Super Niubi, Card365 Teen Patti, Andar Bahar, Dragon Tiger, 7 Up 7 Down).
+ * 3. ALL other games are hidden.
+ */
+function api_is_game_allowed(array $g): bool
+{
+    $vendor = (string)($g['vendorCode'] ?? '');
+    $code = (string)($g['gameCode'] ?? '');
+    $name = (string)($g['name'] ?? $g['gameName'] ?? '');
+    $catType = (int)($g['categoryType'] ?? 0);
+
+    // 1. ALL Lottery & Color Prediction Games (DO NOT HIDE)
+    if ($vendor === 'ARLottery' || $catType === 3 || preg_match('/^(WinGo|K3|D5|5D|TrxWinGo|MotoRace|VideoWinGo)/i', $code)) {
+        return true;
+    }
+
+    // 2. The EXACT 11 Custom-Built Games ONLY:
+    // Game 1: Aviator
+    if (($vendor === 'TB_Chess' || $vendor === 'Spribe' || $vendor === 'SPRIBE') && ($code === '804' || stripos($name, 'aviator') !== false)) {
+        return true;
+    }
+    // Game 2: Chicken Road (1 & 2)
+    if (($vendor === 'TB_Chess' || $vendor === 'INOUT') && in_array($code, ['123', '121'], true)) {
+        return true;
+    }
+    // Game 3: Mines
+    if (($vendor === 'TB_Chess' && $code === '100') || ($vendor === 'INOUT' && ($code === 'platform-mines' || $code === '100'))) {
+        return true;
+    }
+    // Game 4: JILI Jackpot Fishing & Happy Fishing
+    if ($vendor === 'JILI' && in_array($code, ['32', '82'], true)) {
+        return true;
+    }
+    // Game 5: Royal European Roulette 3D
+    if (($vendor === 'INOUT' && $code === 'roulette') || ($vendor === 'TB_Chess' && $code === '104')) {
+        return true;
+    }
+    // Game 6: JDB Dragon Fishing
+    if ($vendor === 'JDB' && in_array($code, ['7001', '7002'], true)) {
+        return true;
+    }
+    // Game 7: JDB Super Niubi
+    if ($vendor === 'JDB' && in_array($code, ['14036', '14045'], true)) {
+        return true;
+    }
+    // Game 8: Card365 Teen Patti
+    if ($vendor === 'Card365' && $code === '707') {
+        return true;
+    }
+    // Game 9: Card365 Andar Bahar
+    if ($vendor === 'Card365' && $code === '710') {
+        return true;
+    }
+    // Game 10: Card365 Dragon Tiger
+    if ($vendor === 'Card365' && $code === '563') {
+        return true;
+    }
+    // Game 11: Card365 7 Up 7 Down
+    if ($vendor === 'Card365' && $code === '921') {
+        return true;
+    }
+
+    // All other dummy games are hidden
+    return false;
+}
+
+function api_filter_visible_games(array &$payload): void
+{
+    if (empty($payload['data']['games'])) {
+        return;
+    }
+
+    $filteredCats = [];
+    foreach ($payload['data']['games'] as $cat) {
+        $catName = (string)($cat['categoryNameDic']['en'] ?? '');
+        $catItems = [];
+
+        foreach ($cat['gameList'] ?? [] as $item) {
+            // Nested vendor with gameList
+            if (isset($item['gameList']) && is_array($item['gameList']) && count($item['gameList']) > 0) {
+                $filteredSub = [];
+                foreach ($item['gameList'] as $subGame) {
+                    if (api_is_game_allowed($subGame)) {
+                        $filteredSub[] = $subGame;
+                    }
+                }
+                if (!empty($filteredSub)) {
+                    $item['gameList'] = $filteredSub;
+                    $item['gameTotalCount'] = count($filteredSub);
+                    $catItems[] = $item;
+                }
+            } else {
+                // Direct game
+                if (api_is_game_allowed($item)) {
+                    $catItems[] = $item;
+                }
+            }
+        }
+
+        // Only keep category if it is Lottery OR if it has at least one allowed game
+        if ($catName === 'Lottery' || !empty($catItems)) {
+            $cat['gameList'] = $catItems;
+            $cat['gameTotalCount'] = count($catItems);
+            $filteredCats[] = $cat;
+        }
+    }
+    $payload['data']['games'] = $filteredCats;
+
+    // Filter hotGames list if present
+    if (!empty($payload['data']['hotGames']) && is_array($payload['data']['hotGames'])) {
+        $filteredHot = [];
+        foreach ($payload['data']['hotGames'] as $hg) {
+            if (api_is_game_allowed($hg)) {
+                $filteredHot[] = $hg;
+            }
+        }
+        $payload['data']['hotGames'] = $filteredHot;
+    }
+
+    // Filter popularGames list if present
+    if (!empty($payload['data']['popularGames']) && is_array($payload['data']['popularGames'])) {
+        $filteredPop = [];
+        foreach ($payload['data']['popularGames'] as $pg) {
+            if (api_is_game_allowed($pg)) {
+                $filteredPop[] = $pg;
+            }
+        }
+        $payload['data']['popularGames'] = $filteredPop;
+    }
+}
+
 function api_home_popup_payload(): array
 {
     $pdo = api_pdo();
@@ -4598,6 +4732,7 @@ function api_explicit_dynamic_response(string $endpoint, array $input): ?array
     }
     if ($e === 'game/gethotgamelist') {
         $home = api_read_snapshot_payload('Home/GetHomeAllGameList');
+        api_filter_visible_games($home);
         $data = $home['data']['hotGames'] ?? [];
         return api_success($data);
     }

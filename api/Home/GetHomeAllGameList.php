@@ -7,6 +7,7 @@ if ($override) {
     $decoded = api_json_decode_lenient((string) $override['content']);
     if ($decoded['ok']) {
         $payload = $decoded['data'];
+        api_filter_visible_games($payload);
         api_refresh_times($payload);
         api_emit($payload);
     }
@@ -6809,5 +6810,6 @@ $payload = [
         'serverTime' => 1780332122003,
     ];
 
+api_filter_visible_games($payload);
 api_refresh_times($payload);
 api_emit($payload);
