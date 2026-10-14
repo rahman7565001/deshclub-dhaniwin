@@ -4249,6 +4249,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'space_dice' || $code === 'dice' || $code === '102' || stripos($name, 'space dice') !== false || stripos($name, 'dice') !== false) {
         return true;
     }
+    // Game 13: Plinko
+    if ($code === 'plinko' || $code === '812' || stripos($name, 'plinko') !== false || stripos($code, 'plinko') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;

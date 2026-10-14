@@ -145,7 +145,17 @@ if ($isSpaceDice) {
     ]));
 }
 
-// 10. Fallback for all other Slot & Casino games
+// 10. Check if Plinko
+$isPlinko = ($gameCode === 'plinko' || $gameCode === '812' || stripos($gameCode, 'plinko') !== false || stripos($vendorCode, 'plinko') !== false);
+if ($isPlinko) {
+    $gameUrl = $baseUrl . '/plinko/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 11. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,
