@@ -404,11 +404,12 @@ const server = http.createServer((req, res) => {
   const isAdmin = /^\/admin(?:\/|$)/i.test(pathname);
   const isPay = /^\/pay(?:\/|$)/i.test(pathname);
   const isAviator = /^\/aviator(?:\/|$)/i.test(pathname);
+  const isChicken = /^\/chicken(?:\/|$)/i.test(pathname);
   const isGame = /^\/game(?:\/|$)/i.test(pathname);
   const isPhp = /\.php$/i.test(pathname);
   const isGenericApi = /^\/api\//i.test(pathname) || (/^\/webapi\//i.test(pathname) && !/^\/webapi\/(?:kv|v)\/(?:config|firebaseConfig)\.js$/i.test(pathname));
 
-  if (isApi || isDraw || isAdmin || isPay || isAviator || isGame || isPhp || isGenericApi) {
+  if (isApi || isDraw || isAdmin || isPay || isAviator || isChicken || isGame || isPhp || isGenericApi) {
     return proxyToPhp(req, res);
   }
 

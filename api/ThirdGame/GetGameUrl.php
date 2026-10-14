@@ -67,6 +67,15 @@ if ($gameCode === '804' || stripos($gameCode, 'aviator') !== false || $gameCode 
     ]));
 }
 
+// 3. Check if Chicken Road (1 or 2)
+if ($gameCode === '123' || $gameCode === '121' || stripos($gameCode, 'chicken') !== false || $gameId === 23832 || $gameId === 23815) {
+    $gameUrl = $baseUrl . '/chicken/index.php?token=' . urlencode($token) . '&version=' . ($gameCode === '121' ? '2' : '1');
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
 // 3. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
