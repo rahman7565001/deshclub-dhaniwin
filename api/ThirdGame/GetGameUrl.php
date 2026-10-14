@@ -101,7 +101,17 @@ if ($isMinesGame) {
     ]));
 }
 
-// 6. Fallback for all other Slot & Casino games
+// 6. Check if Card365 (Teen Patti, Andar Bahar, Dragon Tiger, 7 Up 7 Down)
+$isCard365Game = ($vendorCode === 'Card365' || stripos($vendorCode, 'card365') !== false || in_array($gameCode, ['707', '710', '563', '561', '921', '918', '562', '701', '565', '564'], true) || stripos($gameCode, 'patti') !== false || stripos($gameCode, 'andar') !== false || stripos($gameCode, 'rummy') !== false);
+if ($isCard365Game) {
+    $gameUrl = $baseUrl . '/card365/index.php?token=' . urlencode($token) . '&game=' . urlencode($gameCode);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 7. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,
