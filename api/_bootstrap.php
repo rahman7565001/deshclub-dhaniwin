@@ -4149,7 +4149,21 @@ function api_thirdgame_get_game_url(array $input): array
         ]);
     }
 
-    // 7. Slot / Casino games
+    // 7. Check if Jackpot Fishing (JILI Jackpot Fishing / Happy Fishing)
+    $isJackpotFishing = ($vendorCode === 'JILI' && ($gameCode === '32' || $gameCode === '82'))
+        || ($gameId === 20108 || $gameId === 20111)
+        || (stripos($gameCode, 'jackpot') !== false && stripos($gameCode, 'fish') !== false)
+        || (stripos($gameCode, 'happy') !== false && stripos($gameCode, 'fish') !== false)
+        || $gameCode === 'jackpot_fishing';
+    if ($isJackpotFishing) {
+        $gameUrl = $baseUrl . '/jackpot_fishing/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 8. Slot / Casino games
     $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
     return api_success([
         'url' => $gameUrl,
