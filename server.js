@@ -398,6 +398,12 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Fast path for Vue SPA client routes: /game/iframe, /game/orangeGame, etc.
+  if (/^\/game\/(?:iframe|orangeGame)(?:\/|$)/i.test(pathname)) {
+    const indexPath = path.join(DOC_ROOT, 'index.html');
+    return serveFile(res, indexPath, 'text/html; charset=utf-8');
+  }
+
   // 1. Lottery draw endpoints, dynamic API routes & manual Pay gateway -> Forward to PHP
   const isApi = /^\/(?:(?:webapi|api)\/)?(?:Recharge|Withdraw|Activity|User|Home|Game|Lottery|ThirdGame|VipLevel|AgentRebate|WorkOrder)(?:\/|$)/i.test(pathname);
   const isDraw = /^\/webapi\/(?:kv|v)\/issue\//i.test(pathname) || /^\/(?:WinGo|K3|D5|MotoRace|TrxWinGo)\/.*\.json$/i.test(pathname);
@@ -419,7 +425,7 @@ const server = http.createServer((req, res) => {
   const isTower = /^\/tower(?:\/|$)/i.test(pathname);
   const isPenalty = /^\/penalty(?:\/|$)/i.test(pathname);
   const isKeno = /^\/keno(?:\/|$)/i.test(pathname);
-  const isGame = /^\/game(?:\/|$)/i.test(pathname);
+  const isGame = /^\/game\/.*\.php$/i.test(pathname);
   const isPhp = /\.php$/i.test(pathname);
   const isGenericApi = /^\/api\//i.test(pathname) || (/^\/webapi\//i.test(pathname) && !/^\/webapi\/(?:kv|v)\/(?:config|firebaseConfig)\.js$/i.test(pathname));
 

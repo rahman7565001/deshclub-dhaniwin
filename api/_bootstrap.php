@@ -4173,7 +4173,97 @@ function api_thirdgame_get_game_url(array $input): array
         ]);
     }
 
-    // 9. Slot / Casino games
+    // 9. Check if Space Dice (Cosmic Dice)
+    $isSpaceDice = ($gameCode === 'space_dice' || $gameCode === 'dice' || $gameCode === '102' || stripos($gameCode, 'space_dice') !== false || stripos($gameCode, 'dice') !== false);
+    if ($isSpaceDice) {
+        $gameUrl = $baseUrl . '/space_dice/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 10. Check if Plinko
+    $isPlinko = ($gameCode === 'plinko' || $gameCode === '812' || stripos($gameCode, 'plinko') !== false || stripos($vendorCode, 'plinko') !== false);
+    if ($isPlinko) {
+        $gameUrl = $baseUrl . '/plinko/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 11. Check if Sic Bo
+    $isSicBo = ($gameCode === 'sicbo' || $gameCode === '103' || $gameCode === '813' || stripos($gameCode, 'sicbo') !== false || stripos($gameCode, 'sic_bo') !== false);
+    if ($isSicBo) {
+        $gameUrl = $baseUrl . '/sicbo/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 12. Check if Limbo
+    $isLimbo = ($gameCode === 'limbo' || $gameCode === '105' || $gameCode === '814' || stripos($gameCode, 'limbo') !== false);
+    if ($isLimbo) {
+        $gameUrl = $baseUrl . '/limbo/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 13. Check if Coin Flip
+    $isCoinFlip = ($gameCode === 'coinflip' || $gameCode === 'coin_flip' || $gameCode === '106' || $gameCode === '815' || stripos($gameCode, 'coinflip') !== false || stripos($gameCode, 'coin') !== false);
+    if ($isCoinFlip) {
+        $gameUrl = $baseUrl . '/coinflip/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 14. Check if Crazy Wheel
+    $isCrazyWheel = ($gameCode === 'crazywheel' || $gameCode === 'crazy_wheel' || $gameCode === '107' || $gameCode === '816' || stripos($gameCode, 'crazywheel') !== false || stripos($gameCode, 'crazy') !== false || stripos($gameCode, 'wheel') !== false);
+    if ($isCrazyWheel) {
+        $gameUrl = $baseUrl . '/crazywheel/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 15. Check if Tower Legend
+    $isTower = ($gameCode === 'tower' || $gameCode === 'tower_legend' || $gameCode === '108' || $gameCode === '817' || stripos($gameCode, 'tower') !== false);
+    if ($isTower) {
+        $gameUrl = $baseUrl . '/tower/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 16. Check if Penalty Shootout
+    $isPenalty = ($gameCode === 'penalty' || $gameCode === 'penalty_shootout' || $gameCode === '109' || $gameCode === '818' || stripos($gameCode, 'penalty') !== false || stripos($gameCode, 'shootout') !== false);
+    if ($isPenalty) {
+        $gameUrl = $baseUrl . '/penalty/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 17. Check if Instant Keno
+    $isKeno = ($gameCode === 'keno' || $gameCode === 'instant_keno' || $gameCode === '110' || $gameCode === '819' || stripos($gameCode, 'keno') !== false);
+    if ($isKeno) {
+        $gameUrl = $baseUrl . '/keno/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 18. Slot / Casino games
     $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
     return api_success([
         'url' => $gameUrl,
