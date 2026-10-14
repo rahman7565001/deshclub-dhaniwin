@@ -4277,6 +4277,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'penalty' || $code === 'penalty_shootout' || $code === '109' || $code === '818' || stripos($name, 'penalty') !== false || stripos($name, 'shootout') !== false || stripos($code, 'penalty') !== false) {
         return true;
     }
+    // Game 20: Instant Keno
+    if ($code === 'keno' || $code === 'instant_keno' || $code === '110' || $code === '819' || stripos($name, 'keno') !== false || stripos($code, 'keno') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;

@@ -418,11 +418,12 @@ const server = http.createServer((req, res) => {
   const isCrazyWheel = /^\/crazywheel(?:\/|$)/i.test(pathname);
   const isTower = /^\/tower(?:\/|$)/i.test(pathname);
   const isPenalty = /^\/penalty(?:\/|$)/i.test(pathname);
+  const isKeno = /^\/keno(?:\/|$)/i.test(pathname);
   const isGame = /^\/game(?:\/|$)/i.test(pathname);
   const isPhp = /\.php$/i.test(pathname);
   const isGenericApi = /^\/api\//i.test(pathname) || (/^\/webapi\//i.test(pathname) && !/^\/webapi\/(?:kv|v)\/(?:config|firebaseConfig)\.js$/i.test(pathname));
 
-  if (isApi || isDraw || isAdmin || isPay || isAviator || isChicken || isJdb || isMines || isCard365 || isJackpotFishing || isRoulette || isSpaceDice || isPlinko || isSicBo || isLimbo || isCoinFlip || isCrazyWheel || isTower || isPenalty || isGame || isPhp || isGenericApi) {
+  if (isApi || isDraw || isAdmin || isPay || isAviator || isChicken || isJdb || isMines || isCard365 || isJackpotFishing || isRoulette || isSpaceDice || isPlinko || isSicBo || isLimbo || isCoinFlip || isCrazyWheel || isTower || isPenalty || isKeno || isGame || isPhp || isGenericApi) {
     return proxyToPhp(req, res);
   }
 

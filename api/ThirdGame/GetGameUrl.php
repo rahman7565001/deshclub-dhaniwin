@@ -215,7 +215,17 @@ if ($isPenalty) {
     ]));
 }
 
-// 17. Fallback for all other Slot & Casino games
+// 17. Check if Instant Keno
+$isKeno = ($gameCode === 'keno' || $gameCode === 'instant_keno' || $gameCode === '110' || $gameCode === '819' || stripos($gameCode, 'keno') !== false);
+if ($isKeno) {
+    $gameUrl = $baseUrl . '/keno/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 18. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,
