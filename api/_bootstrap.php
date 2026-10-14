@@ -4163,7 +4163,17 @@ function api_thirdgame_get_game_url(array $input): array
         ]);
     }
 
-    // 8. Slot / Casino games
+    // 8. Check if Roulette (European / Royal Roulette)
+    $isRouletteGame = ($gameCode === 'roulette' || $gameCode === '104' || $gameId === 24099 || $gameId === 20566 || stripos($gameCode, 'roulette') !== false);
+    if ($isRouletteGame) {
+        $gameUrl = $baseUrl . '/roulette/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 9. Slot / Casino games
     $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
     return api_success([
         'url' => $gameUrl,

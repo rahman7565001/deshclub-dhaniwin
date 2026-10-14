@@ -409,11 +409,12 @@ const server = http.createServer((req, res) => {
   const isMines = /^\/mines(?:\/|$)/i.test(pathname);
   const isCard365 = /^\/card365(?:\/|$)/i.test(pathname);
   const isJackpotFishing = /^\/(?:jackpot_fishing|fishing)(?:\/|$)/i.test(pathname);
+  const isRoulette = /^\/roulette(?:\/|$)/i.test(pathname);
   const isGame = /^\/game(?:\/|$)/i.test(pathname);
   const isPhp = /\.php$/i.test(pathname);
   const isGenericApi = /^\/api\//i.test(pathname) || (/^\/webapi\//i.test(pathname) && !/^\/webapi\/(?:kv|v)\/(?:config|firebaseConfig)\.js$/i.test(pathname));
 
-  if (isApi || isDraw || isAdmin || isPay || isAviator || isChicken || isJdb || isMines || isCard365 || isJackpotFishing || isGame || isPhp || isGenericApi) {
+  if (isApi || isDraw || isAdmin || isPay || isAviator || isChicken || isJdb || isMines || isCard365 || isJackpotFishing || isRoulette || isGame || isPhp || isGenericApi) {
     return proxyToPhp(req, res);
   }
 
