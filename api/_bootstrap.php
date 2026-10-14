@@ -4261,6 +4261,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'limbo' || $code === '105' || $code === '814' || stripos($name, 'limbo') !== false || stripos($code, 'limbo') !== false) {
         return true;
     }
+    // Game 16: Coin Flip
+    if ($code === 'coinflip' || $code === 'coin_flip' || $code === '106' || $code === '815' || stripos($name, 'coin flip') !== false || stripos($name, 'coinflip') !== false || stripos($code, 'coin') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;

@@ -175,7 +175,17 @@ if ($isLimbo) {
     ]));
 }
 
-// 13. Fallback for all other Slot & Casino games
+// 13. Check if Coin Flip
+$isCoinFlip = ($gameCode === 'coinflip' || $gameCode === 'coin_flip' || $gameCode === '106' || $gameCode === '815' || stripos($gameCode, 'coinflip') !== false || stripos($gameCode, 'coin') !== false);
+if ($isCoinFlip) {
+    $gameUrl = $baseUrl . '/coinflip/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 14. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,
