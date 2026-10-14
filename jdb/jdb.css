@@ -1,0 +1,850 @@
+/* jdb/jdb.css - JDB Gaming Master Suite Styling */
+:root {
+    --gold: #FFD700;
+    --gold-dark: #B8860B;
+    --gold-glow: rgba(255, 215, 0, 0.45);
+    --gold-grad: linear-gradient(135deg, #FFE066 0%, #FFB800 50%, #FF8C00 100%);
+    --imperial-red: #D63031;
+    --red-grad: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+    --dark-bg: #070B14;
+    --card-bg: rgba(18, 24, 38, 0.85);
+    --card-border: rgba(255, 215, 0, 0.2);
+    --cyan: #00F0FF;
+    --cyan-glow: rgba(0, 240, 255, 0.4);
+    --font-head: 'Cinzel', serif;
+    --font-ui: 'Montserrat', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: #FFFFFF;
+    font-family: var(--font-ui);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==================== TOP HEADER ==================== */
+.jdb-header {
+    width: 100%;
+    height: 54px;
+    background: rgba(10, 15, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-lobby {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-lobby:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.jdb-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.jdb-badge {
+    background: var(--gold-grad);
+    color: #000;
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 13px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.jdb-brand-text {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--gold);
+    display: none;
+}
+
+@media (min-width: 480px) {
+    .jdb-brand-text { display: inline-block; }
+}
+
+/* Mode Switcher */
+.mode-switcher {
+    display: flex;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    border-radius: 24px;
+    padding: 3px;
+    gap: 4px;
+}
+
+.mode-tab {
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.mode-tab.active {
+    background: var(--gold-grad);
+    color: #000;
+    box-shadow: 0 2px 8px var(--gold-glow);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.balance-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.balance-card:active {
+    transform: scale(0.97);
+}
+
+.balance-card .cur-sym {
+    color: var(--gold);
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.balance-card .cur-val {
+    color: #4cd137;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.refresh-icon {
+    color: #aaa;
+    font-size: 12px;
+    margin-left: 2px;
+    display: inline-block;
+    transition: transform 0.4s;
+}
+
+.refreshing .refresh-icon {
+    animation: spin 0.6s infinite linear;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ==================== TICKER MARQUEE ==================== */
+.ticker-bar {
+    width: 100%;
+    height: 26px;
+    background: rgba(214, 48, 49, 0.25);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.ticker-label {
+    background: var(--imperial-red);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 8px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.ticker-marquee-track {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+}
+
+.ticker-marquee {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+}
+
+.ticker-item {
+    font-size: 11px;
+    color: #ddd;
+    margin-right: 30px;
+}
+
+.ticker-item strong {
+    color: var(--gold);
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* ==================== MAIN VIEW SWITCHING ==================== */
+.jdb-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-view {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+}
+
+.game-view.active {
+    display: flex;
+}
+
+/* ========================================================
+   MODE 1: DRAGON FISHING ARCADE
+   ======================================================== */
+.fishing-stage-wrapper {
+    flex: 1;
+    position: relative;
+    min-height: 380px;
+    max-height: calc(100vh - 180px);
+    background: radial-gradient(circle at 50% 30%, #0c3359 0%, #06192e 60%, #030b14 100%);
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+#fishing-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.fishing-hud-top {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.boss-banner {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 15px var(--gold-glow);
+    animation: pulse-glow 1.5s infinite alternate;
+}
+
+.boss-tag {
+    background: var(--imperial-red);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+}
+
+.boss-desc {
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Laser Cannon Meter */
+.laser-meter-container {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid var(--cyan);
+    border-radius: 10px;
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 20;
+}
+
+.laser-label {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--cyan);
+    letter-spacing: 1px;
+}
+
+.laser-bar-bg {
+    width: 70px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.laser-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00f0ff, #0088ff);
+    box-shadow: 0 0 8px var(--cyan);
+    transition: width 0.3s ease;
+}
+
+.btn-laser-trigger {
+    background: var(--cyan);
+    color: #000;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-laser-trigger:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Fishing Bottom Controls */
+.fishing-controls {
+    background: rgba(10, 15, 26, 0.98);
+    border-top: 1px solid var(--card-border);
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    z-index: 30;
+}
+
+.ctrl-subrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.ctrl-title {
+    font-size: 10px;
+    font-weight: 800;
+    color: #888;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.stake-cluster {
+    display: flex;
+    flex-direction: column;
+}
+
+.stake-stepper {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.btn-step {
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.btn-step:active {
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.stake-display {
+    min-width: 60px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 14px;
+    color: #fff;
+}
+
+.stake-display .cur {
+    color: var(--gold);
+    margin-right: 2px;
+}
+
+.quick-chips {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 5px 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: #ccc;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.chip.active {
+    background: var(--gold-grad);
+    color: #000;
+    border-color: var(--gold);
+    box-shadow: 0 0 6px var(--gold-glow);
+}
+
+.tactical-cluster {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: #ddd;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-toggle.active {
+    background: var(--red-grad);
+    color: #fff;
+    border-color: #ff4757;
+    box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+    animation: pulse-border 1.5s infinite;
+}
+
+/* ========================================================
+   MODE 2: SUPER NIUBI SLOT
+   ======================================================== */
+.slot-stage-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 14px calc(14px + env(safe-area-inset-bottom));
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Jackpot Banner */
+.slot-jackpot-header {
+    width: 100%;
+    background: linear-gradient(90deg, #400406 0%, #800000 50%, #400406 100%);
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    padding: 10px 14px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.35);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.jackpot-caption {
+    font-family: var(--font-head);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.jackpot-number {
+    font-family: var(--font-head);
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 12px var(--gold);
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+/* Temple Slot Frame */
+.slot-frame {
+    width: 100%;
+    background: linear-gradient(180deg, #1f0b08 0%, #0c0403 100%);
+    border: 3px solid var(--gold);
+    border-radius: 16px;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), inset 0 0 18px rgba(212, 175, 55, 0.25);
+    position: relative;
+}
+
+.payline-svg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 50px;
+    width: calc(100% - 20px);
+    height: 250px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.line-hide {
+    display: none;
+}
+
+.reels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: #000;
+    border: 2px solid #5a3c10;
+    border-radius: 10px;
+    padding: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.reel-column {
+    background: #0e0e12;
+    border-radius: 8px;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.reel-ribbon {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    transition: transform 0.1s linear;
+}
+
+.slot-card {
+    height: 74px;
+    background: linear-gradient(180deg, #222 0%, #161616 100%);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.05);
+    transition: all 0.2s;
+}
+
+.slot-card.winning {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.4), rgba(255, 65, 108, 0.4));
+    border: 2px solid var(--gold);
+    animation: pulse-win 0.6s infinite alternate;
+}
+
+@keyframes pulse-win {
+    from { transform: scale(0.95); box-shadow: 0 0 8px var(--gold); }
+    to { transform: scale(1.05); box-shadow: 0 0 18px #ff7675; }
+}
+
+.slot-win-strip {
+    margin-top: 10px;
+    height: 38px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-align: center;
+    padding: 0 10px;
+}
+
+/* Slot Controls */
+.slot-controls {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.bet-selector-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.spin-action-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-turbo, .btn-autospin {
+    flex: 1;
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    transition: all 0.2s;
+}
+
+.btn-turbo.active {
+    background: #0984e3;
+    border-color: #74b9ff;
+    box-shadow: 0 0 10px rgba(9, 132, 227, 0.6);
+}
+
+.btn-autospin.active {
+    background: var(--imperial-red);
+    border-color: #ff7675;
+    box-shadow: 0 0 10px rgba(214, 48, 49, 0.6);
+}
+
+.btn-spin-main {
+    flex: 2;
+    padding: 14px 0;
+    background: var(--gold-grad);
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 184, 0, 0.45);
+    transition: all 0.15s ease;
+}
+
+.btn-spin-main:active {
+    transform: scale(0.96);
+}
+
+.btn-spin-main:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================================
+   CELEBRATION OVERLAY MODAL
+   ======================================================== */
+.celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.celebration-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.celebration-card {
+    background: radial-gradient(circle, #3d0608 0%, #170203 100%);
+    border: 3px solid var(--gold);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+    box-shadow: 0 0 40px var(--gold-glow);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.celebration-badge {
+    display: inline-block;
+    background: var(--gold-grad);
+    color: #000;
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.celebration-icon {
+    font-size: 56px;
+    margin-bottom: 8px;
+    animation: bounce 1s infinite alternate;
+}
+
+.celebration-amount {
+    font-family: var(--font-head);
+    font-size: 32px;
+    font-weight: 900;
+    color: #4cd137;
+    text-shadow: 0 0 15px rgba(76, 209, 55, 0.6);
+    margin-bottom: 4px;
+}
+
+.celebration-subtitle {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.btn-collect {
+    background: var(--gold-grad);
+    border: none;
+    color: #000;
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 900;
+    padding: 10px 24px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--gold-glow);
+}
+
+/* Animations */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+    from { box-shadow: 0 0 10px var(--gold-glow); }
+    to { box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); }
+}
+
+@keyframes pulse-border {
+    0%, 100% { border-color: #ff4757; }
+    50% { border-color: #ffa502; }
+}

@@ -76,7 +76,22 @@ if ($gameCode === '123' || $gameCode === '121' || stripos($gameCode, 'chicken') 
     ]));
 }
 
-// 3. Fallback for all other Slot & Casino games
+// 4. Check if JDB Game (Dragon Fishing or Super Niubi Slot)
+$isJdbGame = ($vendorCode === 'JDB')
+    || (stripos($vendorCode, 'jdb') !== false)
+    || in_array($gameCode, ['7001', '7002', '7003', '7004', '7005', '7006', '14036', '14045', '14006', '14027', '14080'], true)
+    || stripos($gameCode, 'jdb') !== false;
+
+if ($isJdbGame) {
+    $isFishing = in_array($gameCode, ['7001', '7002', '7003', '7004', '7005', '7006'], true) || stripos($gameCode, 'fish') !== false;
+    $gameUrl = $baseUrl . '/jdb/index.php?token=' . urlencode($token) . '&game=' . urlencode($gameCode) . '&mode=' . ($isFishing ? 'fishing' : 'slot');
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 5. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,

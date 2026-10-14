@@ -4114,7 +4114,22 @@ function api_thirdgame_get_game_url(array $input): array
         ]);
     }
 
-    // 3. Slot / Casino games
+    // 4. JDB Game (Dragon Fishing or Super Niubi Slot)
+    $isJdbGame = ($vendorCode === 'JDB')
+        || (stripos($vendorCode, 'jdb') !== false)
+        || in_array($gameCode, ['7001', '7002', '7003', '7004', '7005', '7006', '14036', '14045', '14006', '14027', '14080'], true)
+        || stripos($gameCode, 'jdb') !== false;
+
+    if ($isJdbGame) {
+        $isFishing = in_array($gameCode, ['7001', '7002', '7003', '7004', '7005', '7006'], true) || stripos($gameCode, 'fish') !== false;
+        $gameUrl = $baseUrl . '/jdb/index.php?token=' . urlencode($token) . '&game=' . urlencode($gameCode) . '&mode=' . ($isFishing ? 'fishing' : 'slot');
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 5. Slot / Casino games
     $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
     return api_success([
         'url' => $gameUrl,
