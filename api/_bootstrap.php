@@ -4269,6 +4269,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'crazywheel' || $code === 'crazy_wheel' || $code === '107' || $code === '816' || stripos($name, 'crazy wheel') !== false || stripos($name, 'crazywheel') !== false || stripos($code, 'crazy') !== false || stripos($code, 'wheel') !== false) {
         return true;
     }
+    // Game 18: Tower Legend
+    if ($code === 'tower' || $code === 'tower_legend' || $code === '108' || $code === '817' || stripos($name, 'tower') !== false || stripos($code, 'tower') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;
