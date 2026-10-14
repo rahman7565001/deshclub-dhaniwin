@@ -4129,7 +4129,17 @@ function api_thirdgame_get_game_url(array $input): array
         ]);
     }
 
-    // 5. Slot / Casino games
+    // 5. Mines (Diamond Mines Crash Game)
+    $isMinesGame = ($gameCode === '100' || $gameCode === '811' || $gameId === 20562 || $gameId === 21127 || stripos($gameCode, 'mines') !== false || stripos($vendorCode, 'mines') !== false);
+    if ($isMinesGame) {
+        $gameUrl = $baseUrl . '/mines/index.php?token=' . urlencode($token);
+        return api_success([
+            'url' => $gameUrl,
+            'returnType' => 1
+        ]);
+    }
+
+    // 6. Slot / Casino games
     $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
     return api_success([
         'url' => $gameUrl,

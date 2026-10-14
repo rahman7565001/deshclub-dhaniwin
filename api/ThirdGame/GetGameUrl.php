@@ -91,7 +91,17 @@ if ($isJdbGame) {
     ]));
 }
 
-// 5. Fallback for all other Slot & Casino games
+// 5. Check if Mines (Diamond Mines Crash Game)
+$isMinesGame = ($gameCode === '100' || $gameCode === '811' || $gameId === 20562 || $gameId === 21127 || stripos($gameCode, 'mines') !== false || stripos($vendorCode, 'mines') !== false);
+if ($isMinesGame) {
+    $gameUrl = $baseUrl . '/mines/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 6. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,

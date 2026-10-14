@@ -1,0 +1,716 @@
+/* mines/mines.css - Diamond Mines Crash Game Styling */
+:root {
+    --bg-dark: #0A0E17;
+    --card-bg: rgba(18, 24, 38, 0.9);
+    --tile-idle: #1A2234;
+    --tile-hover: #232E46;
+    --tile-border: rgba(255, 255, 255, 0.1);
+    --gold: #FFD700;
+    --gold-grad: linear-gradient(135deg, #FFE066 0%, #FFB800 50%, #FF8C00 100%);
+    --green-grad: linear-gradient(135deg, #00E676 0%, #00B0FF 100%);
+    --red-grad: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+    --gem-color: #00E676;
+    --bomb-color: #FF3838;
+    --cyan: #00F0FF;
+    --font-ui: 'Montserrat', sans-serif;
+    --font-num: 'Cinzel', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #FFFFFF;
+    font-family: var(--font-ui);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+/* ==================== HEADER ==================== */
+.mines-header {
+    width: 100%;
+    height: 54px;
+    background: rgba(13, 18, 29, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-lobby {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-lobby:active {
+    transform: scale(0.95);
+}
+
+.brand-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.gem-ico {
+    font-size: 18px;
+    filter: drop-shadow(0 0 6px rgba(0, 230, 118, 0.6));
+}
+
+.brand-name {
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 2px;
+    background: var(--green-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.provably-fair {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-radius: 12px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    letter-spacing: 1px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.balance-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 230, 118, 0.5);
+    border-radius: 20px;
+    padding: 5px 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.balance-card .cur-sym {
+    color: var(--gem-color);
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.balance-card .cur-val {
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.refresh-icon {
+    color: #888;
+    font-size: 12px;
+    display: inline-block;
+    transition: transform 0.4s;
+}
+
+.refreshing .refresh-icon {
+    animation: spin 0.6s infinite linear;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* ==================== TICKER RIBBON ==================== */
+.ticker-bar {
+    width: 100%;
+    height: 26px;
+    background: rgba(0, 230, 118, 0.12);
+    border-bottom: 1px solid rgba(0, 230, 118, 0.2);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.ticker-tag {
+    background: var(--gem-color);
+    color: #000;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 8px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.ticker-marquee-track {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-marquee {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+}
+
+.ticker-item {
+    font-size: 11px;
+    color: #ddd;
+    margin-right: 30px;
+}
+
+.ticker-item strong {
+    color: var(--gold);
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* ==================== MAIN STAGE ==================== */
+.mines-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 14px calc(14px + env(safe-area-inset-bottom));
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Live Round HUD */
+.round-status-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.status-pill {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--tile-border);
+    border-radius: 12px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.status-pill .lbl {
+    font-size: 10px;
+    font-weight: 800;
+    color: #888;
+}
+
+.status-pill .val {
+    font-size: 13px;
+    font-weight: 900;
+    color: #FFFFFF;
+}
+
+.status-pill .val.highlight {
+    color: var(--gem-color);
+    font-size: 14px;
+}
+
+/* ==================== 5x5 MINEFIELD GRID ==================== */
+.minefield-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 380px;
+    background: #0E131F;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 14px;
+}
+
+.minefield-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+}
+
+.mine-tile {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    perspective: 600px;
+    outline: none;
+    padding: 0;
+}
+
+.tile-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tile-front, .tile-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tile Front (Hidden) */
+.tile-front {
+    background: linear-gradient(145deg, #202A40, #141B2B);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.15s ease;
+}
+
+.tile-front .hex-dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
+}
+
+.mine-tile:hover .tile-front {
+    background: linear-gradient(145deg, #273450, #192236);
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+}
+
+.mine-tile:active .tile-inner {
+    transform: scale(0.92);
+}
+
+/* Tile Back (Revealed) */
+.tile-back {
+    transform: rotateY(180deg);
+}
+
+.mine-tile.revealed .tile-inner {
+    transform: rotateY(180deg);
+}
+
+/* Gem Style */
+.tile-back.gem {
+    background: radial-gradient(circle, #004d25 0%, #002411 100%);
+    border: 2px solid var(--gem-color);
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.5);
+    animation: gem-pop 0.4s ease;
+}
+
+.tile-back.gem .gem-icon {
+    font-size: 26px;
+    filter: drop-shadow(0 0 8px #00E676);
+}
+
+/* Mine / Bomb Style */
+.tile-back.mine {
+    background: radial-gradient(circle, #59090b 0%, #2e0405 100%);
+    border: 2px solid var(--bomb-color);
+    box-shadow: 0 0 20px rgba(255, 56, 56, 0.8);
+    animation: bomb-shake 0.4s ease;
+}
+
+.tile-back.mine .bomb-icon {
+    font-size: 26px;
+    filter: drop-shadow(0 0 10px #FF3838);
+}
+
+/* Faded Unrevealed at End */
+.tile-back.faded {
+    opacity: 0.45;
+}
+
+@keyframes gem-pop {
+    0% { transform: scale(0.6); }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1.0); }
+}
+
+@keyframes bomb-shake {
+    0%, 100% { transform: translate(0, 0); }
+    20%, 60% { transform: translate(-3px, 2px); }
+    40%, 80% { transform: translate(3px, -2px); }
+}
+
+/* ==================== CONTROLS PANEL ==================== */
+.mines-controls {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--tile-border);
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.control-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.row-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 800;
+    color: #888;
+    letter-spacing: 0.5px;
+}
+
+.badge-hint {
+    color: var(--gem-color);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* Mines Selector Pills */
+.mines-selector {
+    display: flex;
+    gap: 6px;
+}
+
+.mines-selector .pill {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 8px 0;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mines-selector .pill.active {
+    background: var(--red-grad);
+    color: #FFFFFF;
+    border-color: #ff4757;
+    box-shadow: 0 0 8px rgba(255, 71, 87, 0.4);
+}
+
+.mines-selector .pill:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Stake Adjuster */
+.ctrl-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #888;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.stepper-box {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.btn-step {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-step:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.stake-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.stake-input-wrap .cur {
+    color: var(--gem-color);
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.stake-input-wrap input {
+    width: 80px;
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 900;
+    text-align: center;
+    outline: none;
+}
+
+.stake-input-wrap input:disabled {
+    color: #aaa;
+}
+
+.quick-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    flex: 1;
+    padding: 6px 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ddd;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.chip.active {
+    background: var(--green-grad);
+    color: #000;
+    border-color: var(--gem-color);
+    box-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+}
+
+.chip:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Action Buttons Row */
+.action-buttons-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.btn-random {
+    width: 90px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: #ddd;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-random:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-main-action {
+    flex: 1;
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.15s ease;
+}
+
+.btn-main-action:active {
+    transform: scale(0.97);
+}
+
+/* Idle State: Green BET */
+.btn-main-action.btn-start {
+    background: var(--green-grad);
+    color: #000;
+    box-shadow: 0 4px 18px rgba(0, 230, 118, 0.4);
+}
+
+/* Playing State: Pulsing Gold CASHOUT */
+.btn-main-action.btn-cashout {
+    background: var(--gold-grad);
+    color: #000;
+    box-shadow: 0 4px 22px rgba(255, 215, 0, 0.6);
+    animation: pulse-gold 1.2s infinite alternate;
+}
+
+@keyframes pulse-gold {
+    from { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+    to { box-shadow: 0 0 25px rgba(255, 215, 0, 0.85); transform: scale(1.02); }
+}
+
+/* ==================== CELEBRATION MODAL ==================== */
+.celebration-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.celebration-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.celebration-card {
+    background: radial-gradient(circle, #0c2b1e 0%, #06140e 100%);
+    border: 3px solid var(--gem-color);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+    box-shadow: 0 0 40px rgba(0, 230, 118, 0.5);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.celebration-badge {
+    display: inline-block;
+    background: var(--green-grad);
+    color: #000;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.celebration-icon {
+    font-size: 56px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 10px #00E676);
+}
+
+.celebration-amount {
+    font-size: 32px;
+    font-weight: 900;
+    color: #4cd137;
+    margin-bottom: 4px;
+}
+
+.celebration-subtitle {
+    font-size: 12px;
+    color: var(--cyan);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.btn-collect {
+    background: var(--green-grad);
+    border: none;
+    color: #000;
+    font-size: 15px;
+    font-weight: 900;
+    padding: 10px 26px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
