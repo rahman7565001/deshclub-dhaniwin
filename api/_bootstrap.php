@@ -4257,6 +4257,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'sicbo' || $code === '103' || $code === '813' || stripos($name, 'sicbo') !== false || stripos($name, 'sic bo') !== false || stripos($code, 'sicbo') !== false) {
         return true;
     }
+    // Game 15: Limbo Turbo
+    if ($code === 'limbo' || $code === '105' || $code === '814' || stripos($name, 'limbo') !== false || stripos($code, 'limbo') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;

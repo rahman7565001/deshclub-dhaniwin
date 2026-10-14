@@ -165,7 +165,17 @@ if ($isSicBo) {
     ]));
 }
 
-// 12. Fallback for all other Slot & Casino games
+// 12. Check if Limbo
+$isLimbo = ($gameCode === 'limbo' || $gameCode === '105' || $gameCode === '814' || stripos($gameCode, 'limbo') !== false);
+if ($isLimbo) {
+    $gameUrl = $baseUrl . '/limbo/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 13. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,
