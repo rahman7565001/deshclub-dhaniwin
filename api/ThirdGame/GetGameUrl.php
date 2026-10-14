@@ -155,7 +155,17 @@ if ($isPlinko) {
     ]));
 }
 
-// 11. Fallback for all other Slot & Casino games
+// 11. Check if Sic Bo
+$isSicBo = ($gameCode === 'sicbo' || $gameCode === '103' || $gameCode === '813' || stripos($gameCode, 'sicbo') !== false || stripos($gameCode, 'sic_bo') !== false);
+if ($isSicBo) {
+    $gameUrl = $baseUrl . '/sicbo/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 12. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,

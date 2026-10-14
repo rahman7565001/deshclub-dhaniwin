@@ -4253,6 +4253,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'plinko' || $code === '812' || stripos($name, 'plinko') !== false || stripos($code, 'plinko') !== false) {
         return true;
     }
+    // Game 14: Super Sic Bo
+    if ($code === 'sicbo' || $code === '103' || $code === '813' || stripos($name, 'sicbo') !== false || stripos($name, 'sic bo') !== false || stripos($code, 'sicbo') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;
