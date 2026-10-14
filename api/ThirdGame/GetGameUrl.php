@@ -205,7 +205,17 @@ if ($isTower) {
     ]));
 }
 
-// 16. Fallback for all other Slot & Casino games
+// 16. Check if Penalty Shootout
+$isPenalty = ($gameCode === 'penalty' || $gameCode === 'penalty_shootout' || $gameCode === '109' || $gameCode === '818' || stripos($gameCode, 'penalty') !== false || stripos($gameCode, 'shootout') !== false);
+if ($isPenalty) {
+    $gameUrl = $baseUrl . '/penalty/index.php?token=' . urlencode($token);
+    api_emit(api_success([
+        'url' => $gameUrl,
+        'returnType' => 1
+    ]));
+}
+
+// 17. Fallback for all other Slot & Casino games
 $gameUrl = $baseUrl . '/game/slot.php?game=' . urlencode($gameCode) . '&vendor=' . urlencode($vendorCode) . '&token=' . urlencode($token);
 api_emit(api_success([
     'url' => $gameUrl,

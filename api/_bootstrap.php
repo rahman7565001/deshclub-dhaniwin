@@ -4273,6 +4273,10 @@ function api_is_game_allowed(array $g): bool
     if ($code === 'tower' || $code === 'tower_legend' || $code === '108' || $code === '817' || stripos($name, 'tower') !== false || stripos($code, 'tower') !== false) {
         return true;
     }
+    // Game 19: Penalty Shootout
+    if ($code === 'penalty' || $code === 'penalty_shootout' || $code === '109' || $code === '818' || stripos($name, 'penalty') !== false || stripos($name, 'shootout') !== false || stripos($code, 'penalty') !== false) {
+        return true;
+    }
 
     // All other dummy games are hidden
     return false;
