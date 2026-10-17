@@ -24,6 +24,10 @@ if (empty($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(random_bytes(32));
 }
 $csrfToken = $_SESSION['csrf'];
+$adminSiteName = function_exists('api_setting') ? api_setting('site_name', 'Deshclub') : 'Deshclub';
+if (empty($adminSiteName)) {
+    $adminSiteName = 'Deshclub';
+}
 
 // Check Logout
 if (($_GET['logout'] ?? '') === '1') {
@@ -62,7 +66,7 @@ if (!AuthController::checkRememberMe() && empty($_SESSION['admin_logged_in'])):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Deshclub Admin - Secure Access</title>
+  <title><?php echo htmlspecialchars($adminSiteName); ?> Admin - Secure Access</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="assets/css/admin-theme.css" rel="stylesheet">
@@ -70,7 +74,7 @@ if (!AuthController::checkRememberMe() && empty($_SESSION['admin_logged_in'])):
 <body class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
   <div class="glass-panel p-5 text-center" style="width: min(440px, 90vw);">
     <div class="brand-logo mx-auto mb-4" style="width: 60px; height: 60px; font-size: 28px; border-radius: 18px;">✦</div>
-    <h2 class="fw-bold mb-1" style="background: linear-gradient(to right, #fff, var(--accent-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Deshclub Portal</h2>
+    <h2 class="fw-bold mb-1" style="background: linear-gradient(to right, #fff, var(--accent-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"><?php echo htmlspecialchars($adminSiteName); ?> Portal</h2>
     <p class="text-secondary mb-4">Enterprise Prediction Gaming Administrator Panel</p>
     
     <?php if ($loginError): ?>
@@ -485,7 +489,7 @@ $allGameMeta = [
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="<?php echo $csrfToken; ?>">
-  <title>Deshclub Admin - Enterprise Dashboard</title>
+  <title><?php echo htmlspecialchars($adminSiteName); ?> Admin - Enterprise Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -1440,11 +1444,103 @@ $allGameMeta = [
 
         <?php if ($tab === 'settings'): 
           $settings = admin_db_rows("SELECT * FROM api_settings ORDER BY setting_key");
+          $currentSiteName = function_exists('api_setting') ? api_setting('site_name', 'Deshclub') : 'Deshclub';
+          if (empty($currentSiteName)) $currentSiteName = 'Deshclub';
+          $currentSiteDesc = function_exists('api_setting') ? api_setting('site_description', 'Deshclub – Where the wealth happens. Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place.') : '';
+          $currentTelegram = function_exists('api_setting') ? api_setting('telegram_url', 'https://t.me/deshclub') : 'https://t.me/deshclub';
+          $currentGatewayName = function_exists('api_setting') ? api_setting('upi_display_name', $currentSiteName) : $currentSiteName;
+          $saved = ($_GET['saved'] ?? '') === '1';
         ?>
           <div id="settings-view">
-            <h2 class="fw-bold mb-4"><i class="fas fa-sliders-h text-gold me-2"></i> System Settings & Maintenance</h2>
-            
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+              <h2 class="fw-bold m-0"><i class="fas fa-globe text-gold me-2"></i> Website Branding & System Settings</h2>
+              <span class="badge px-3 py-2" style="background: rgba(251, 191, 36, 0.15); color: var(--accent-gold); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 20px; font-size: 13px;">
+                <i class="fas fa-check-circle me-1"></i> লাইভ নাম: <strong id="currentLiveBadge"><?php echo htmlspecialchars($currentSiteName); ?></strong>
+              </span>
+            </div>
+
+            <?php if ($saved): ?>
+              <div class="alert alert-success border-0 mb-4 d-flex align-items-center justify-content-between" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border-radius: 14px; padding: 16px 20px;">
+                <div>
+                  <i class="fas fa-check-circle fa-lg me-2"></i>
+                  <strong>অভিনন্দন!</strong> ওয়েবসাইটের নাম ও ব্র্যান্ডিং সফলভাবে পরিবর্তন করা হয়েছে এবং সর্বত্র আপডেট হয়েছে।
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php endif; ?>
+
+            <!-- DYNAMIC BRANDING CARD -->
+            <div class="glass-panel p-4 mb-4" style="border: 1px solid rgba(251, 191, 36, 0.35); box-shadow: 0 8px 32px rgba(0,0,0,0.37);">
+              <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3" style="border-color: rgba(255,255,255,0.08) !important;">
+                <div>
+                  <h4 class="fw-bold text-gold m-0"><i class="fas fa-pen-nib me-2"></i> ওয়েবসাইটের নাম ও ব্র্যান্ডিং কনফিগারেশন</h4>
+                  <p class="text-secondary small m-0 mt-1">এখানে নাম পরিবর্তন করে সেভ করলেই ওয়েবসাইটের হেডার, পেজ টাইটেল, মেনুবার, এসপিএ কনফিগারেশন ও গেমের নাম সাথে সাথে পরিবর্তিত হয়ে যাবে।</p>
+                </div>
+                <div class="text-end d-none d-md-block">
+                  <span class="badge bg-primary px-3 py-2" style="border-radius: 12px; font-size: 12px;">Dynamic Sync Active</span>
+                </div>
+              </div>
+
+              <form id="brandingForm" action="api.php" method="post">
+                <input type="hidden" name="action" value="save_branding">
+                <input type="hidden" name="csrf" value="<?php echo $csrfToken; ?>">
+                <input type="hidden" name="redirect" value="/admin/?tab=settings">
+
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label text-light fw-bold small">
+                      <i class="fas fa-signature text-gold me-1"></i> ওয়েবসাইটের নাম (Website Name) <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" name="site_name" id="site_name_input" class="form-control form-control-premium form-control-lg fw-bold" 
+                           value="<?php echo htmlspecialchars($currentSiteName); ?>" required placeholder="যেমন: Deshclub, BDG Club, ইত্যাদি">
+                    <div class="form-text text-muted small mt-1">ওয়েবসাইটের প্রধান নাম যা হোমপেজ হেডার, ব্রাউজার ট্যাব ও অ্যাপে প্রদর্শিত হবে।</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label text-light fw-bold small">
+                      <i class="fas fa-cash-register text-success me-1"></i> ক্যাশিয়ার / গেটওয়ে নাম (Payment Display Name)
+                    </label>
+                    <input type="text" name="upi_display_name" id="upi_display_name_input" class="form-control form-control-premium form-control-lg" 
+                           value="<?php echo htmlspecialchars($currentGatewayName); ?>" placeholder="Payment Display Name">
+                    <div class="form-text text-muted small mt-1">ডিপোজিট ক্যাশিয়ার ও পেমেন্ট রিসিটে মার্চেন্ট বা প্ল্যাটফর্ম নাম হিসেবে দেখাবে।</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label text-light fw-bold small">
+                      <i class="fab fa-telegram text-info me-1"></i> অফিসিয়াল টেলিগ্রাম চ্যানেল / সাপোর্ট লিঙ্ক (Telegram Support URL)
+                    </label>
+                    <input type="url" name="telegram_url" class="form-control form-control-premium" 
+                           value="<?php echo htmlspecialchars($currentTelegram); ?>" placeholder="https://t.me/yourchannel">
+                    <div class="form-text text-muted small mt-1">গিফট কোড ও সাপোর্ট আইকনে ক্লিক করলে এই চ্যানেলে নিয়ে যাবে।</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="form-label text-light fw-bold small">
+                      <i class="fas fa-quote-left text-warning me-1"></i> ওয়েবসাইটের ট্যাগলাইন / বিবরণ (Site Description)
+                    </label>
+                    <input type="text" name="site_description" class="form-control form-control-premium" 
+                           value="<?php echo htmlspecialchars($currentSiteDesc); ?>" placeholder="Where the wealth happens. Play top trending games...">
+                    <div class="form-text text-muted small mt-1">এসইও (SEO), সোশ্যাল শেয়ার ও মেটা ডেসক্রিপশনে ব্যবহার হবে।</div>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between mt-4 pt-3 border-top" style="border-color: rgba(255,255,255,0.08) !important;">
+                  <div class="text-secondary small">
+                    <i class="fas fa-shield-alt text-gold me-1"></i> সেভ বাটনে ক্লিক করার সাথে সাথে ওয়েবসাইটের সকল ক্লায়েন্টে লাইভ আপডেট হবে।
+                  </div>
+                  <button type="submit" id="saveBrandingSubmitBtn" class="btn btn-premium px-4 py-2 fw-bold">
+                    <i class="fas fa-save me-2"></i> নাম পরিবর্তন সেভ করুন (Save Branding)
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- RAW API_SETTINGS ADVANCED TABLE -->
             <div class="glass-panel p-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h4 class="fw-bold m-0"><i class="fas fa-database text-gold me-2"></i> সকল সিস্টেম ভেরিয়েবল (All System Settings)</h4>
+                <span class="text-muted small">মোট ভেরিয়েবল: <?php echo count($settings); ?> টি</span>
+              </div>
                 <div class="table-responsive table-responsive-premium">
                     <table class="table">
                         <thead>
@@ -1460,6 +1556,7 @@ $allGameMeta = [
                                     <form action="api.php" method="post">
                                         <input type="hidden" name="action" value="save_setting">
                                         <input type="hidden" name="csrf" value="<?php echo $csrfToken; ?>">
+                                        <input type="hidden" name="redirect" value="/admin/?tab=settings">
                                         <input type="hidden" name="setting_key" value="<?php echo htmlspecialchars($set['setting_key']); ?>">
                                         <td>
                                             <strong><?php echo htmlspecialchars($set['setting_key']); ?></strong>
@@ -1477,6 +1574,7 @@ $allGameMeta = [
                                 <form action="api.php" method="post">
                                     <input type="hidden" name="action" value="save_setting">
                                     <input type="hidden" name="csrf" value="<?php echo $csrfToken; ?>">
+                                    <input type="hidden" name="redirect" value="/admin/?tab=settings">
                                     <td><input name="setting_key" class="form-control form-control-premium" placeholder="new_setting_key" required></td>
                                     <td><textarea name="setting_value" class="form-control form-control-premium" placeholder="Value..." required></textarea></td>
                                     <td><button type="submit" class="btn btn-success btn-sm">Add Setting</button></td>
@@ -1487,6 +1585,45 @@ $allGameMeta = [
                 </div>
             </div>
           </div>
+
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              const bForm = document.getElementById('brandingForm');
+              if (!bForm) return;
+
+              bForm.addEventListener('submit', async function(e) {
+                  e.preventDefault();
+                  const submitBtn = document.getElementById('saveBrandingSubmitBtn');
+                  const origHtml = submitBtn.innerHTML;
+                  submitBtn.disabled = true;
+                  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> সেভ হচ্ছে...';
+
+                  try {
+                      const formData = new FormData(bForm);
+                      const res = await fetch('api.php', {
+                          method: 'POST',
+                          body: formData,
+                          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                      });
+                      const data = await res.json();
+                      if (data.success) {
+                          const newName = document.getElementById('site_name_input').value.trim();
+                          const badge = document.getElementById('currentLiveBadge');
+                          if (badge) badge.textContent = newName;
+                          alert('✅ ' + data.message);
+                          window.location.reload();
+                      } else {
+                          alert('❌ ' + (data.message || 'Error saving branding'));
+                      }
+                  } catch (err) {
+                      alert('Error: ' + err.message);
+                  } finally {
+                      submitBtn.disabled = false;
+                      submitBtn.innerHTML = origHtml;
+                  }
+              });
+          });
+          </script>
         <?php endif; ?>
 
         <?php if ($tab === 'audit'): 

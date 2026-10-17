@@ -6,6 +6,10 @@
 
 declare(strict_types=1);
 
+if (file_exists(__DIR__ . '/api/_bootstrap.php')) {
+    require_once __DIR__ . '/api/_bootstrap.php';
+}
+
 $docRoot = __DIR__;
 $rawUri = $_SERVER['REQUEST_URI'] ?? '/';
 $parsedPath = parse_url($rawUri, PHP_URL_PATH);
@@ -138,10 +142,38 @@ if (preg_match('#^/(WinGo|K3|D5|MotoRace|TrxWinGo)/(.+\.json)$#i', $uri, $m)) {
 }
 
 // -------------------------------------------------------------
-// 3. WebAPI / Config Fallbacks
+// 3. WebAPI / Config Fallbacks & Dynamic Runtime Branding
 // -------------------------------------------------------------
-if ($uri === '/webapi/v/config.js') {
-    serve_static_asset($docRoot . '/webapi/kv/config.js');
+if ($uri === '/webapi/kv/config.js' || $uri === '/webapi/v/config.js') {
+    $configPath = $docRoot . '/webapi/kv/config.js';
+    if (file_exists($configPath)) {
+        header('Content-Type: application/javascript; charset=utf-8');
+        header('Access-Control-Allow-Origin: *');
+        header('Cache-Control: no-cache, no-store, must-revalidate');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+        $content = (string)file_get_contents($configPath);
+        if (function_exists('api_setting')) {
+            $siteName = api_setting('site_name', '');
+            if ($siteName !== '') {
+                $siteNameEscaped = str_replace(['\\', '"'], ['\\\\', '\"'], $siteName);
+                $content = preg_replace('/"webSiteName":\s*"[^"]*"/', '"webSiteName": "' . $siteNameEscaped . '"', $content);
+                $content = preg_replace('/"seoHomeTitle":\s*"[^"]*"/', '"seoHomeTitle": "' . $siteNameEscaped . '"', $content);
+            }
+            $siteDesc = api_setting('site_description', '');
+            if ($siteDesc !== '') {
+                $descEscaped = str_replace(['\\', '"', "\r", "\n"], ['\\\\', '\"', '', '\n'], $siteDesc);
+                $content = preg_replace('/"seoHomeDescription":\s*"[^"]*"/', '"seoHomeDescription": "' . $descEscaped . '"', $content);
+            }
+            $telegram = api_setting('telegram_url', '');
+            if ($telegram !== '') {
+                $tgEscaped = str_replace(['\\', '"'], ['\\\\', '\"'], $telegram);
+                $content = preg_replace('/("jumpUrl":\s*")https:\/\/t\.me\/[^"]*(")/', '${1}' . $tgEscaped . '${2}', $content);
+            }
+        }
+        echo $content;
+        exit;
+    }
 }
 if ($uri === '/webapi/v/firebaseConfig.js') {
     serve_static_asset($docRoot . '/webapi/kv/firebaseConfig.js');
@@ -282,13 +314,27 @@ if (in_array($ext, $assetExtensions, true)) {
 $indexHtml = $docRoot . '/index.html';
 if (is_file($indexHtml)) {
     header('Content-Type: text/html; charset=utf-8');
+    header('Access-Control-Allow-Origin: *');
     header('Cache-Control: no-cache, no-store, must-revalidate');
     header('Pragma: no-cache');
     header('Expires: 0');
-    readfile($indexHtml);
+    $html = (string)file_get_contents($indexHtml);
+    if (function_exists('api_setting')) {
+        $siteName = api_setting('site_name', '');
+        if ($siteName !== '') {
+            $safeName = htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8');
+            $html = preg_replace('/<title>.*?<\/title>/i', '<title>' . $safeName . '</title>', $html);
+            $html = preg_replace('/(<meta\s+property=["\']og:title["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $safeName . '$2', $html);
+            $html = preg_replace('/(<meta\s+property=["\']og:site_name["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $safeName . '$2', $html);
+            $html = preg_replace('/(<meta\s+name=["\']twitter:title["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $safeName . '$2', $html);
+            $html = preg_replace('/(<meta\s+name=["\']keywords["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $safeName . '$2', $html);
+        }
+    }
+    echo $html;
     exit;
 }
 
 http_response_code(404);
 header('Content-Type: text/plain; charset=utf-8');
-echo 'Deshclub: index.html not found';
+echo 'Platform: index.html not found';
+

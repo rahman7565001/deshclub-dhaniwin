@@ -9,7 +9,7 @@ $trxTabs = ['trxwingo_1m', 'trxwingo_3m', 'trxwingo_5m', 'trxwingo_10m'];
 $motoTabs = ['motorace_1m', 'motorace_3m', 'motorace_5m', 'motorace_10m'];
 $financeTabs = ['gateways', 'add_upi', 'usdt_rate', 'add_usdt', 'add_upi_image', 'add_usdt_image', 'recharges', 'withdrawals', 'upi_withdraw', 'withdraw_sent', 'withdraw_reject'];
 $supportTabs = ['support_deposit', 'support_withdraw', 'support_ifsc', 'support_bank', 'support_game'];
-$adminManageTabs = ['bonus_manage', 'admin_password', 'check_same_ip', 'site_maintenance', 'banned_users', 'users', 'daily_salary', 'gift_code', 'add_admin', 'demo_user', 'agent_user'];
+$adminManageTabs = ['settings', 'bonus_manage', 'admin_password', 'check_same_ip', 'site_maintenance', 'banned_users', 'users', 'daily_salary', 'gift_code', 'add_admin', 'demo_user', 'agent_user'];
 ?>
 
 <style>
@@ -265,6 +265,9 @@ $adminManageTabs = ['bonus_manage', 'admin_password', 'check_same_ip', 'site_mai
         </a>
         <div class="collapse <?php echo $adminManageOpen ? 'show' : ''; ?>" id="adminManageCollapse">
             <div class="sidebar-submenu">
+                <a class="sidebar-sub-link <?php echo $currentTab === 'settings' ? 'active' : ''; ?>" href="/admin/?tab=settings">
+                    <i class="fas fa-globe text-gold me-1"></i> Website Branding (সাইটের নাম)
+                </a>
                 <a class="sidebar-sub-link <?php echo $currentTab === 'bonus_manage' ? 'active' : ''; ?>" href="/admin/?tab=bonus_manage">Bonus Manage</a>
                 <a class="sidebar-sub-link <?php echo $currentTab === 'admin_password' ? 'active' : ''; ?>" href="/admin/?tab=admin_password">Admin Password</a>
                 <a class="sidebar-sub-link <?php echo $currentTab === 'check_same_ip' ? 'active' : ''; ?>" href="/admin/?tab=check_same_ip">Check Same IP</a>

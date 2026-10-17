@@ -73,7 +73,7 @@ const NavbarComponent = defineComponent({
             createElementVNode(
               "div",
               { class: "game-nav-brand-title" },
-              toDisplayString(props.title || "Deshclub"),
+              toDisplayString(props.title || (window._DATA_ && window._DATA_.homeSetting && window._DATA_.homeSetting.baseConfig && window._DATA_.homeSetting.baseConfig.webSiteName) || window.DESHCLUB_SITE_NAME || "Deshclub"),
               1
             ),
             createElementVNode(

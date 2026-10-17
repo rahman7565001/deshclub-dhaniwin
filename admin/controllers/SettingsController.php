@@ -26,11 +26,133 @@ class SettingsController
                     $stmt->execute([$key, $value]);
                 }
             }
+            if ($key === 'site_name') {
+                self::syncSiteFiles($value);
+            }
             return ['success' => true, 'message' => "Setting '$key' saved successfully"];
         } catch (Throwable $e) {
             return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
         }
     }
+
+    public static function saveBranding(array $post): array
+    {
+        $siteName = trim((string)($post['site_name'] ?? ''));
+        if ($siteName === '') {
+            return ['success' => false, 'message' => 'ওয়েবসাইটের নাম অবশ্যই পূরণ করতে হবে (Site name is required)'];
+        }
+
+        $description = trim((string)($post['site_description'] ?? ''));
+        $telegramUrl = trim((string)($post['telegram_url'] ?? ''));
+        $gatewayName = trim((string)($post['upi_display_name'] ?? $siteName));
+
+        self::saveSetting('site_name', $siteName);
+        if ($description !== '') {
+            self::saveSetting('site_description', $description);
+        }
+        if ($telegramUrl !== '') {
+            self::saveSetting('telegram_url', $telegramUrl);
+        }
+        if ($gatewayName !== '') {
+            self::saveSetting('upi_display_name', $gatewayName);
+        }
+        $shareContent = "👉Invite your friends to join {$siteName} and easily unlock free bonus! 🔗 #inviteLink#";
+        self::saveSetting('share_content', $shareContent);
+
+        self::syncSiteFiles($siteName, $description, $telegramUrl);
+
+        return [
+            'success' => true,
+            'message' => "ওয়েবসাইট নাম সফলভাবে '{$siteName}' এ পরিবর্তন করা হয়েছে এবং সর্বত্র আপডেট হয়েছে!",
+            'site_name' => $siteName
+        ];
+    }
+
+    public static function syncSiteFiles(string $siteName, string $description = '', string $telegramUrl = ''): bool
+    {
+        $siteName = trim($siteName);
+        if ($siteName === '') {
+            return false;
+        }
+
+        $docRoot = dirname(__DIR__, 2);
+        $siteNameEscaped = str_replace(['\\', '"'], ['\\\\', '\"'], $siteName);
+        $siteNameHtml = htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8');
+
+        // 1. Update webapi/kv/config.js and webapi2/kv/config.js
+        $configFiles = [
+            $docRoot . '/webapi/kv/config.js',
+            $docRoot . '/webapi2/kv/config.js',
+        ];
+        foreach ($configFiles as $cfgFile) {
+            if (is_file($cfgFile) && is_writable($cfgFile)) {
+                $content = (string)file_get_contents($cfgFile);
+                $content = preg_replace('/"webSiteName":\s*"[^"]*"/', '"webSiteName": "' . $siteNameEscaped . '"', $content);
+                $content = preg_replace('/"seoHomeTitle":\s*"[^"]*"/', '"seoHomeTitle": "' . $siteNameEscaped . '"', $content);
+                if ($description !== '') {
+                    $descEscaped = str_replace(['\\', '"', "\r", "\n"], ['\\\\', '\"', '', '\n'], $description);
+                    $content = preg_replace('/"seoHomeDescription":\s*"[^"]*"/', '"seoHomeDescription": "' . $descEscaped . '"', $content);
+                }
+                if ($telegramUrl !== '') {
+                    $tgEscaped = str_replace(['\\', '"'], ['\\\\', '\"'], $telegramUrl);
+                    $content = preg_replace('/("jumpUrl":\s*")https:\/\/t\.me\/[^"]*(")/', '${1}' . $tgEscaped . '${2}', $content);
+                }
+                file_put_contents($cfgFile, $content);
+            }
+        }
+
+        // 2. Update index.html and css/undefined.html
+        $htmlFiles = [
+            $docRoot . '/index.html',
+            $docRoot . '/css/undefined.html',
+        ];
+        foreach ($htmlFiles as $hPath) {
+            if (is_file($hPath) && is_writable($hPath)) {
+                $html = (string)file_get_contents($hPath);
+                $html = preg_replace('/<title>.*?<\/title>/i', '<title>' . $siteNameHtml . '</title>', $html);
+                $html = preg_replace('/(<meta\s+property=["\']og:title["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $siteNameHtml . '$2', $html);
+                $html = preg_replace('/(<meta\s+property=["\']og:site_name["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $siteNameHtml . '$2', $html);
+                $html = preg_replace('/(<meta\s+name=["\']twitter:title["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $siteNameHtml . '$2', $html);
+                $html = preg_replace('/(<meta\s+name=["\']keywords["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $siteNameHtml . '$2', $html);
+                if ($description !== '') {
+                    $descHtml = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
+                    $html = preg_replace('/(<meta\s+name=["\']description["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $descHtml . '$2', $html);
+                    $html = preg_replace('/(<meta\s+property=["\']og:description["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $descHtml . '$2', $html);
+                    $html = preg_replace('/(<meta\s+name=["\']twitter:description["\']\s+content=["\'])[^"\']*(["\'])/i', '$1' . $descHtml . '$2', $html);
+                }
+                file_put_contents($hPath, $html);
+            }
+        }
+
+        // 3. Update payment gateway page (pay/index.php)
+        $payIndex = $docRoot . '/pay/index.php';
+        if (is_file($payIndex) && is_writable($payIndex)) {
+            $payContent = (string)file_get_contents($payIndex);
+            $payContent = preg_replace("/'account_name'\s*=>\s*'[^']*'/", "'account_name' => '" . addslashes($siteName) . "'", $payContent);
+            $payContent = preg_replace('/<title>.*?<\/title>/i', '<title>' . $siteNameHtml . ' - Premium Payment Gateway</title>', $payContent);
+            $payContent = preg_replace('/<div class="gateway-logo mt-2">.*?<\/div>/i', '<div class="gateway-logo mt-2">' . $siteNameHtml . ' Gateway</div>', $payContent);
+            file_put_contents($payIndex, $payContent);
+        }
+
+        // 4. Update Aviator title (aviator/index.php)
+        $aviatorIndex = $docRoot . '/aviator/index.php';
+        if (is_file($aviatorIndex) && is_writable($aviatorIndex)) {
+            $aviatorContent = (string)file_get_contents($aviatorIndex);
+            $aviatorContent = preg_replace('/<title>.*?<\/title>/i', '<title>' . $siteNameHtml . ' Aviator - Crash Game</title>', $aviatorContent);
+            file_put_contents($aviatorIndex, $aviatorContent);
+        }
+
+        // 5. Update Chicken Road title (chicken/index.php)
+        $chickenIndex = $docRoot . '/chicken/index.php';
+        if (is_file($chickenIndex) && is_writable($chickenIndex)) {
+            $chickenContent = (string)file_get_contents($chickenIndex);
+            $chickenContent = preg_replace('/<title>.*?<\/title>/i', '<title>Chicken Road 1 - ' . $siteNameHtml . '</title>', $chickenContent);
+            file_put_contents($chickenIndex, $chickenContent);
+        }
+
+        return true;
+    }
+
 
     public static function savePaymentMethod(array $post): array
     {

@@ -302,6 +302,21 @@ try {
             break;
 
         // --- Settings & Gateway ---
+        case 'save_branding':
+            if (!admin_has_permission('settings')) {
+                throw new Exception('Permission denied: settings');
+            }
+            $res = SettingsController::saveBranding($_POST);
+            if ($res['success']) {
+                AuthController::logActivity($adminId, 'save_branding', 'api_settings', 'site_name', (string)($_POST['site_name'] ?? ''));
+            }
+            if (!empty($_POST['redirect'])) {
+                header('Location: ' . $_POST['redirect'] . (strpos((string)$_POST['redirect'], '?') !== false ? '&' : '?') . 'saved=1');
+                exit;
+            }
+            echo json_encode($res);
+            break;
+
         case 'save_setting':
             if (!admin_has_permission('settings')) {
                 throw new Exception('Permission denied: settings');
@@ -311,6 +326,10 @@ try {
             $res = SettingsController::saveSetting($key, $val);
             if ($res['success']) {
                 AuthController::logActivity($adminId, 'save_setting', 'api_settings', $key, $val);
+            }
+            if (!empty($_POST['redirect'])) {
+                header('Location: ' . $_POST['redirect'] . (strpos((string)$_POST['redirect'], '?') !== false ? '&' : '?') . 'saved=1');
+                exit;
             }
             echo json_encode($res);
             break;

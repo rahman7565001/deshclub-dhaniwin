@@ -169,7 +169,7 @@
             "adjustTokenConfig": {},
             "seoHomeConfig": {
                 "seoHomeTitle": "Deshclub",
-                "seoHomeDescription": "Deshclub – Where the wealth happens.\nPlay top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place. Enjoy rich events, high win potential, and massive rewards every day. With exciting gameplay and frequent bonuses, every round gives you a real chance to win big. Join now and start your winning journey.",
+                "seoHomeDescription": "Deshclub – Where the wealth happens. Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place.",
                 "seoHomeImage": "/img/6006/other/083934987-42192-file_20260520083934973.webp"
             },
             "giftCodeConfig": {

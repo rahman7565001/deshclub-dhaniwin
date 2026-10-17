@@ -336,20 +336,17 @@
             "buildTime": "2026-06-03T01:40:00Z"
         };
     </script>
-    <meta name="description" content="Deshclub – Where the wealth happens.
-Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place. Enjoy rich events, high win potential, and massive rewards every day. With exciting gameplay and frequent bonuses, every round gives you a real chance to win big. Join now and start your winning journey."></meta>
+    <meta name="description" content="Deshclub – Where the wealth happens. Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place."></meta>
     <meta name="keywords" content="Deshclub"></meta>
     <meta name="renderer" content="webkit"></meta>
     <meta name="force-rendering" content="webkit"></meta>
     <meta name="twitter:card" content="summary_large_image"></meta>
     <meta name="twitter:title" content="Deshclub"></meta>
     <meta name="twitter:url" content="deshclub.com"></meta>
-    <meta name="twitter:description" content="Deshclub – Where the wealth happens.
-Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place. Enjoy rich events, high win potential, and massive rewards every day. With exciting gameplay and frequent bonuses, every round gives you a real chance to win big. Join now and start your winning journey."></meta>
+    <meta name="twitter:description" content="Deshclub – Where the wealth happens. Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place."></meta>
     <meta name="twitter:image" content="/img/6006/other/083934987-42192-file_20260520083934973.webp"></meta>
     <meta property="og:title" content="Deshclub"></meta>
-    <meta property="og:description" content="Deshclub – Where the wealth happens.
-Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place. Enjoy rich events, high win potential, and massive rewards every day. With exciting gameplay and frequent bonuses, every round gives you a real chance to win big. Join now and start your winning journey."></meta>
+    <meta property="og:description" content="Deshclub – Where the wealth happens. Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in one place."></meta>
     <meta property="og:type" content="website"></meta>
     <meta property="og:url" content="deshclub.com"></meta>
     <meta property="og:image" content="/img/6006/other/083934987-42192-file_20260520083934973.webp"></meta>
@@ -367,6 +364,38 @@ Play top trending games like Wingo, Vortex, Chicken Road, and Aviator—all in o
     <link rel="canonical" href="https://deshclub.com"></link>
     <link></link>
     <script type="text/javascript" src="/webapi/kv/config.js"></script>
+    <script type="text/javascript">
+        (function() {
+            function syncBrandTitle() {
+                var name = window._DATA_ && window._DATA_.homeSetting && window._DATA_.homeSetting.baseConfig && window._DATA_.homeSetting.baseConfig.webSiteName;
+                if (name && typeof name === 'string' && name.trim()) {
+                    window.DESHCLUB_SITE_NAME = name.trim();
+                    if (document.title !== window.DESHCLUB_SITE_NAME) {
+                        document.title = window.DESHCLUB_SITE_NAME;
+                    }
+                }
+            }
+            syncBrandTitle();
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', syncBrandTitle);
+            }
+            window.addEventListener('load', syncBrandTitle);
+            try {
+                var titleElem = document.querySelector('title');
+                if (titleElem && window.MutationObserver) {
+                    var obs = new MutationObserver(function() {
+                        var name = window._DATA_ && window._DATA_.homeSetting && window._DATA_.homeSetting.baseConfig && window._DATA_.homeSetting.baseConfig.webSiteName;
+                        if (name && document.title !== name) {
+                            obs.disconnect();
+                            document.title = name;
+                            obs.observe(titleElem, { childList: true, characterData: true, subtree: true });
+                        }
+                    });
+                    obs.observe(titleElem, { childList: true, characterData: true, subtree: true });
+                }
+            } catch(e) {}
+        })();
+    </script>
     <script type="text/javascript" id="">
         window._CONFIG_ = {
             "ip": "2a06:98c0:3600::103",
