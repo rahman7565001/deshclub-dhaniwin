@@ -440,6 +440,6 @@ INSERT IGNORE INTO `api_users` (`user_id`, `username`, `nickname`, `phone`, `wal
 
 -- Seed Default Payment Method
 INSERT IGNORE INTO `payment_methods` (`id`, `method_name`, `method_type`, `account_name`, `account_value`, `qr_text`, `min_amount`, `max_amount`, `sort_order`, `enabled`) VALUES
-(400101, 'PhonePe', 'UPI', 'Deshclub', 'deshclub@upi', 'upi://pay?pa=deshclub@upi&pn=Dhani%20Win&cu=INR', 100.0000, 50000.0000, 10, 1);
+(400101, 'PhonePe', 'UPI', 'Deshclub', 'deshclub@upi', 'upi://pay?pa=deshclub@upi&pn=Deshclub&cu=INR', 100.0000, 50000.0000, 10, 1);
 
 COMMIT;

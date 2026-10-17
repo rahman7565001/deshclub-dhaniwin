@@ -6,11 +6,11 @@
             "baseConfig": {
                 "selfLotteryMode": "0",
                 "webSiteName": "Deshclub",
-                "headerLogo": "/img/6006/other/042954624-29954-file_20260406042954622.webp",
-                "headerLogo2": "/img/6006/other/043007516-29955-file_20260406043007514.webp",
-                "registPageLogo": "/img/6006/other/094842601-32284-file_20260421094842574.webp",
-                "loginPageLogo": "/img/6006/other/043015439-29956-file_20260406043015428.webp",
-                "webIco": "/img/6006/other/043033085-29959-file_20260406043033085.webp",
+                "headerLogo": "/img/6006/other/deshclub_header.png",
+                "headerLogo2": "/img/6006/other/deshclub_header.png",
+                "registPageLogo": "/img/6006/other/deshclub_square.png",
+                "loginPageLogo": "/img/6006/other/deshclub_square.png",
+                "webIco": "/img/6006/other/deshclub_ico.png",
                 "defaultLanguage": "en",
                 "isOpenLoginCaptcha": "1",
                 "homeWinDisplayAmount": "500",
@@ -147,9 +147,9 @@
             },
             "pwaConfig": {
                 "pwaImage": {
-                    "pwaStartImg": "/img/6006/other/100025321-32286-file_20260421100025269.webp",
-                    "pwaBigImg": "/img/6006/other/043021744-29957-file_20260406043021730.webp",
-                    "pwaSmallImg": "/img/6006/other/043027517-29958-file_20260406043027515.webp"
+                    "pwaStartImg": "/img/6006/other/deshclub_header.png",
+                    "pwaBigImg": "/img/6006/other/deshclub_header.png",
+                    "pwaSmallImg": "/img/6006/other/deshclub_ico.png"
                 },
                 "pwaList": ["deshclub.com", "deshclub.vip", "deshclub.net"]
             },
@@ -224,7 +224,7 @@
                 "appKey": "3fae146c914431bb68b9993d",
                 "apkName": "com.ar6006.fb.app",
                 "platformType": 2,
-                "serviceAccountKey": "{\"project_info\": {\"project_number\": \"717624173528\",\"project_id\": \"dhaniwin\",\"storage_bucket\": \"dhaniwin.firebasestorage.app\"},\"client\": [{\"client_info\": {\"mobilesdk_app_id\": \"1:717624173528:android:7ff9cbd63f81e0293648ad\",\"android_client_info\": {\"package_name\": \"com.ar6006.fb.app\"}},\"oauth_client\": [],\"api_key\": [{\"current_key\": \"AIzaSyC51uFQJg9hB6JUnCZ6xRIncXgfV8OOEdU\"}],\"services\": {\"appinvite_service\": {\"other_platform_oauth_client\": []}}}],\"configuration_version\": \"1\"}"
+                "serviceAccountKey": "{\"project_info\": {\"project_number\": \"717624173528\",\"project_id\": \"deshclub\",\"storage_bucket\": \"deshclub.firebasestorage.app\"},\"client\": [{\"client_info\": {\"mobilesdk_app_id\": \"1:717624173528:android:7ff9cbd63f81e0293648ad\",\"android_client_info\": {\"package_name\": \"com.ar6006.fb.app\"}},\"oauth_client\": [],\"api_key\": [{\"current_key\": \"AIzaSyC51uFQJg9hB6JUnCZ6xRIncXgfV8OOEdU\"}],\"services\": {\"appinvite_service\": {\"other_platform_oauth_client\": []}}}],\"configuration_version\": \"1\"}"
             }, {
                 "appKey": "43bbfef2eac6559c4014c1bf",
                 "apkName": "",

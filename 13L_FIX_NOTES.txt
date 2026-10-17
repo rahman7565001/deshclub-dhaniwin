@@ -1,4 +1,4 @@
-13L Dhani.win fixes applied
+13L Deshclub fixes applied
 
 1) Lottery history/result compatibility
 - WinGo, K3, 5D/D5, TRX WinGo and MotoRace/MotoRacing now normalize gameCode, lotteryCode, typeId/gameType.

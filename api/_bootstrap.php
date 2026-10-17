@@ -877,8 +877,8 @@ function api_ensure_schema(PDO $pdo): void
     api_set_default_settings($pdo);
 
     try {
-        $stmt = $pdo->prepare("UPDATE api_settings SET setting_value = ? WHERE setting_key = 'share_domain' AND setting_value = 'https://dhaniwin7.com'");
-        $stmt->execute(['https://dhandawin.kkr7.online']);
+        $stmt = $pdo->prepare("UPDATE api_settings SET setting_value = ? WHERE setting_key = 'share_domain' AND (setting_value LIKE '%dhani%' OR setting_value LIKE '%dhandawin%')");
+        $stmt->execute(['https://deshclub.com']);
     } catch (Throwable $e) {
     }
 
@@ -4504,9 +4504,9 @@ function api_share_copy_payload(): array
 {
     $user = api_primary_user();
     $inviteCode = (string) ($user['user_id'] ?? '132257');
-    $domain = (string) api_setting('share_domain', 'https://dhandawin.kkr7.online');
-    if ($domain === 'https://dhaniwin7.com') {
-        $domain = 'https://dhandawin.kkr7.online';
+    $domain = (string) api_setting('share_domain', 'https://deshclub.com');
+    if (strpos($domain, 'dhani') !== false || strpos($domain, 'dhandawin') !== false) {
+        $domain = 'https://deshclub.com';
     }
     $host = (string) ($_SERVER['HTTP_HOST'] ?? '');
     if ($host !== '' && strpos($host, 'localhost') === false && strpos($host, '127.0.0.1') === false) {
